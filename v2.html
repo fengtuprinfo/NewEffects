@@ -425,7 +425,10 @@ const DEFAULT_SONGS = [
   // Suno 生成曲，沒有 YouTube 影片，直接播本機 MP3
   {id: 'suno-e093a932', title: '統一發票頭獎得主鋒兄威力彩頭獎得主塗哥',
    audio: '統一發票頭獎得主鋒兄威力彩頭獎得主塗哥.mp3',
-   subs: '統一發票頭獎得主鋒兄威力彩頭獎得主塗哥.srt', lead: 2, cast: 'lucky'}
+   subs: '統一發票頭獎得主鋒兄威力彩頭獎得主塗哥.srt', lead: 2, cast: 'lucky'},
+  {id: 'hw-watashi', title: '私は、わたしの事が好き。 [かぐや(cv.夏吉ゆうこ)]',
+   audio: '私は、わたしの事が好き。 [かぐや(cv.夏吉ゆうこ)].mp3',
+   subs: '私は、わたしの事が好き。.srt', lead: 0, cast: 'kaguya'}
 ];
 // 每首歌的字幕／音訊檔放在同一個資料夾，執行時才讀取
 const cfgOf = id => DEFAULT_SONGS.find(d => d.id === id) || {};
@@ -544,7 +547,8 @@ $('#srcSeg').addEventListener('click', e => {
 const LEAD_NAMES = {
   best4u: ['小日向理瀬', '葉山陽和', '前原純華', '小鷹咲希', '橘雪乃', '御社智'],
   anaru: ['水之江梅', '古都吹寿子', '陸奥こころ', '尾鳥たん', '照井有栖', '平塚敏深'],
-  lucky: ['鯨魚娘', '咕咕嘎嘎', '鋒兄', '塗哥', '喵布布', '喵白白', '牙妹', '魚妹']
+  lucky: ['鯨魚娘', '咕咕嘎嘎', '鋒兄', '塗哥', '喵布布', '喵白白', '牙妹', '魚妹'],
+  kaguya: ['かぐや', '彩葉', 'ツキ']
 };
 function syncLeadMenu(id){
   const names = LEAD_NAMES[cfgOf(id).cast] || LEAD_NAMES.best4u;

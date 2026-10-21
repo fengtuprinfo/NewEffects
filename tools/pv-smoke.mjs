@@ -70,10 +70,18 @@ if(!song) throw new Error(`pv.js 沒有第 ${songIndex} 首歌`);
 const srtPath = path.join(ROOT, song.subs);
 if(!fs.existsSync(srtPath)) throw new Error(`找不到字幕檔 ${song.subs}（本機檔案，不在 repo 內時請先放好）`);
 const cues = T.parseSrt(fs.readFileSync(srtPath, 'utf8'));
+// 用真實音檔長度（沒有 ffprobe 或音檔不在本機時退回 141.57 秒）
+let dur = 141.57;
+try{
+  const {execFileSync} = await import('node:child_process');
+  const out = execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0',
+    path.join(ROOT, `${song.file}.mp3`)], {stdio: ['ignore', 'pipe', 'ignore']}).toString().trim();
+  if(+out > 1) dur = +out;
+}catch{}
 
 T.setA({rms: wave(), low: wave(), mid: wave(),
   cumMid: (() => { const c = new Float32Array(N + 1); for(let i = 0; i < N; i++) c[i+1] = c[i] + .09; return c; })(),
-  bpm: 116.2, spb: 60/116.2, beat0: 0, barOff: 0, dur: 141.57});
+  bpm: 116.2, spb: 60/116.2, beat0: 0, barOff: 0, dur});
 T.setup(cues);
 
 console.log(`歌曲 ${songIndex}「${song.title}」  成員 ${T.MEMBERS.length} 位、主唱 #${T.LEAD}、歌詞 ${cues.length} 句`);
@@ -87,7 +95,7 @@ for(const type of ['film', 'bike', 'windows', 'typo', 'stage', 'outro']){
 // 每個鏡頭在許多時間點各呼叫一次；直接用分鏡自己的時間，最貼近實際播放
 let ok = 0, fail = 0;
 const times = [];
-for(let t = 0; t < 141; t += 1.7) times.push(t);
+for(let t = 0; t < dur; t += 1.7) times.push(t);
 for(const [name, fn] of Object.entries(T.SHOTS)){
   if(name === 'characters') continue;
   for(const sh of shots.filter(s => s.type === name).length ? shots.filter(s => s.type === name) : [{type: name, start: 10, end: 20}]){

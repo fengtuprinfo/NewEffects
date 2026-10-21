@@ -562,5 +562,43 @@
    ],
    "sheet": "lucky8.png"
   }
+ ],
+ "kaguya": [
+  {
+   "file": "kaguya-0.png",
+   "w": 855,
+   "h": 1059,
+   "headX": 772,
+   "headY": 95,
+   "source": [
+    574,
+    21
+   ],
+   "sheet": "kaguya-casual.jpg"
+  },
+  {
+   "file": "kaguya-1.png",
+   "w": 555,
+   "h": 775,
+   "headX": 302,
+   "headY": 69,
+   "source": [
+    1365,
+    265
+   ],
+   "sheet": "kaguya-beach.jpg"
+  },
+  {
+   "file": "kaguya-2.png",
+   "w": 596,
+   "h": 818,
+   "headX": 290,
+   "headY": 73,
+   "source": [
+    1324,
+    175
+   ],
+   "sheet": "kaguya-fox.jpg"
+  }
  ]
 }

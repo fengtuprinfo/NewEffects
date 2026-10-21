@@ -7,8 +7,10 @@
 <style>
 :root{color-scheme:dark}
 html,body{margin:0;height:100%;background:#000;color:#eee;font-family:"PingFang TC","Hiragino Sans",sans-serif;overflow:hidden}
-body{display:grid;place-items:center}
-#pv{width:min(100vw,calc(100vh*16/9));height:auto;aspect-ratio:16/9;display:block;background:#000}
+/* 底部留給控制列：畫布不鋪滿整個視窗，歌詞才不會被播放器蓋住。
+   實際高度由 JS 量 #ui 後寫進 --ui-h，控制列換行或放大時也跟得上。 */
+body{--ui-h:104px;display:grid;place-items:center;box-sizing:border-box;padding-bottom:var(--ui-h)}
+#pv{width:min(100vw,calc((100vh - var(--ui-h))*16/9));height:auto;aspect-ratio:16/9;display:block;background:#000}
 #ui{position:fixed;left:50%;bottom:16px;translate:-50% 0;display:flex;gap:10px;align-items:center;padding:10px 14px;
   border-radius:14px;background:rgba(18,18,28,.82);backdrop-filter:blur(8px);box-shadow:0 6px 24px rgba(0,0,0,.4);
   width:min(920px,calc(100vw - 32px));box-sizing:border-box;transition:opacity .4s}
@@ -21,6 +23,8 @@ body{display:grid;place-items:center}
 #msg{position:fixed;top:16px;left:50%;translate:-50% 0;font-size:14px;background:rgba(0,0,0,.6);padding:6px 12px;border-radius:8px}
 #msg:empty{display:none}
 body.render #ui,body.render #msg{display:none}
+body.render{padding-bottom:0}
+body.render #pv{width:min(100vw,calc(100vh*16/9))}
 @media (max-width:600px){#ui{flex-wrap:wrap}#seek{order:5;flex-basis:100%}}
 </style>
 </head>
@@ -36,6 +40,16 @@ body.render #ui,body.render #msg{display:none}
   <a href="v2.html">第二版本：歌詞播放器 →</a>
 </div>
 <div id="msg"></div>
+<script>
+// 量控制列實際高度，讓畫布自動讓開（換行、縮放、字體變大都不會蓋到歌詞）
+(() => {
+  const ui = document.getElementById('ui');
+  const fit = () => document.body.style.setProperty('--ui-h', (ui.offsetHeight + 26) + 'px');
+  addEventListener('resize', fit);
+  if(window.ResizeObserver) new ResizeObserver(fit).observe(ui);
+  fit();
+})();
+</script>
 <script src="dance-rig.js"></script>
 <script src="pv.js"></script>
 </body>

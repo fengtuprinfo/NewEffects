@@ -17,7 +17,7 @@ macOS 也可雙擊 `啟動播放器.command`，會在終端機啟動伺服器並
 - 歌詞特效：卡拉OK填色、逐字彈跳、霓虹燈、逐字浮現、柔焦夢幻
 - 中日雙語字幕：SRT 每段第二行放繁中翻譯，會顯示在日文特效行下方並隨時間填色；下一句預覽同步顯示中日文
 - 和聲（`［］`、`《》`、`[]` 內文字）以小字淺藍色顯示；`漢字(かな)` 顯示為注音假名
-- 載歌載舞：每位卡司成員會抬手、側擺、踏步及跳躍；可切換參考人物／Q 版、選擇主唱並調整舞動強度。人數跟著該首歌的卡司走（best4u／anaru 六人、招財喵布布八人），主唱選單會依歌曲重建
+- 載歌載舞：每位卡司成員會抬手、側擺、踏步及跳躍；可切換參考人物／Q 版、選擇主唱並調整舞動強度。人數跟著該首歌的卡司走（best4u／anaru 六人、招財喵布布八人、超かぐや姫！三人），主唱選單會依歌曲重建
 - MP3 以低頻偵測節拍，中頻音量驅動主唱嘴型與音符；嘴型為音量開合效果。YouTube 因無法取得音訊，使用固定 120 BPM
 - 桌面舞台和控制列適應視窗高度，側欄獨立捲動；手機直向排列。長歌詞自動縮放至最多兩行，避免被舞台裁切
 - 打點對時：貼上歌詞後按「開始打點」，每句開始時按 Space，可匯出 LRC
@@ -27,10 +27,18 @@ macOS 也可雙擊 `啟動播放器.command`，會在終端機啟動伺服器並
 
 首頁 `index.html` 是每首歌的歌詞 PV（1920×1080），用同一套 `pv.js` 在瀏覽器即時預覽，或輸出成 MP4；原本的動態歌詞播放器改為第二版本 `v2.html`，兩頁互相有連結：
 
-- 預覽：開啟 `http://127.0.0.1:8765/?song=0`（0 大好きだよって叫ぶんだ、1 SUNRISE、2 HELLO HERO、3 風の中は走るっきゃないっ！、4 ぴ、5 統一發票頭獎得主鋒兄威力彩頭獎得主塗哥）
+- 預覽：開啟 `http://127.0.0.1:8765/?song=0`（0 大好きだよって叫ぶんだ、1 SUNRISE、2 HELLO HERO、3 風の中は走るっきゃないっ！、4 ぴ、5 統一發票頭獎得主鋒兄威力彩頭獎得主塗哥、6 私は、わたしの事が好き。）
 - 輸出：`node render-pv.mjs`（`pv.js` 裡的全部歌曲同時輸出到 `pv/`），或 `node render-pv.mjs 1 --from 60 --to 72` 只輸出片段。需要 Google Chrome 與 ffmpeg
 
-人物由使用者提供的參考圖去背切出來：把參考圖放進 `assets/ref/`（`rise5.webp` 五人演出服白底、`lineup12.webp` 十二人色條底、`rooftop6.webp`、`stage9.webp`），執行 `node tools/cutout.mjs` 產生 `assets/ref/cast/` 的角色 PNG 與 `cast.json`。每首歌的主視覺與成員在 `pv.js` 的 `ARTS`、`SONGS[].cast` 設定（`lead` 是主唱，預設第一位）：大好きだよって叫ぶんだ 用 RISE 演出服，SUNRISE 用制服，HELLO HERO 用智的隊伍，風の中は走るっきゃないっ！ 用生徒会六人（`assets/ref/cast/anaru-*.png`，主視覺 `assets/ref/anaru6.png`），統一發票頭獎得主… 用招財喵布布八人（見下節）。角色以切圖分條彎曲、跳躍、壓縮做出跟拍舞動。
+人物由使用者提供的參考圖去背切出來：把參考圖放進 `assets/ref/`（`rise5.webp` 五人演出服白底、`lineup12.webp` 十二人色條底、`rooftop6.webp`、`stage9.webp`），執行 `node tools/cutout.mjs` 產生 `assets/ref/cast/` 的角色 PNG 與 `cast.json`。每首歌的主視覺與成員在 `pv.js` 的 `ARTS`、`SONGS[].cast` 設定（`lead` 是主唱，預設第一位）：大好きだよって叫ぶんだ 用 RISE 演出服，SUNRISE 用制服，HELLO HERO 用智的隊伍，風の中は走るっきゃないっ！ 用生徒会六人（`assets/ref/cast/anaru-*.png`，主視覺 `assets/ref/anaru6.png`），統一發票頭獎得主… 用招財喵布布八人（見下節），私は、わたしの事が好き。用超かぐや姫！三人（見下節）。角色以切圖分條彎曲、跳躍、壓縮做出跟拍舞動。
+
+### 超かぐや姫！三人（畫面擷取）
+
+這組沒有立繪，人物是從使用者提供的歌詞影片定格裡取下來的，走第三條工具鏈：
+
+- `tools/matte-vision.py` 先對 `assets/ref/kaguya-casual.jpg`（かぐや 黑色連身裙）、`kaguya-beach.jpg`（彩葉）、`kaguya-fox.jpg`（ツキ）產生 `*-matte.png` 灰階前景遮罩。
+- `python3 tools/cutout-kaguya.py` 依遮罩分配角色、避開燒進畫面的字幕帶，輸出 `assets/ref/cast/kaguya-0.png`～`kaguya-2.png`，併入 `cast.json` 的 `kaguya` 群組，並把三張切圖拼成 1920×1080 的群像主視覺 `assets/ref/kaguya-group.png`。
+- 這組只有三個人，PV 的舞台分鏡會自動排成「主唱中央、左右各一位」的三人隊形（`pv.js` 的 `stage` 鏡頭對五人以下有專用配置）。
 
 ### 招財喵布布八人（單張立繪）
 
@@ -89,11 +97,14 @@ macOS 也可雙擊 `啟動播放器.command`，會在終端機啟動伺服器並
 
 ## 歌曲檔案
 
-本機 MP3 與字幕檔（SRT／LRC）通常不放在這個 repo（見 `.gitignore`）。「風の中は走るっきゃないっ！」、「ぴ [ナナヲアカリ]」與「統一發票頭獎得主鋒兄威力彩頭獎得主塗哥」的 MP3 和字幕已納入 repo，供部署版播放及顯示字幕；其他音訊與字幕仍由使用者本機提供。
+本機 MP3 與字幕檔（SRT／LRC）通常不放在這個 repo（見 `.gitignore`）。「風の中は走るっきゃないっ！」、「ぴ [ナナヲアカリ]」、「統一發票頭獎得主鋒兄威力彩頭獎得主塗哥」與「私は、わたしの事が好き。」的 MP3 和字幕已納入 repo，供部署版播放及顯示字幕；其他音訊與字幕仍由使用者本機提供。
 
 「統一發票頭獎得主鋒兄威力彩頭獎得主塗哥」是 Suno 生成的曲子（`v6`，141.6 秒），沒有 YouTube 影片，播放器直接播本機 MP3。它的中文 SRT 是拿歌詞對音訊做強制對齊產生的：`ffmpeg` 轉 16 kHz 單聲道，用本機 `faster-whisper medium` 取詞級時間戳（`language=zh`、`word_timestamps`），再把歌詞逐字對到 ASR 詞上。音訊檔是從 Suno 分享頁的 CDN 取回、以 AES-CTR 解密後轉成 MP3。
 
 「ぴ」的 SRT 是拿官方歌詞對本機 MP3 做強制對齊產生的：日中逐句雙語，中文行用「嗶」代替日文歌詞裡的「ぴ」（播放器以「是否含假名」判斷哪一行是翻譯，中文行若含假名會失效）。
+
+「私は、わたしの事が好き。」的 SRT 走同一條流程，工具留在 `tools/`：`faster-whisper medium` 取詞級時間戳後，`tools/align-lyrics.py` 把歌詞逐字與 ASR 逐字做 Levenshtein 對齊（對上的字沿用 ASR 時間），再由 `tools/build-srt.py` 寫成日中雙語 SRT 並把每句結束時間收到下一句開始前。ASR 對唱歌的辨識本來就零散，但對齊後每句仍有 5–12 個字對上，時間軸足夠貼合。
+
 把檔案放在與 `index.html` 同一個資料夾，並在 `v2.html` 的 `DEFAULT_SONGS`（播放器）與 `pv.js` 的 `SONGS`（PV）設定檔名：
 
 部署版若缺少其他歌曲的本機 MP3，播放器會自動切換到該曲的 YouTube 音源；部署版未附其他歌曲的 SRT／LRC，請在歌詞面板匯入字幕檔。

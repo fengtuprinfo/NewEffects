@@ -24,7 +24,10 @@ const ARTS = {
     faces: [[181, 369], [588, 377], [919, 402], [1216, 372], [1486, 367], [1726, 380]]},
   // 招財喵布布八人：由 tools/build-group.mjs 把 tools/cutout-solo.mjs 的切圖拼成群像
   lucky8: {src: 'assets/ref/lucky8.png', crop: [0, 0, 1920, 1080],
-    faces: [[228, 104], [719, 104], [1197, 104], [1674, 104], [238, 644], [718, 644], [1199, 644], [1678, 644]]}
+    faces: [[228, 104], [719, 104], [1197, 104], [1674, 104], [238, 644], [718, 644], [1199, 644], [1678, 644]]},
+  // 超かぐや姫！：畫面取自歌詞影片，由 tools/cutout-kaguya.py 去背切圖並拼成群像
+  kaguya: {src: 'assets/ref/kaguya-group.png', crop: [0, 0, 1920, 1080],
+    faces: [[960, 300], [430, 446], [1500, 464]]}
 };
 const SONGS = [
   {title: '大好きだよって叫ぶんだ', ver: '小日向理瀬 ver.', file: '大好きだよって叫ぶんだ [小日向理瀬ver.]',
@@ -48,7 +51,11 @@ const SONGS = [
    subs: '統一發票頭獎得主鋒兄威力彩頭獎得主塗哥.srt', theme: 'lucky', art: 'lucky8', lead: 2,
    series: '招財喵布布', kicker: '鋒兄生日祝福曲',
    cast: [['lucky', 0, '鯨魚娘', '#3f7fd0'], ['lucky', 1, '咕咕嘎嘎', '#3a4250'], ['lucky', 2, '鋒兄', '#b08a4a'], ['lucky', 3, '塗哥', '#7b8794'],
-          ['lucky', 4, '喵布布', '#d9822b'], ['lucky', 5, '喵白白', '#8d97a3'], ['lucky', 6, '牙妹', '#d9424f'], ['lucky', 7, '魚妹', '#3f6ea8']]}
+          ['lucky', 4, '喵布布', '#d9822b'], ['lucky', 5, '喵白白', '#8d97a3'], ['lucky', 6, '牙妹', '#d9424f'], ['lucky', 7, '魚妹', '#3f6ea8']]},
+  {title: '私は、わたしの事が好き。', ver: 'かぐや(cv.夏吉ゆうこ)', file: '私は、わたしの事が好き。 [かぐや(cv.夏吉ゆうこ)]',
+   subs: '私は、わたしの事が好き。.srt', theme: 'kaguya', art: 'kaguya',
+   series: 'HoneyWorks', kicker: '映画「超かぐや姫！」',
+   cast: [['kaguya', 0, 'かぐや', '#f2a7c3'], ['kaguya', 1, '彩葉', '#7fd8bb'], ['kaguya', 2, 'ツキ', '#e9a94f']]}
 ];
 // 每首歌一組配色：夏日向日葵、日出、黃昏星空、晴空疾風
 const THEMES = {
@@ -57,7 +64,9 @@ const THEMES = {
   twilight: {sky: ['#050820', '#2b2366', '#d0677a'], pastel: ['#eef0ff', '#ffe6ea'], accent: '#ffd56b', accent2: '#9c7bff', cool: '#62d4ff', deep: '#14123a', particle: 'star'},
   wind:     {sky: ['#0e3a66', '#49b4ef', '#e8f8ff'], pastel: ['#f3fbff', '#e5fff6'], accent: '#ffe14a', accent2: '#3ec6ff', cool: '#d7f6ff', deep: '#0c2748', particle: 'wind'},
   pit:      {sky: ['#431a6b', '#ff79b8', '#ffe9a8'], pastel: ['#fff3fb', '#eafaff'], accent: '#ff4f9a', accent2: '#31d3c6', cool: '#ffd166', deep: '#2a1146', particle: 'dot'},
-  lucky:    {sky: ['#4a0a16', '#c8202f', '#ffd98a'], pastel: ['#fff6e2', '#ffe4e6'], accent: '#ffd23f', accent2: '#ff4d6d', cool: '#ffb703', deep: '#33070f', particle: 'coin'}
+  lucky:    {sky: ['#4a0a16', '#c8202f', '#ffd98a'], pastel: ['#fff6e2', '#ffe4e6'], accent: '#ffd23f', accent2: '#ff4d6d', cool: '#ffb703', deep: '#33070f', particle: 'coin'},
+  // 超かぐや姫！：祭典夜的紫藍到燈籠橘，配上升的燈籠光點
+  kaguya:   {sky: ['#120e34', '#5a2472', '#ffb45e'], pastel: ['#fff2f8', '#ffe9d2'], accent: '#ffcf6a', accent2: '#ff7fae', cool: '#9ad7ff', deep: '#1a0f33', particle: 'lantern'}
 };
 const LOGO = [['B', '#2ba6e1'], ['E', '#f6a531'], ['S', '#ee5b97'], ['T', '#2ba6e1'], [' ', ''], ['4', '#f6a531'], ['U', '#8d6ad6']];
 const POP = ['#ee5b97', '#2ba6e1', '#f6a531', '#8d6ad6', '#3cc39a', '#f08a4b'];
@@ -122,6 +131,8 @@ const CHARACTER_GROUPS = song.cast[0][0] === 'anaru'
   ? [{sheet:'anaru', title:'生徒会六人', src:'assets/ref/anaru6.png', colors:['#49b4ef','#ffe14a'], count:6}]
   : song.cast[0][0] === 'lucky'
   ? [{sheet:'lucky', title:'招財喵布布 · 幸運八人', src:'assets/ref/lucky8.png', colors:['#c8202f','#ffd98a'], count:8, solo:true}]
+  : song.cast[0][0] === 'kaguya'
+  ? [{sheet:'kaguya', title:'かぐや · 彩葉 · ツキ', src:'assets/ref/kaguya-group.png', colors:['#3a1d63','#ffb45e'], count:3, solo:true}]
   : BASE_CHARACTER_GROUPS;
 let A = null, cues = [], sections = [], shots = [], TJ = [], TZ = [], C = {};
 
@@ -424,6 +435,19 @@ function particles(t, n, layer = 0, kind = T.particle){
       g.strokeStyle = 'rgba(140,74,8,.5)'; g.lineWidth = 2; g.stroke();
       g.fillStyle = 'rgba(120,58,6,.7)'; g.fillRect(-r*.27, -r*.27, r*.54, r*.54);
       g.restore();
+    } else if(kind === 'lantern'){
+      // 祭典燈籠：暖色小燈籠緩緩上升，邊飄邊搖，中心留一點燭火
+      const life = 9 + h3*6, age = frac(t/life + h1);
+      const x = h2*W + Math.sin(t*.5 + i*2)*42 + age*40, y = H*1.12 - age*(H*1.3);
+      const r = 9 + h3*11, a = Math.sin(age*Math.PI);
+      g.globalCompositeOperation = 'lighter';
+      glow(x, y, r*3.4, h4 > .6 ? T.accent2 : T.accent, .3*a);
+      g.globalCompositeOperation = 'source-over';
+      g.globalAlpha = .92*a; g.fillStyle = h4 > .5 ? T.accent : T.accent2;
+      roundRect(x - r*.62, y - r*.85, r*1.24, r*1.7, r*.34); g.fill();
+      g.fillStyle = 'rgba(255,246,214,.85)'; g.fillRect(x - r*.16, y - r*.42, r*.32, r*.84);
+      g.globalAlpha = .5*a; g.strokeStyle = 'rgba(255,214,150,.9)'; g.lineWidth = 1.5;
+      g.beginPath(); g.moveTo(x, y - r*.85); g.lineTo(x, y - r*1.35); g.stroke();
     } else {
       const life = 7 + h3*6, age = frac(t/life + h1), x = h2*W*1.2 - age*320 + Math.sin(t*1.3 + i)*25, y = -60 + age*(H + 120);
       g.globalCompositeOperation = 'source-over';
@@ -1025,12 +1049,14 @@ function shotStage(t, sh, u){
     : O.length >= 5
     ? [{nx:.28, ny:.74, nh:.46, m:O[0]}, {nx:.50, ny:.70, nh:.44, m:O[1]}, {nx:.72, ny:.74, nh:.46, m:O[2]},
        {nx:.15, ny:.90, nh:.54, m:O[3]}, {nx:.85, ny:.90, nh:.54, m:O[4]}, {nx:.50, ny:1, nh:.64, m:LEAD}]
-    : [{nx:.32, ny:.74, nh:.46, m:O[0]}, {nx:.68, ny:.74, nh:.46, m:O[1]},
-       {nx:.14, ny:.90, nh:.54, m:O[2]}, {nx:.86, ny:.90, nh:.54, m:O[3]}, {nx:.50, ny:1, nh:.64, m:LEAD}];
+    : O.length >= 3
+    ? [{nx:.28, ny:.74, nh:.46, m:O[0]}, {nx:.72, ny:.74, nh:.46, m:O[1]},
+       {nx:.13, ny:.90, nh:.54, m:O[2]}, {nx:.87, ny:.90, nh:.54, m:O[3]}, {nx:.50, ny:1, nh:.64, m:LEAD}]
+    : [{nx:.27, ny:.80, nh:.50, m:O[0]}, {nx:.73, ny:.80, nh:.50, m:O[1]},
+       {nx:.50, ny:1, nh:.70, m:LEAD}];
   // 後排正中央會被主唱擋住。手張得很開的立繪，冒出的頭和手臂會像主唱的殘影，每個景別都不畫；
   // 較窄的立繪只在特寫拿掉，廣角仍留著當後排。
-  const centerBack = O.length >= 7 ? 2 : O.length >= 5 ? 1 : -1;
-  const intro = sh.variant === 'intro' ? clamp((t - .5)/1.5) : 1;
+  const centerBack = O.length >= 7 ? 2 : O.length >= 5 ? 1 : -1;  const intro = sh.variant === 'intro' ? clamp((t - .5)/1.5) : 1;
   const inv = (cam2, x, y) => [cam2.fx + (x - cam2.fx)/cam2.z, cam2.fy + (y - cam2.fy)/cam2.z];
   const corners = [[STAGE_SAFE.l, STAGE_SAFE.t], [STAGE_SAFE.r, STAGE_SAFE.t], [STAGE_SAFE.l, STAGE_SAFE.b], [STAGE_SAFE.r, STAGE_SAFE.b]].map(([x, y]) => inv(camFit, x, y));
   const box = {
@@ -1372,7 +1398,7 @@ function shotCharacters(t,sh,u){
     light.addColorStop(0,'rgba(255,255,255,.16)');light.addColorStop(1,'rgba(255,255,255,0)');
     g.fillStyle=light;g.beginPath();g.moveTo(x-6,0);g.lineTo(x+6,0);g.lineTo(x+sway+130,900);g.lineTo(x+sway-130,900);g.closePath();g.fill();
   }
-  const sizes={casual:[1774,815],rooftop:[1536,1024],idol:[1536,1024],stage:[1774,887],anaru:[1920,1080],lucky:[1920,1080]};
+  const sizes={casual:[1774,815],rooftop:[1536,1024],idol:[1536,1024],stage:[1774,887],anaru:[1920,1080],lucky:[1920,1080],kaguya:[1920,1080]};
   const [sourceW,sourceH]=sizes[group.sheet],scale=Math.min((W-160)/sourceW,740/sourceH);
   const originX=(W-sourceW*scale)/2,originY=150;
   if(group.matte){
@@ -1384,12 +1410,15 @@ function shotCharacters(t,sh,u){
     }
   }
   const focus=Math.floor(Math.max(0,local-2)/2)%actors.length;
-  // solo 組的切圖來自各自獨立的立繪，沒有群像座標，改用 4×2 網格平均排列
+  // solo 組的切圖來自各自獨立的立繪，沒有群像座標，改用網格平均排列（人數少時一列排開、每列置中）
   const solo=!!group.solo,n=actors.length,gw=sourceW*scale,gh=sourceH*scale;
+  const cols=solo?Math.min(4,Math.max(1,n)):1,rows=solo?Math.ceil(n/cols):1;
+  const cw=solo?gw/cols:0,chh=solo?gh/rows:0;
   actors.forEach((actor,i)=>{
-    const col=solo?i%4:i,row=solo?Math.floor(i/4):0,cw=solo?gw/4:0,chh=solo?gh/2:0;
-    const h=solo?chh*.9:actor.meta.h*scale;
-    const x=solo?originX+(col+.5)*cw:originX+(actor.meta.source[0]+actor.meta.w/2)*scale;
+    const col=solo?i%cols:i,row=solo?Math.floor(i/cols):0;
+    const inRow=solo?Math.min(cols,n-row*cols):1;
+    const h=solo?Math.min(chh*.9,cw*.95*actor.meta.h/actor.meta.w):actor.meta.h*scale;
+    const x=solo?originX+(gw-inRow*cw)/2+(col+.5)*cw:originX+(actor.meta.source[0]+actor.meta.w/2)*scale;
     const y=solo?originY+(row+1)*chh-6:originY+(actor.meta.source[1]+actor.meta.h)*scale;
     const entry=easeOut((local-i*.045)/.65);
     const state=danceState(i,t,{e:.23,alt:true});state.actor=actor;

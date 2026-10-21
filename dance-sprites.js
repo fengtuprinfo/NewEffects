@@ -7,9 +7,10 @@
   const SETS = {
     best4u: {sheet: 'casual', idx: [4, 1, 0, 2, 3, 11]},
     anaru: {sheet: 'anaru', idx: [0, 1, 2, 3, 4, 5]},
-    lucky: {sheet: 'lucky', idx: [0, 1, 2, 3, 4, 5, 6, 7]}
+    lucky: {sheet: 'lucky', idx: [0, 1, 2, 3, 4, 5, 6, 7]},
+    kaguya: {sheet: 'kaguya', idx: [0, 1, 2]}
   };
-  const actors = {best4u: [], anaru: [], lucky: []};
+  const actors = {best4u: [], anaru: [], lucky: [], kaguya: []};
   let active = 'best4u';
   const api = window.SpriteDancers = {ready: false, error: null, draw, use, count};
   function use(name){ if(actors[name]?.length) active = name; }
