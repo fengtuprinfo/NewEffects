@@ -433,7 +433,9 @@ const DEFAULT_SONGS = [
    audio: 'カニ☆Do-Luck!.mp3',
    subs: 'カニ☆Do-Luck!.srt', lead: 0, cast: 'aiura'},
   {id: '2SHNY5v6DnM', title: 'ユラリユレル [NOMELON NOLEMON]',
-   audio: 'yurariyureru.mp3', subs: 'yurariyureru.srt', lead: 0, cast: 'growup'}
+   audio: 'yurariyureru.mp3', subs: 'yurariyureru.srt', lead: 0, cast: 'growup'},
+  {id: 'ZrRHLwP2_fI', title: '明日へのBreakShoot [葉山陽和ver.]',
+   audio: '明日へのBreakShoot [葉山陽和ver.].mp3', subs: '明日へのBreakShoot.srt', lead: 1, cast: 'extreme'}
 ];
 // 每首歌的字幕／音訊檔放在同一個資料夾，執行時才讀取
 const cfgOf = id => DEFAULT_SONGS.find(d => d.id === id) || {};
@@ -555,7 +557,8 @@ const LEAD_NAMES = {
   lucky: ['鯨魚娘', '咕咕嘎嘎', '鋒兄', '塗哥', '喵布布', '喵白白', '牙妹', '魚妹'],
   kaguya: ['かぐや', '彩葉', 'ツキ'],
   aiura: ['天谷奏香', '岩沢彩生', '上原歩子'],
-  growup: ['鶴巻瑞佳', '川澄桜翔', '吾野伊万里', '五十土五十鈴', '由良 葵', '由良 茜', '酒匂 雫', 'スヴェトラーナ', '間宮 凛', '麻利亜']
+  growup: ['鶴巻瑞佳', '川澄桜翔', '吾野伊万里', '五十土五十鈴', '由良 葵', '由良 茜', '酒匂 雫', 'スヴェトラーナ', '間宮 凛', '麻利亜'],
+  extreme: ['前原純華', '葉山陽和', '小鷹咲希', '橘雪乃', '小日向理瀬', 'ミシェル・イェーガー', 'アシュリー・ヴァンクロフト', '桜井羽月', '御社智', '末宗祐里子', '本田千尋', 'ティーナ・メルキース']
 };
 function syncLeadMenu(id){
   const names = LEAD_NAMES[cfgOf(id).cast] || LEAD_NAMES.best4u;
@@ -826,16 +829,16 @@ function lineSpan(L){
 function tokenize(text){
   const units = [];
   let bk = false;
-  const re = /([\u4e00-\u9fff々〆ヶ]+)[(（]([\u3041-\u309f\u30a0-\u30ff]+)[)）]|./gsu;
+  const re = /([\u4e00-\u9fff々〆ヶ]+|[A-Za-z]+(?: +[A-Za-z]+)*)[(（]([\u3041-\u309f\u30a0-\u30ff]+)[)）]|./gsu;
   for(const m of text.matchAll(re)){
     const c = m[0];
-    if(c === '［' || c === '《' || c === '['){ bk = true; continue; }
-    if(c === '］' || c === '》' || c === ']'){ bk = false; continue; }
+    if('［《[(（'.includes(c)){ bk = true; continue; }
+    if('］》])）'.includes(c)){ bk = false; continue; }
     units.push(m[1] ? {base: m[1], ruby: m[2], bk} : {base: c, bk});
   }
   return units;
 }
-const plainText = t => t.replace(/([\u4e00-\u9fff々〆ヶ]+)[(（][\u3041-\u309f\u30a0-\u30ff]+[)）]/gu, '$1')
+const plainText = t => t.replace(/([\u4e00-\u9fff々〆ヶ]+|[A-Za-z]+(?: +[A-Za-z]+)*)[(（][\u3041-\u309f\u30a0-\u30ff]+[)）]/gu, '$1')
   .replace(/^[［《\[](.*?)[］》\]]$/, '$1').replace(/[［《\[](.*?)[］》\]]/g, ' ($1)');
 // 主句維持一行。日文歌的主句是日文，中文歌的主句是中文，翻譯行各自另外排。
 // 縮得進畫面就不要換行；小到看不清仍然超出畫面，才從中間對半分成兩行。

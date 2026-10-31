@@ -11,6 +11,10 @@
 !/yurariyureru.mp3
 !/yurariyureru.srt
 
+# 明日へのBreakShoot 葉山陽和 ver. 隨歌曲清單部署
+!/明日へのBreakShoot *.mp3
+!/明日へのBreakShoot.srt
+
 .DS_Store
 .claude/
 

@@ -163,6 +163,10 @@ function cut(sheet){
 const manifest = fs.existsSync(path.join(OUT,'cast.json')) ? JSON.parse(fs.readFileSync(path.join(OUT,'cast.json'),'utf8')) : {};
 // anaru 是「生徒会にも穴はある！」已去背的單張立繪，不從合圖重切；重跑時沿用 manifest.anaru。
 for(const s of SHEETS){
+  if(s.name==='casual' && fs.existsSync(path.join(REF,'casual-remade/transparent-0.png'))){
+    console.log('casual：使用獨立重製素材，略過舊色條切割');
+    continue;
+  }
   if(!fs.existsSync(path.join(REF,s.file))){
     if(s.bg==='alpha'){console.log(`略過 ${s.file}：請先放入透明人物圖層`);continue;}
     throw new Error('找不到 '+s.file);
@@ -171,3 +175,6 @@ for(const s of SHEETS){
   console.log(`${s.file}: ${manifest[s.name].map(c => `${c.w}x${c.h}`).join(' ')}`);
 }
 fs.writeFileSync(path.join(OUT, 'cast.json'), JSON.stringify(manifest, null, 1));
+if(fs.existsSync(path.join(REF,'casual-remade/transparent-0.png'))){
+  execFileSync(process.execPath,[path.join(ROOT,'tools/build-casual-remade.mjs')],{stdio:'inherit'});
+}

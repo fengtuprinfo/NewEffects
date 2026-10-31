@@ -14,6 +14,8 @@ const $ = s => document.querySelector(s);
 
 // 主視覺：參考圖與臉部座標（Ken Burns 鏡頭的目標）；cast 第一位是主唱，sprite 由 tools/cutout.mjs 從參考圖去背
 const ARTS = {
+  breakshoot: {src: 'assets/ref/breakshoot-cover.png', crop: [0, 0, 720, 720],
+    faces: [[142, 145], [288, 145], [433, 145], [579, 145], [142, 338], [288, 338], [433, 338], [579, 338], [142, 531], [288, 531], [433, 531], [579, 531]]},
   growup: {src: 'assets/ref/growup/group.png', crop: [0, 0, 1920, 1080],
     faces: [[190, 89], [571, 89], [935, 89], [1340, 89], [1706, 89], [193, 629], [565, 629], [958, 629], [1342, 629], [1726, 629]]},
   best4u: {src: 'assets/best4u-cover.webp', crop: [0, 38, 673, 537],
@@ -39,10 +41,10 @@ const SONGS = [
    cast: [['idol', 0, '理瀬', '#f6a531'], ['idol', 1, '純華', '#2ba6e1'], ['idol', 2, '陽和', '#ee5b97'], ['idol', 3, '咲希', '#3cc39a'], ['idol', 4, '雪乃', '#8d6ad6']]},
   {title: 'SUNRISE', ver: '小日向理瀬 ver.', file: 'SUNRISE [小日向理瀬ver.]',
    subs: 'Subtitle_《SUN RISE…》手をとっては競い...…_1790794218236.srt', theme: 'sunrise', art: 'rooftop',
-   cast: [['casual', 4, '理瀬', '#f6a531'], ['casual', 1, '陽和', '#ee5b97'], ['casual', 0, '純華', '#2ba6e1'], ['casual', 2, '咲希', '#3cc39a'], ['casual', 3, '雪乃', '#8d6ad6'], ['casual', 11, '智', '#f0c23a']]},
+   cast: [['casual', 4, '理瀬', '#f6a531'], ['casual', 1, '陽和', '#ee5b97'], ['casual', 0, '純華', '#2ba6e1'], ['casual', 2, '咲希', '#3cc39a'], ['casual', 3, '雪乃', '#8d6ad6'], ['casual', 8, '智', '#f0c23a']]},
   {title: 'HELLO HERO', ver: '御社 智 ver.', file: 'HELLO HERO [御社 智ver.]',
    subs: 'Subtitle_これまでもこれからも　変わらずいるよヨ...る_1790795207681.srt', theme: 'twilight', art: 'stage',
-   cast: [['casual', 11, '智', '#f0c23a'], ['casual', 7, '', '#e0524f'], ['casual', 8, '', '#ee5b97'], ['casual', 9, '', '#f4a6b8'], ['casual', 10, '', '#2ba6e1']]},
+   cast: [['casual', 8, '智', '#f0c23a'], ['casual', 7, '羽月', '#e0524f'], ['casual', 11, 'ティーナ', '#79c5a3'], ['casual', 9, '祐里子', '#f4a6b8'], ['casual', 10, '千尋', '#2ba6e1']]},
   {title: '風の中は走るっきゃないっ！', ver: '三月のパンタシア', file: '風の中は走るっきゃないっ！ [三月のパンタシア]',
    subs: '風の中は走るっきゃないっ！.srt', theme: 'wind', art: 'anaru',
    series: '三月のパンタシア', kicker: 'TVアニメ「生徒会にも穴はある！」OP',
@@ -69,7 +71,13 @@ const SONGS = [
    series: 'グロウアップショウ', kicker: 'ひまわりのサーカス団 · OPENING',
    cast: [['growup', 0, '鶴巻瑞佳', '#c72d48'], ['growup', 1, '川澄桜翔', '#368fc4'], ['growup', 2, '吾野伊万里', '#73a34b'],
           ['growup', 3, '五十土五十鈴', '#e99038'], ['growup', 4, '由良 葵', '#a28ac4'], ['growup', 5, '由良 茜', '#c74360'],
-          ['growup', 6, '酒匂 雫', '#7786ba'], ['growup', 7, 'スヴェトラーナ', '#d7d3c9'], ['growup', 8, '間宮 凛', '#bd8b4c'], ['growup', 9, '麻利亜', '#f1bc3e']]}
+          ['growup', 6, '酒匂 雫', '#7786ba'], ['growup', 7, 'スヴェトラーナ', '#d7d3c9'], ['growup', 8, '間宮 凛', '#bd8b4c'], ['growup', 9, '麻利亜', '#f1bc3e']]},
+  {title: '明日へのBreakShoot', ver: '葉山陽和 ver.', file: '明日へのBreakShoot [葉山陽和ver.]',
+   subs: '明日へのBreakShoot.srt', theme: 'wind', art: 'breakshoot', lead: 1, photoAspect: 16/9,
+   series: 'Extreme Hearts', kicker: 'CHARACTER SONG · 葉山陽和',
+   cast: [['casual', 0, '前原純華', '#2ba6e1'], ['casual', 1, '葉山陽和', '#ee5b97'], ['casual', 2, '小鷹咲希', '#3cc39a'], ['casual', 3, '橘雪乃', '#8d6ad6'],
+          ['casual', 4, '小日向理瀬', '#f6a531'], ['casual', 5, 'ミシェル・イェーガー', '#d2c8cf'], ['casual', 6, 'アシュリー・ヴァンクロフト', '#9b85ce'],
+          ['casual', 7, '桜井羽月', '#ebbd48'], ['casual', 8, '御社智', '#e9819d'], ['casual', 9, '末宗祐里子', '#e5b8b9'], ['casual', 10, '本田千尋', '#54bed5'], ['casual', 11, 'ティーナ・メルキース', '#74c4a5']]}
 ];
 // 每首歌一組配色：夏日向日葵、日出、黃昏星空、晴空疾風
 const THEMES = {
@@ -137,7 +145,7 @@ const MEMBERS = song.cast.map(([sheet, idx, name, color], i) => ({sheet, idx, na
 const LEAD = clamp(+(song.lead ?? 0) | 0, 0, MEMBERS.length - 1);
 const OTHERS = MEMBERS.map((_, i) => i).filter(i => i !== LEAD);
 const BASE_CHARACTER_GROUPS = [
-  {sheet:'casual',title:'十二人 · 制服與便服',src:'assets/ref/lineup12.webp',colors:['#11bbde','#ff86b1'],count:12},
+  {sheet:'casual',title:'十二人 · 制服與便服',src:'assets/ref/casual-remade/group.png',colors:['#11bbde','#ff86b1'],count:12,solo:true},
   {sheet:'rooftop',title:'屋頂六人 · SUNRISE',src:'assets/ref/rooftop6.webp',colors:['#70ccff','#bdf1bc'],count:6},
   {sheet:'idol',title:'RISE 五人 · 演出服',src:'assets/ref/rise5.webp',colors:['#284b92','#f1c265'],count:5},
   {sheet:'stage',title:'舞台九人 · 黃昏演出',src:'assets/ref/stage9.webp',colors:['#918be8','#f9b38e'],count:9}
@@ -152,6 +160,8 @@ const CHARACTER_GROUPS = song.cast[0][0] === 'anaru'
   ? [{sheet:'aiura', title:'あいうら · 奏香・彩生・歩子', src:'assets/ref/aiura-group.png', colors:['#7fbfba','#ffe3b2'], count:3, solo:true}]
   : song.cast[0][0] === 'growup'
   ? [{sheet:'growup', title:'ひまわりサーカス · 十人', src:'assets/ref/growup/group.png', colors:['#e8a72f','#ffd968'], count:10, solo:true}]
+  : song.art === 'breakshoot'
+  ? [{sheet:'casual', title:'Extreme Hearts · 十二人', src:'assets/ref/casual-remade/group.png', colors:['#5cabe0','#f3afd3'], count:12,solo:true}]
   : BASE_CHARACTER_GROUPS;
 let A = null, cues = [], sections = [], shots = [], TJ = [], TZ = [], C = {};
 
@@ -241,7 +251,7 @@ function parseSrt(text){
 const PUNCT = '、。・「」『』…,.';
 function tokenize(text){
   const out = []; let bk = false;
-  const re = /([一-鿿々〆ヶ]+)[(（]([ぁ-ゟ゠-ヿ]+)[)）]|[A-Za-z0-9'’!?！？\-_~]+|./gsu;
+  const re = /([一-鿿々〆ヶ]+|[A-Za-z]+(?: +[A-Za-z]+)*)[(（]([ぁ-ゟ゠-ヿ]+)[)）]|[A-Za-z0-9'’!?！？\-_~]+|./gsu;
   for(const m of text.matchAll(re)){
     const c = m[0];
     if(m[1]){ out.push({t: m[1], ruby: m[2], bk, w: m[1].length + .3}); continue; }
@@ -1062,7 +1072,10 @@ function shotStage(t, sh, u){
   }
   // 舞者：依卡司人數排成後排／中排／前排，中央是主唱。
   // nx、ny 是安全框裡的位置（ny 是把抬手和鞋底的餘裕算進去之後的腳底），nh 是希望的身高占比。
-  const O = OTHERS, spots = O.length >= 9
+  const O = OTHERS, spots = O.length >= 11
+    ? [...O.slice(0, 6).map((m, i) => ({nx:(i+.5)/6, ny:.60, nh:.28, m})),
+       ...O.slice(6, 11).map((m, i) => ({nx:(i+.5)/5, ny:.78, nh:.31, m})), {nx:.50, ny:1, nh:.50, m:LEAD}]
+    : O.length >= 9
     ? [{nx:.08, ny:.65, nh:.34, m:O[0]}, {nx:.29, ny:.65, nh:.34, m:O[1]}, {nx:.50, ny:.65, nh:.34, m:O[2]}, {nx:.71, ny:.65, nh:.34, m:O[3]}, {nx:.92, ny:.65, nh:.34, m:O[4]},
        {nx:.14, ny:.86, nh:.42, m:O[5]}, {nx:.37, ny:.86, nh:.42, m:O[6]}, {nx:.63, ny:.86, nh:.42, m:O[7]}, {nx:.86, ny:.86, nh:.42, m:O[8]}, {nx:.50, ny:1, nh:.58, m:LEAD}]
     : O.length >= 7
@@ -1381,7 +1394,7 @@ function shotOutro(t, sh, u){
   g.fillStyle = 'rgba(6,4,16,.5)'; g.fillRect(0, 0, W, H);
   bokeh(t, 12, 6);
   particles(t, 40, 7);
-  const lt = t - sh.start, cw = 980, ch = cw*AH/AW, rot = -.025 + Math.sin(t*.5)*.01;
+  const lt = t - sh.start, cw = 980, ch = song.photoAspect ? cw/song.photoAspect : cw*AH/AW, rot = -.025 + Math.sin(t*.5)*.01;
   const e = easeBack(lt/.9);
   g.save(); g.translate(W/2, 470 + (1 - e)*200 + Math.sin(t*.8)*6); g.rotate(rot); g.scale(.85 + .15*e, .85 + .15*e); g.globalAlpha = clamp(lt/.4);
   g.fillStyle = 'rgba(0,0,0,.35)'; g.fillRect(-cw/2 - 4, -ch/2 + 4, cw + 36, ch + 36);
@@ -1420,7 +1433,7 @@ function shotCharacters(t,sh,u){
     light.addColorStop(0,'rgba(255,255,255,.16)');light.addColorStop(1,'rgba(255,255,255,0)');
     g.fillStyle=light;g.beginPath();g.moveTo(x-6,0);g.lineTo(x+6,0);g.lineTo(x+sway+130,900);g.lineTo(x+sway-130,900);g.closePath();g.fill();
   }
-  const sizes={casual:[1774,815],rooftop:[1536,1024],idol:[1536,1024],stage:[1774,887],anaru:[1920,1080],lucky:[1920,1080],kaguya:[1920,1080],aiura:[1920,1080],growup:[1920,1080]};
+  const sizes={casual:[1920,1080],rooftop:[1536,1024],idol:[1536,1024],stage:[1774,887],anaru:[1920,1080],lucky:[1920,1080],kaguya:[1920,1080],aiura:[1920,1080],growup:[1920,1080]};
   const [sourceW,sourceH]=sizes[group.sheet],scale=Math.min((W-160)/sourceW,740/sourceH);
   const originX=(W-sourceW*scale)/2,originY=150;
   if(group.matte){
@@ -1434,7 +1447,7 @@ function shotCharacters(t,sh,u){
   const focus=Math.floor(Math.max(0,local-2)/2)%actors.length;
   // solo 組的切圖來自各自獨立的立繪，沒有群像座標，改用網格平均排列（人數少時一列排開、每列置中）
   const solo=!!group.solo,n=actors.length,gw=sourceW*scale,gh=sourceH*scale;
-  const cols=solo?(n===10?5:Math.min(4,Math.max(1,n))):1,rows=solo?Math.ceil(n/cols):1;
+  const cols=solo?(n===12?6:n===10?5:Math.min(4,Math.max(1,n))):1,rows=solo?Math.ceil(n/cols):1;
   const cw=solo?gw/cols:0,chh=solo?gh/rows:0;
   actors.forEach((actor,i)=>{
     const col=solo?i%cols:i,row=solo?Math.floor(i/cols):0;

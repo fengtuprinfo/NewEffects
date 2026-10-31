@@ -16,7 +16,7 @@ macOS 也可雙擊 `啟動播放器.command`，會在終端機啟動伺服器並
 
 - 歌詞特效：卡拉OK填色、逐字彈跳、霓虹燈、逐字浮現、柔焦夢幻
 - 中日雙語字幕：SRT 每段第二行放繁中翻譯，會顯示在日文特效行下方並隨時間填色；下一句預覽同步顯示中日文
-- 和聲（`［］`、`《》`、`[]` 內文字）以小字淺藍色顯示；`漢字(かな)` 顯示為注音假名
+- 和聲（`［］`、`《》`、`[]`、`()` 內文字）以小字淺藍色顯示；`漢字(かな)` 與 `English phrase(カナ)` 顯示為上方注音假名
 - 載歌載舞：每位卡司成員會抬手、側擺、踏步及跳躍；可切換參考人物／Q 版、選擇主唱並調整舞動強度。人數跟著該首歌的卡司走（best4u／anaru 六人、招財喵布布八人、超かぐや姫！三人），主唱選單會依歌曲重建
 - MP3 以低頻偵測節拍，中頻音量驅動主唱嘴型與音符；嘴型為音量開合效果。YouTube 因無法取得音訊，使用固定 120 BPM
 - 桌面舞台和控制列適應視窗高度，側欄獨立捲動；手機直向排列。長歌詞自動縮放至最多兩行，避免被舞台裁切
@@ -27,7 +27,7 @@ macOS 也可雙擊 `啟動播放器.command`，會在終端機啟動伺服器並
 
 首頁 `index.html` 是每首歌的歌詞 PV（1920×1080），用同一套 `pv.js` 在瀏覽器即時預覽，或輸出成 MP4；原本的動態歌詞播放器改為第二版本 `v2.html`，兩頁互相有連結：
 
-- 預覽：開啟 `http://127.0.0.1:8765/?song=0`（0 大好きだよって叫ぶんだ、1 SUNRISE、2 HELLO HERO、3 風の中は走るっきゃないっ！、4 ぴ、5 統一發票頭獎得主鋒兄威力彩頭獎得主塗哥、6 私は、わたしの事が好き。、7 カニ☆Do-Luck!、8 ユラリユレル）
+- 預覽：開啟 `http://127.0.0.1:8765/?song=0`（0 大好きだよって叫ぶんだ、1 SUNRISE、2 HELLO HERO、3 風の中は走るっきゃないっ！、4 ぴ、5 統一發票頭獎得主鋒兄威力彩頭獎得主塗哥、6 私は、わたしの事が好き。、7 カニ☆Do-Luck!、8 ユラリユレル、9 明日へのBreakShoot [葉山陽和ver.]）
 - 輸出：`node render-pv.mjs`（`pv.js` 裡的全部歌曲同時輸出到 `pv/`），或 `node render-pv.mjs 1 --from 60 --to 72` 只輸出片段。需要 Google Chrome 與 ffmpeg
 
 人物由使用者提供的參考圖去背切出來：把參考圖放進 `assets/ref/`（`rise5.webp` 五人演出服白底、`lineup12.webp` 十二人色條底、`rooftop6.webp`、`stage9.webp`），執行 `node tools/cutout.mjs` 產生 `assets/ref/cast/` 的角色 PNG 與 `cast.json`。每首歌的主視覺與成員在 `pv.js` 的 `ARTS`、`SONGS[].cast` 設定（`lead` 是主唱，預設第一位）：大好きだよって叫ぶんだ 用 RISE 演出服，SUNRISE 用制服，HELLO HERO 用智的隊伍，風の中は走るっきゃないっ！ 用生徒会六人（`assets/ref/cast/anaru-*.png`，主視覺 `assets/ref/anaru6.png`），統一發票頭獎得主… 用招財喵布布八人（見下節），私は、わたしの事が好き。用超かぐや姫！三人（見下節）。角色以切圖分條彎曲、跳躍、壓縮做出跟拍舞動。
@@ -54,6 +54,18 @@ macOS 也可雙擊 `啟動播放器.command`，會在終端機啟動伺服器並
 「ユラリユレル [NOMELON NOLEMON]」已加入歌詞 PV（編號 8）與第二版播放器，使用 `yurariyureru.mp3` 與 39 段日中雙語 `yurariyureru.srt`，兩檔均納入 repo 供部署版使用。十位人物依使用者提供的圖片獨立去背，PV、人物 PV、播放器及主唱選單使用相同十人，預設主唱為鶴巻瑞佳；人物 PV 固定此組，以 5×2 排列。
 
 原圖、透明圖、群像與完整提示記錄在 [assets/ref/growup/README.md](assets/ref/growup/README.md)。執行 `node tools/build-growup.mjs` 可重建十張切圖、`cast.json` 與群像 `assets/ref/growup/group.png`。
+
+### 明日へのBreakShoot：葉山陽和 ver.
+
+已加入歌詞 PV（編號 9）與第二版播放器，使用 `明日へのBreakShoot [葉山陽和ver.].mp3`、35 段日中雙語 `明日へのBreakShoot.srt` 及使用者提供的專輯封面 `assets/ref/breakshoot-cover.png`。十二位人物使用依新參考合圖重製的 `casual` 透明切圖；兩版主唱皆預設為葉山陽和（索引 1），第二版提供十二人的主唱選單，人物 PV 固定使用這組十二人，排成 6×2。音檔與字幕均納入 repo。
+
+漢字與英文的假名讀音保留在日文字幕中並顯示為 ruby，例如 `眩(まば)`、`Break shoot(ブレイクシュート)`、`New Dream(ニュードリーム)`；英文和聲中的讀音不會打斷和聲樣式。來源與對時說明見 [assets/ref/BREAKSHOOT.md](assets/ref/BREAKSHOOT.md)。
+
+### 制服／便服十二人重製
+
+`assets/ref/casual-remade/source.png` 保存使用者提供的十二人參考圖。以內建 imagegen 逐位保留臉型、服裝、姿勢與配件，補齊被鄰近人物擋住的邊緣，去除色條、倒影與人物殘片，替換 `assets/ref/cast/casual-0.png`～`casual-11.png`。新版沿用索引順序，所有使用 `casual` 的 PV 與播放器共用替換後素材；人物 PV 改為獨立 6×2 站位。
+
+執行 `node tools/build-casual-remade.mjs` 可由已保存的透明圖重建十二張切圖、`cast.json` 與群像 `assets/ref/casual-remade/group.png`。舊入口 `node tools/cutout.mjs` 會略過此組舊色條切割並沿用新素材。來源、索引及完整提示見 [assets/ref/casual-remade/README.md](assets/ref/casual-remade/README.md)。同時修正既有「御社智」的素材對應為索引 8；索引 11 是ティーナ・メルキース。
 
 ## 人物動畫 PV
 

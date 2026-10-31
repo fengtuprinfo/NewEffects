@@ -5,14 +5,15 @@
   // best4u 依主唱選單：小日向理瀬、葉山陽和、前原純華、小鷹咲希、橘雪乃、御社智
   // anaru 是「生徒会にも穴はある！」六人，lucky 是招財喵布布八人，都只在該首歌使用
   const SETS = {
-    best4u: {sheet: 'casual', idx: [4, 1, 0, 2, 3, 11]},
+    best4u: {sheet: 'casual', idx: [4, 1, 0, 2, 3, 8]},
     anaru: {sheet: 'anaru', idx: [0, 1, 2, 3, 4, 5]},
     lucky: {sheet: 'lucky', idx: [0, 1, 2, 3, 4, 5, 6, 7]},
     kaguya: {sheet: 'kaguya', idx: [0, 1, 2]},
     aiura: {sheet: 'aiura', idx: [0, 1, 2]},
-    growup: {sheet: 'growup', idx: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]}
+    growup: {sheet: 'growup', idx: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]},
+    extreme: {sheet: 'casual', idx: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}
   };
-  const actors = {best4u: [], anaru: [], lucky: [], kaguya: [], aiura: [], growup: []};
+  const actors = {best4u: [], anaru: [], lucky: [], kaguya: [], aiura: [], growup: [], extreme: []};
   let active = 'best4u';
   const api = window.SpriteDancers = {ready: false, error: null, draw, use, count};
   function use(name){ if(actors[name]?.length) active = name; }
