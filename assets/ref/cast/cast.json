@@ -600,5 +600,49 @@
    ],
    "sheet": "kaguya-fox.jpg"
   }
+ ],
+ "aiura": [
+  {
+   "file": "aiura-0.png",
+   "w": 541,
+   "h": 968,
+   "headX": 288,
+   "headY": 141,
+   "source": [
+    10,
+    37
+   ],
+   "sheet": "aiura-sprites.png",
+   "name": "天谷奏香",
+   "armScale": 0.12
+  },
+  {
+   "file": "aiura-1.png",
+   "w": 478,
+   "h": 999,
+   "headX": 221,
+   "headY": 147,
+   "source": [
+    562,
+    4
+   ],
+   "sheet": "aiura-sprites.png",
+   "name": "岩沢彩生",
+   "armScale": 0.12
+  },
+  {
+   "file": "aiura-2.png",
+   "w": 466,
+   "h": 972,
+   "headX": 221,
+   "headY": 151,
+   "source": [
+    1063,
+    34
+   ],
+   "sheet": "aiura-sprites.png",
+   "name": "上原歩子",
+   "armScale": 0.12
+  }
  ]
 }

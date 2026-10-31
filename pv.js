@@ -25,6 +25,8 @@ const ARTS = {
   // 招財喵布布八人：由 tools/build-group.mjs 把 tools/cutout-solo.mjs 的切圖拼成群像
   lucky8: {src: 'assets/ref/lucky8.png', crop: [0, 0, 1920, 1080],
     faces: [[228, 104], [719, 104], [1197, 104], [1674, 104], [238, 644], [718, 644], [1199, 644], [1678, 644]]},
+  aiura: {src: 'assets/ref/aiura-group.png', crop: [0, 0, 1920, 1080],
+    faces: [[976, 285], [425, 287], [1469, 294]]},
   // 超かぐや姫！：畫面取自歌詞影片，由 tools/cutout-kaguya.py 去背切圖並拼成群像
   kaguya: {src: 'assets/ref/kaguya-group.png', crop: [0, 0, 1920, 1080],
     faces: [[960, 300], [430, 446], [1500, 464]]}
@@ -57,9 +59,9 @@ const SONGS = [
    series: 'HoneyWorks', kicker: '映画「超かぐや姫！」',
    cast: [['kaguya', 0, 'かぐや', '#f2a7c3'], ['kaguya', 1, '彩葉', '#7fd8bb'], ['kaguya', 2, 'ツキ', '#e9a94f']]},
   {title: 'カニ☆Do-Luck!', ver: 'あいうらぶ', file: 'カニ☆Do-Luck!',
-   subs: 'カニ☆Do-Luck!.srt', theme: 'summer', art: 'best4u',
+   subs: 'カニ☆Do-Luck!.srt', theme: 'summer', art: 'aiura',
    series: 'あいうらぶ', kicker: 'カニ☆Do-Luck!',
-   cast: [['idol', 0, '理瀬', '#f6a531'], ['idol', 1, '純華', '#2ba6e1'], ['idol', 2, '陽和', '#ee5b97'], ['idol', 3, '咲希', '#3cc39a'], ['idol', 4, '雪乃', '#8d6ad6']]}
+   cast: [['aiura', 0, '天谷奏香', '#d58761'], ['aiura', 1, '岩沢彩生', '#c7b75e'], ['aiura', 2, '上原歩子', '#6ea8ac']]}
 ];
 // 每首歌一組配色：夏日向日葵、日出、黃昏星空、晴空疾風
 const THEMES = {
@@ -137,6 +139,8 @@ const CHARACTER_GROUPS = song.cast[0][0] === 'anaru'
   ? [{sheet:'lucky', title:'招財喵布布 · 幸運八人', src:'assets/ref/lucky8.png', colors:['#c8202f','#ffd98a'], count:8, solo:true}]
   : song.cast[0][0] === 'kaguya'
   ? [{sheet:'kaguya', title:'かぐや · 彩葉 · ツキ', src:'assets/ref/kaguya-group.png', colors:['#3a1d63','#ffb45e'], count:3, solo:true}]
+  : song.cast[0][0] === 'aiura'
+  ? [{sheet:'aiura', title:'あいうら · 奏香・彩生・歩子', src:'assets/ref/aiura-group.png', colors:['#7fbfba','#ffe3b2'], count:3, solo:true}]
   : BASE_CHARACTER_GROUPS;
 let A = null, cues = [], sections = [], shots = [], TJ = [], TZ = [], C = {};
 
@@ -549,7 +553,7 @@ function drawDancer(i, x, y, h, st){
   g.restore();
   // st 可以帶 armA/armB/legA/legB 直接指定關節角度（例如合照要一個固定的舞姿）
   SpriteRig.draw(g, img, x, y, h, {wave: st.wave, energy: st.energy, hop, tilt: st.tilt, squash: st.squash*4,
-    armA: st.armA, armB: st.armB, legA: st.legA, legB: st.legB});
+    armA: st.armA, armB: st.armB, legA: st.legA, legB: st.legB, armScale: m.meta?.armScale});
 }
 // 立繪的 h 就是整張圖的高度，腳的錨點在圖的底邊。
 // 手抬起來會高出頭頂，踏步會讓鞋底低於錨點，落地壓縮會把身體再撐寬約一成。
@@ -1273,7 +1277,7 @@ function drawRider(m, cx, cy, R, t, opts = {}){
   if(img) SpriteRig.draw(g, img, fx, feetY, h, {
     energy: 0, wave: 0, hop: 0, tilt: .07,
     armA: -.78 + .07*Math.sin(pedal), armB: -.78 + .07*Math.sin(pedal + 1.6),
-    legA: angL, legB: angR
+    legA: angL, legB: angR, armScale: MEMBERS[m]?.meta?.armScale
   });
   drawBicycle(cx, cy, R, spin, pedal, {frame: opts.frame, part: 'front', feet: feet?.length ? feet : null});
   g.restore();
@@ -1402,7 +1406,7 @@ function shotCharacters(t,sh,u){
     light.addColorStop(0,'rgba(255,255,255,.16)');light.addColorStop(1,'rgba(255,255,255,0)');
     g.fillStyle=light;g.beginPath();g.moveTo(x-6,0);g.lineTo(x+6,0);g.lineTo(x+sway+130,900);g.lineTo(x+sway-130,900);g.closePath();g.fill();
   }
-  const sizes={casual:[1774,815],rooftop:[1536,1024],idol:[1536,1024],stage:[1774,887],anaru:[1920,1080],lucky:[1920,1080],kaguya:[1920,1080]};
+  const sizes={casual:[1774,815],rooftop:[1536,1024],idol:[1536,1024],stage:[1774,887],anaru:[1920,1080],lucky:[1920,1080],kaguya:[1920,1080],aiura:[1920,1080]};
   const [sourceW,sourceH]=sizes[group.sheet],scale=Math.min((W-160)/sourceW,740/sourceH);
   const originX=(W-sourceW*scale)/2,originY=150;
   if(group.matte){

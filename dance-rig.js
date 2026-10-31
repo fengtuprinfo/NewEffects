@@ -441,8 +441,10 @@
     const sw = Math.max(-1, Math.min(1, st.wave || 0));
     // 需要特定姿勢（例如騎車）時可直接指定關節角度，不必走節拍擺動
     // 不以 0.3 為靜止角。那一轉會把原本接好的肩膀立刻拉開。
-    const armA = st.armA !== undefined ? st.armA : sw*amp;
-    const armB = st.armB !== undefined ? st.armB : -sw*amp;
+    // Narrow, downward sleeves need smaller rotations to keep the shoulder seam closed.
+    const armScale = st.armScale == null ? 1 : clamp01(st.armScale);
+    const armA = (st.armA !== undefined ? st.armA : sw*amp)*armScale;
+    const armB = (st.armB !== undefined ? st.armB : -sw*amp)*armScale;
     const legA = st.legA !== undefined ? st.legA : 0.22*sw*amp;
     const legB = st.legB !== undefined ? st.legB : -0.22*sw*amp;
     const moving = amp > .01 || st.armA !== undefined || st.legA !== undefined;
