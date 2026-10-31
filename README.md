@@ -42,11 +42,11 @@ macOS 也可雙擊 `啟動播放器.command`，會在終端機啟動伺服器並
 
 ### 招財喵布布八人（單張立繪）
 
-`lucky1.png`～`lucky8.png` 是「一張一位角色」的 T-pose 立繪，不是多人合圖，走另一條工具鏈：
+幸運八人的素材來自獨立的 T-pose 立繪。咕咕嘎嘎、鋒兄、塗哥、喵布布、喵白白、牙妹、魚妹已依使用者此次提供的七張原圖，以內建 imagegen 重新去背並替換；鯨魚娘沿用既有切圖。來源對照與完整提示見 [assets/ref/lucky-remade/README.md](assets/ref/lucky-remade/README.md)。
 
-- `node tools/matte-vision.py <原圖> <輸出-matte.png>`：用 macOS Vision 的前景遮罩（`VNGenerateForegroundInstanceMaskRequest`）產生灰階遮罩，供背景複雜的圖使用（本組是兩隻貓的場景照，遮罩存成 `assets/ref/lucky5-matte.png`、`lucky6-matte.png`）。需要 macOS 14+ 與 `pyobjc-framework-Vision`。
-- `node tools/cutout-solo.mjs`：白底立繪走邊緣背景填充、有遮罩的走 alpha，輸出 `assets/ref/cast/lucky-0.png`～`lucky-7.png` 並併入 `cast.json` 的 `lucky` 群組。
-- `node tools/build-group.mjs`：把八張切圖拼成 1920×1080 的群像主視覺 `assets/ref/lucky8.png`，並印出 `ARTS.lucky8` 要用的臉部座標。
+- `assets/ref/lucky-remade/lucky-1.png`～`lucky-7.png` 保存七張透明原圖，保留白鞋、衣服、耳朵、手指與尾巴。
+- `node tools/rebuild-lucky.mjs`：依 alpha 裁切空白、加透明邊距，更新 `assets/ref/cast/lucky-1.png`～`lucky-7.png` 與 `cast.json`，再重建群像。`node tools/cutout-solo.mjs` 會自動使用相同流程，避免舊白底填充挖掉白鞋。
+- `node tools/build-group.mjs`：單獨把目前八張切圖拼成 1920×1080 群像主視覺 `assets/ref/lucky8.png`，並印出 `ARTS.lucky8` 要用的臉部座標；這個檔案是輸出群像，不是魚妹的來源圖。
 - 這一組在人物 PV 裡只有一組造型（沒有四組輪替），因為切圖來自各自獨立的立繪，改用 4×2 網格排列。
 
 ## 人物動畫 PV

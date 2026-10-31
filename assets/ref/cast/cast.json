@@ -480,87 +480,94 @@
   },
   {
    "file": "lucky-1.png",
-   "w": 1012,
-   "h": 1298,
-   "headX": 503,
-   "headY": 101,
+   "w": 1027,
+   "h": 1384,
+   "headX": 511,
+   "headY": 131,
    "source": [
-    6,
-    48
+    -1,
+    41
    ],
-   "sheet": "lucky2.png"
+   "sheet": "lucky-remade/lucky-1.png",
+   "name": "咕咕嘎嘎"
   },
   {
    "file": "lucky-2.png",
-   "w": 1021,
-   "h": 1287,
-   "headX": 504,
-   "headY": 110,
+   "w": 1034,
+   "h": 1297,
+   "headX": 512,
+   "headY": 123,
    "source": [
-    2,
-    108
+    -5,
+    101
    ],
-   "sheet": "lucky3.png"
+   "sheet": "lucky-remade/lucky-2.png",
+   "name": "鋒兄"
   },
   {
    "file": "lucky-3.png",
-   "w": 1012,
-   "h": 1250,
-   "headX": 492,
-   "headY": 106,
+   "w": 1028,
+   "h": 1264,
+   "headX": 500,
+   "headY": 120,
    "source": [
-    6,
-    128
+    -2,
+    113
    ],
-   "sheet": "lucky4.png"
+   "sheet": "lucky-remade/lucky-3.png",
+   "name": "塗哥"
   },
   {
    "file": "lucky-4.png",
-   "w": 1014,
-   "h": 1265,
-   "headX": 502,
-   "headY": 119,
+   "w": 1035,
+   "h": 1318,
+   "headX": 511,
+   "headY": 125,
    "source": [
-    3,
-    179
+    -4,
+    116
    ],
-   "sheet": "lucky5.png"
+   "sheet": "lucky-remade/lucky-4.png",
+   "name": "喵布布"
   },
   {
    "file": "lucky-5.png",
-   "w": 1068,
-   "h": 1259,
-   "headX": 528,
-   "headY": 118,
+   "w": 1092,
+   "h": 1334,
+   "headX": 542,
+   "headY": 127,
    "source": [
-    10,
-    120
+    -2,
+    64
    ],
-   "sheet": "lucky6.png"
+   "sheet": "lucky-remade/lucky-5.png",
+   "name": "喵白白"
   },
   {
    "file": "lucky-6.png",
-   "w": 1016,
-   "h": 1443,
-   "headX": 504,
-   "headY": 135,
+   "w": 1020,
+   "h": 1448,
+   "headX": 506,
+   "headY": 137,
    "source": [
-    4,
-    42
+    2,
+    41
    ],
-   "sheet": "lucky7.png"
+   "sheet": "lucky-remade/lucky-6.png",
+   "name": "牙妹"
   },
   {
    "file": "lucky-7.png",
-   "w": 1018,
-   "h": 1397,
-   "headX": 504,
-   "headY": 131,
+   "w": 1023,
+   "h": 1413,
+   "headX": 509,
+   "headY": 134,
    "source": [
-    4,
-    93
+    1,
+    81
    ],
-   "sheet": "lucky8.png"
+   "sheet": "lucky-remade/lucky-7.png",
+   "name": "魚妹"
   }
  ],
  "kaguya": [

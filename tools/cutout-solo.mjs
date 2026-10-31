@@ -12,6 +12,13 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const REF = path.join(ROOT, 'assets/ref'), OUT = path.join(REF, 'cast');
 fs.mkdirSync(OUT, {recursive: true});
 
+// Approved replacement PNGs already contain alpha. Reuse it instead of running
+// the old white-background fill, which can erase white shoes and clothing.
+if(fs.existsSync(path.join(REF, 'lucky-remade/lucky-1.png'))){
+  execFileSync(process.execPath, [path.join(ROOT, 'tools/rebuild-lucky.mjs')], {stdio: 'inherit'});
+  process.exit(0);
+}
+
 const GROUP = 'lucky';
 const SHEETS = [
   {file: 'lucky1.png', bg: 'white'},
