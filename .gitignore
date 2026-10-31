@@ -3,6 +3,10 @@
 *.srt
 *.lrc
 
+# カニ☆Do-Luck! 隨歌曲清單部署
+!/カニ☆Do-Luck!.mp3
+!/カニ☆Do-Luck!.srt
+
 .DS_Store
 .claude/
 

@@ -55,7 +55,11 @@ const SONGS = [
   {title: '私は、わたしの事が好き。', ver: 'かぐや(cv.夏吉ゆうこ)', file: '私は、わたしの事が好き。 [かぐや(cv.夏吉ゆうこ)]',
    subs: '私は、わたしの事が好き。.srt', theme: 'kaguya', art: 'kaguya',
    series: 'HoneyWorks', kicker: '映画「超かぐや姫！」',
-   cast: [['kaguya', 0, 'かぐや', '#f2a7c3'], ['kaguya', 1, '彩葉', '#7fd8bb'], ['kaguya', 2, 'ツキ', '#e9a94f']]}
+   cast: [['kaguya', 0, 'かぐや', '#f2a7c3'], ['kaguya', 1, '彩葉', '#7fd8bb'], ['kaguya', 2, 'ツキ', '#e9a94f']]},
+  {title: 'カニ☆Do-Luck!', ver: 'あいうらぶ', file: 'カニ☆Do-Luck!',
+   subs: 'カニ☆Do-Luck!.srt', theme: 'summer', art: 'best4u',
+   series: 'あいうらぶ', kicker: 'カニ☆Do-Luck!',
+   cast: [['idol', 0, '理瀬', '#f6a531'], ['idol', 1, '純華', '#2ba6e1'], ['idol', 2, '陽和', '#ee5b97'], ['idol', 3, '咲希', '#3cc39a'], ['idol', 4, '雪乃', '#8d6ad6']]}
 ];
 // 每首歌一組配色：夏日向日葵、日出、黃昏星空、晴空疾風
 const THEMES = {
