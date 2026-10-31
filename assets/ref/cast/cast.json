@@ -651,5 +651,157 @@
    "name": "上原歩子",
    "armScale": 0.12
   }
+ ],
+ "growup": [
+  {
+   "file": "growup-0.png",
+   "w": 578,
+   "h": 1712,
+   "headX": 279,
+   "headY": 178,
+   "source": [
+    157,
+    12
+   ],
+   "sheet": "growup/transparent-0.png",
+   "name": "鶴巻瑞佳",
+   "armScale": 0.08,
+   "legScale": 0.15
+  },
+  {
+   "file": "growup-1.png",
+   "w": 792,
+   "h": 1507,
+   "headX": 380,
+   "headY": 157,
+   "source": [
+    130,
+    24
+   ],
+   "sheet": "growup/transparent-1.png",
+   "name": "川澄桜翔",
+   "armScale": 0.08,
+   "legScale": 0.15
+  },
+  {
+   "file": "growup-2.png",
+   "w": 822,
+   "h": 1938,
+   "headX": 314,
+   "headY": 200,
+   "source": [
+    1,
+    0
+   ],
+   "sheet": "growup/transparent-2.png",
+   "name": "吾野伊万里",
+   "armScale": 0.08,
+   "legScale": 0.15
+  },
+  {
+   "file": "growup-3.png",
+   "w": 561,
+   "h": 1685,
+   "headX": 264,
+   "headY": 175,
+   "source": [
+    184,
+    5
+   ],
+   "sheet": "growup/transparent-3.png",
+   "name": "五十土五十鈴",
+   "armScale": 0.08,
+   "legScale": 0.15
+  },
+  {
+   "file": "growup-4.png",
+   "w": 574,
+   "h": 1586,
+   "headX": 215,
+   "headY": 165,
+   "source": [
+    254,
+    15
+   ],
+   "sheet": "growup/transparent-4.png",
+   "name": "由良 葵",
+   "armScale": 0.08,
+   "legScale": 0.15
+  },
+  {
+   "file": "growup-5.png",
+   "w": 538,
+   "h": 1515,
+   "headX": 273,
+   "headY": 158,
+   "source": [
+    217,
+    4
+   ],
+   "sheet": "growup/transparent-5.png",
+   "name": "由良 茜",
+   "armScale": 0.08,
+   "legScale": 0.15
+  },
+  {
+   "file": "growup-6.png",
+   "w": 502,
+   "h": 1824,
+   "headX": 210,
+   "headY": 189,
+   "source": [
+    191,
+    31
+   ],
+   "sheet": "growup/transparent-6.png",
+   "name": "酒匂 雫",
+   "armScale": 0.08,
+   "legScale": 0.15
+  },
+  {
+   "file": "growup-7.png",
+   "w": 401,
+   "h": 1874,
+   "headX": 191,
+   "headY": 194,
+   "source": [
+    214,
+    24
+   ],
+   "sheet": "growup/transparent-7.png",
+   "name": "スヴェトラーナ",
+   "armScale": 0.08,
+   "legScale": 0.15
+  },
+  {
+   "file": "growup-8.png",
+   "w": 646,
+   "h": 1847,
+   "headX": 311,
+   "headY": 191,
+   "source": [
+    96,
+    38
+   ],
+   "sheet": "growup/transparent-8.png",
+   "name": "間宮 凛",
+   "armScale": 0.08,
+   "legScale": 0.15
+  },
+  {
+   "file": "growup-9.png",
+   "w": 633,
+   "h": 1504,
+   "headX": 311,
+   "headY": 157,
+   "source": [
+    199,
+    7
+   ],
+   "sheet": "growup/transparent-9.png",
+   "name": "麻利亜",
+   "armScale": 0.08,
+   "legScale": 0.15
+  }
  ]
 }

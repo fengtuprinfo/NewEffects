@@ -445,8 +445,9 @@
     const armScale = st.armScale == null ? 1 : clamp01(st.armScale);
     const armA = (st.armA !== undefined ? st.armA : sw*amp)*armScale;
     const armB = (st.armB !== undefined ? st.armB : -sw*amp)*armScale;
-    const legA = st.legA !== undefined ? st.legA : 0.22*sw*amp;
-    const legB = st.legB !== undefined ? st.legB : -0.22*sw*amp;
+    const legScale = st.legScale == null ? 1 : clamp01(st.legScale);
+    const legA = (st.legA !== undefined ? st.legA : 0.22*sw*amp)*legScale;
+    const legB = (st.legB !== undefined ? st.legB : -0.22*sw*amp)*legScale;
     const moving = amp > .01 || st.armA !== undefined || st.legA !== undefined;
     const kx = w/r.W, ky = h/r.H;
     const px = v => v*kx, py = v => v*ky;

@@ -14,6 +14,8 @@ const $ = s => document.querySelector(s);
 
 // 主視覺：參考圖與臉部座標（Ken Burns 鏡頭的目標）；cast 第一位是主唱，sprite 由 tools/cutout.mjs 從參考圖去背
 const ARTS = {
+  growup: {src: 'assets/ref/growup/group.png', crop: [0, 0, 1920, 1080],
+    faces: [[190, 89], [571, 89], [935, 89], [1340, 89], [1706, 89], [193, 629], [565, 629], [958, 629], [1342, 629], [1726, 629]]},
   best4u: {src: 'assets/best4u-cover.webp', crop: [0, 38, 673, 537],
     faces: [[118, 110], [195, 160], [272, 124], [372, 127], [455, 157], [533, 102], [238, 234], [305, 242], [385, 224]]},
   rooftop: {src: 'assets/ref/rooftop6.webp', crop: [0, 0, 1536, 1024],
@@ -61,10 +63,17 @@ const SONGS = [
   {title: 'カニ☆Do-Luck!', ver: 'あいうらぶ', file: 'カニ☆Do-Luck!',
    subs: 'カニ☆Do-Luck!.srt', theme: 'summer', art: 'aiura',
    series: 'あいうらぶ', kicker: 'カニ☆Do-Luck!',
-   cast: [['aiura', 0, '天谷奏香', '#d58761'], ['aiura', 1, '岩沢彩生', '#c7b75e'], ['aiura', 2, '上原歩子', '#6ea8ac']]}
+   cast: [['aiura', 0, '天谷奏香', '#d58761'], ['aiura', 1, '岩沢彩生', '#c7b75e'], ['aiura', 2, '上原歩子', '#6ea8ac']]},
+  {title: 'ユラリユレル', ver: 'NOMELON NOLEMON', file: 'yurariyureru',
+   subs: 'yurariyureru.srt', theme: 'growup', art: 'growup', lead: 0,
+   series: 'グロウアップショウ', kicker: 'ひまわりのサーカス団 · OPENING',
+   cast: [['growup', 0, '鶴巻瑞佳', '#c72d48'], ['growup', 1, '川澄桜翔', '#368fc4'], ['growup', 2, '吾野伊万里', '#73a34b'],
+          ['growup', 3, '五十土五十鈴', '#e99038'], ['growup', 4, '由良 葵', '#a28ac4'], ['growup', 5, '由良 茜', '#c74360'],
+          ['growup', 6, '酒匂 雫', '#7786ba'], ['growup', 7, 'スヴェトラーナ', '#d7d3c9'], ['growup', 8, '間宮 凛', '#bd8b4c'], ['growup', 9, '麻利亜', '#f1bc3e']]}
 ];
 // 每首歌一組配色：夏日向日葵、日出、黃昏星空、晴空疾風
 const THEMES = {
+  growup:   {sky: ['#351429', '#b84b3b', '#ffcb42'], pastel: ['#fff8df', '#ffebbb'], accent: '#ffd64c', accent2: '#dd4058', cool: '#69c7c3', deep: '#301326', particle: 'spark'},
   summer:   {sky: ['#0b3d74', '#2f8fe0', '#bfeaff'], pastel: ['#fff8dc', '#d6f0ff'], accent: '#ffd23f', accent2: '#ff7b54', cool: '#5fd0ff', deep: '#0b2d55', particle: 'petal'},
   sunrise:  {sky: ['#22164a', '#b8487d', '#ffbf7a'], pastel: ['#fff1e6', '#ffe0ef'], accent: '#ffc35c', accent2: '#ff5f93', cool: '#a99bff', deep: '#2a1640', particle: 'spark'},
   twilight: {sky: ['#050820', '#2b2366', '#d0677a'], pastel: ['#eef0ff', '#ffe6ea'], accent: '#ffd56b', accent2: '#9c7bff', cool: '#62d4ff', deep: '#14123a', particle: 'star'},
@@ -141,6 +150,8 @@ const CHARACTER_GROUPS = song.cast[0][0] === 'anaru'
   ? [{sheet:'kaguya', title:'かぐや · 彩葉 · ツキ', src:'assets/ref/kaguya-group.png', colors:['#3a1d63','#ffb45e'], count:3, solo:true}]
   : song.cast[0][0] === 'aiura'
   ? [{sheet:'aiura', title:'あいうら · 奏香・彩生・歩子', src:'assets/ref/aiura-group.png', colors:['#7fbfba','#ffe3b2'], count:3, solo:true}]
+  : song.cast[0][0] === 'growup'
+  ? [{sheet:'growup', title:'ひまわりサーカス · 十人', src:'assets/ref/growup/group.png', colors:['#e8a72f','#ffd968'], count:10, solo:true}]
   : BASE_CHARACTER_GROUPS;
 let A = null, cues = [], sections = [], shots = [], TJ = [], TZ = [], C = {};
 
@@ -553,7 +564,7 @@ function drawDancer(i, x, y, h, st){
   g.restore();
   // st 可以帶 armA/armB/legA/legB 直接指定關節角度（例如合照要一個固定的舞姿）
   SpriteRig.draw(g, img, x, y, h, {wave: st.wave, energy: st.energy, hop, tilt: st.tilt, squash: st.squash*4,
-    armA: st.armA, armB: st.armB, legA: st.legA, legB: st.legB, armScale: m.meta?.armScale});
+    armA: st.armA, armB: st.armB, legA: st.legA, legB: st.legB, armScale: m.meta?.armScale, legScale: m.meta?.legScale});
 }
 // 立繪的 h 就是整張圖的高度，腳的錨點在圖的底邊。
 // 手抬起來會高出頭頂，踏步會讓鞋底低於錨點，落地壓縮會把身體再撐寬約一成。
@@ -1051,7 +1062,10 @@ function shotStage(t, sh, u){
   }
   // 舞者：依卡司人數排成後排／中排／前排，中央是主唱。
   // nx、ny 是安全框裡的位置（ny 是把抬手和鞋底的餘裕算進去之後的腳底），nh 是希望的身高占比。
-  const O = OTHERS, spots = O.length >= 7
+  const O = OTHERS, spots = O.length >= 9
+    ? [{nx:.08, ny:.65, nh:.34, m:O[0]}, {nx:.29, ny:.65, nh:.34, m:O[1]}, {nx:.50, ny:.65, nh:.34, m:O[2]}, {nx:.71, ny:.65, nh:.34, m:O[3]}, {nx:.92, ny:.65, nh:.34, m:O[4]},
+       {nx:.14, ny:.86, nh:.42, m:O[5]}, {nx:.37, ny:.86, nh:.42, m:O[6]}, {nx:.63, ny:.86, nh:.42, m:O[7]}, {nx:.86, ny:.86, nh:.42, m:O[8]}, {nx:.50, ny:1, nh:.58, m:LEAD}]
+    : O.length >= 7
     ? [{nx:.07, ny:.74, nh:.42, m:O[0]}, {nx:.22, ny:.72, nh:.40, m:O[1]}, {nx:.50, ny:.70, nh:.40, m:O[2]}, {nx:.78, ny:.72, nh:.40, m:O[3]}, {nx:.93, ny:.74, nh:.42, m:O[4]},
        {nx:.36, ny:.90, nh:.52, m:O[5]}, {nx:.64, ny:.90, nh:.52, m:O[6]}, {nx:.50, ny:1, nh:.64, m:LEAD}]
     : O.length >= 5
@@ -1064,7 +1078,7 @@ function shotStage(t, sh, u){
        {nx:.50, ny:1, nh:.70, m:LEAD}];
   // 後排正中央會被主唱擋住。手張得很開的立繪，冒出的頭和手臂會像主唱的殘影，每個景別都不畫；
   // 較窄的立繪只在特寫拿掉，廣角仍留著當後排。
-  const centerBack = O.length >= 7 ? 2 : O.length >= 5 ? 1 : -1;  const intro = sh.variant === 'intro' ? clamp((t - .5)/1.5) : 1;
+  const centerBack = O.length >= 9 ? -1 : O.length >= 7 ? 2 : O.length >= 5 ? 1 : -1;  const intro = sh.variant === 'intro' ? clamp((t - .5)/1.5) : 1;
   const inv = (cam2, x, y) => [cam2.fx + (x - cam2.fx)/cam2.z, cam2.fy + (y - cam2.fy)/cam2.z];
   const corners = [[STAGE_SAFE.l, STAGE_SAFE.t], [STAGE_SAFE.r, STAGE_SAFE.t], [STAGE_SAFE.l, STAGE_SAFE.b], [STAGE_SAFE.r, STAGE_SAFE.b]].map(([x, y]) => inv(camFit, x, y));
   const box = {
@@ -1248,7 +1262,7 @@ function drawRider(m, cx, cy, R, t, opts = {}){
   const img = MEMBERS[m]?.img;
   // 踏板對準圖層量到的鞋底。以前用整條腿的外框底邊再往下偏，黃色橢圓會懸在褲腳下面。
   // 兩腿一前一後擺（正面立繪在側面視角下讀起來就是踩踏）。
-  const swing = Math.sin(pedal), amp = opts.legAmp ?? .30;
+  const swing = Math.sin(pedal), amp = (opts.legAmp ?? .30)*(MEMBERS[m]?.meta?.legScale ?? 1);
   const angL = amp*swing, angR = -amp*swing;
   // SpriteRig.draw 會把傳入的 tilt 再乘 0.6，鞋底的點要一起轉，踏板才跟得上鞋子。
   const tilt = .07*.6;
@@ -1406,7 +1420,7 @@ function shotCharacters(t,sh,u){
     light.addColorStop(0,'rgba(255,255,255,.16)');light.addColorStop(1,'rgba(255,255,255,0)');
     g.fillStyle=light;g.beginPath();g.moveTo(x-6,0);g.lineTo(x+6,0);g.lineTo(x+sway+130,900);g.lineTo(x+sway-130,900);g.closePath();g.fill();
   }
-  const sizes={casual:[1774,815],rooftop:[1536,1024],idol:[1536,1024],stage:[1774,887],anaru:[1920,1080],lucky:[1920,1080],kaguya:[1920,1080],aiura:[1920,1080]};
+  const sizes={casual:[1774,815],rooftop:[1536,1024],idol:[1536,1024],stage:[1774,887],anaru:[1920,1080],lucky:[1920,1080],kaguya:[1920,1080],aiura:[1920,1080],growup:[1920,1080]};
   const [sourceW,sourceH]=sizes[group.sheet],scale=Math.min((W-160)/sourceW,740/sourceH);
   const originX=(W-sourceW*scale)/2,originY=150;
   if(group.matte){
@@ -1420,7 +1434,7 @@ function shotCharacters(t,sh,u){
   const focus=Math.floor(Math.max(0,local-2)/2)%actors.length;
   // solo 組的切圖來自各自獨立的立繪，沒有群像座標，改用網格平均排列（人數少時一列排開、每列置中）
   const solo=!!group.solo,n=actors.length,gw=sourceW*scale,gh=sourceH*scale;
-  const cols=solo?Math.min(4,Math.max(1,n)):1,rows=solo?Math.ceil(n/cols):1;
+  const cols=solo?(n===10?5:Math.min(4,Math.max(1,n))):1,rows=solo?Math.ceil(n/cols):1;
   const cw=solo?gw/cols:0,chh=solo?gh/rows:0;
   actors.forEach((actor,i)=>{
     const col=solo?i%cols:i,row=solo?Math.floor(i/cols):0;

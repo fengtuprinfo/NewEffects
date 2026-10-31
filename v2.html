@@ -431,7 +431,9 @@ const DEFAULT_SONGS = [
    subs: '私は、わたしの事が好き。.srt', lead: 0, cast: 'kaguya'},
   {id: 'lk7NsqwWiA0', title: 'カニ☆Do-Luck! [あいうらぶ]',
    audio: 'カニ☆Do-Luck!.mp3',
-   subs: 'カニ☆Do-Luck!.srt', lead: 0, cast: 'aiura'}
+   subs: 'カニ☆Do-Luck!.srt', lead: 0, cast: 'aiura'},
+  {id: '2SHNY5v6DnM', title: 'ユラリユレル [NOMELON NOLEMON]',
+   audio: 'yurariyureru.mp3', subs: 'yurariyureru.srt', lead: 0, cast: 'growup'}
 ];
 // 每首歌的字幕／音訊檔放在同一個資料夾，執行時才讀取
 const cfgOf = id => DEFAULT_SONGS.find(d => d.id === id) || {};
@@ -552,7 +554,8 @@ const LEAD_NAMES = {
   anaru: ['水之江梅', '古都吹寿子', '陸奥こころ', '尾鳥たん', '照井有栖', '平塚敏深'],
   lucky: ['鯨魚娘', '咕咕嘎嘎', '鋒兄', '塗哥', '喵布布', '喵白白', '牙妹', '魚妹'],
   kaguya: ['かぐや', '彩葉', 'ツキ'],
-  aiura: ['天谷奏香', '岩沢彩生', '上原歩子']
+  aiura: ['天谷奏香', '岩沢彩生', '上原歩子'],
+  growup: ['鶴巻瑞佳', '川澄桜翔', '吾野伊万里', '五十土五十鈴', '由良 葵', '由良 茜', '酒匂 雫', 'スヴェトラーナ', '間宮 凛', '麻利亜']
 };
 function syncLeadMenu(id){
   const names = LEAD_NAMES[cfgOf(id).cast] || LEAD_NAMES.best4u;

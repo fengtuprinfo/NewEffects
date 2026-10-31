@@ -9,9 +9,10 @@
     anaru: {sheet: 'anaru', idx: [0, 1, 2, 3, 4, 5]},
     lucky: {sheet: 'lucky', idx: [0, 1, 2, 3, 4, 5, 6, 7]},
     kaguya: {sheet: 'kaguya', idx: [0, 1, 2]},
-    aiura: {sheet: 'aiura', idx: [0, 1, 2]}
+    aiura: {sheet: 'aiura', idx: [0, 1, 2]},
+    growup: {sheet: 'growup', idx: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]}
   };
-  const actors = {best4u: [], anaru: [], lucky: [], kaguya: [], aiura: []};
+  const actors = {best4u: [], anaru: [], lucky: [], kaguya: [], aiura: [], growup: []};
   let active = 'best4u';
   const api = window.SpriteDancers = {ready: false, error: null, draw, use, count};
   function use(name){ if(actors[name]?.length) active = name; }
@@ -52,7 +53,7 @@
     // 手臂／腿／身體分層的傀儡動畫，見 dance-rig.js
     SpriteRig.draw(ctx, img, x, y, height, {
       wave, energy, hop: state.hop || 0, tilt: state.tilt || 0, squash: squash*.45,
-      armScale: actor.meta.armScale
+      armScale: actor.meta.armScale, legScale: actor.meta.legScale
     });
     if(state.lead){
       // 主唱腳下的光圈
