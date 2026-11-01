@@ -13,11 +13,17 @@ body{--ui-h:104px;display:grid;place-items:center;box-sizing:border-box;padding-
 #pv{width:min(100vw,calc((100vh - var(--ui-h))*16/9));height:auto;aspect-ratio:16/9;display:block;background:#000}
 #ui{position:fixed;left:50%;bottom:16px;translate:-50% 0;display:flex;gap:10px;align-items:center;padding:10px 14px;
   border-radius:14px;background:rgba(18,18,28,.82);backdrop-filter:blur(8px);box-shadow:0 6px 24px rgba(0,0,0,.4);
-  width:min(920px,calc(100vw - 32px));box-sizing:border-box;transition:opacity .4s}
+  width:min(1120px,calc(100vw - 32px));box-sizing:border-box;transition:opacity .4s;flex-wrap:wrap}
 #ui.idle{opacity:0}
+#ui:focus-within,#ui:hover{opacity:1}
 #ui select,#ui button{font:inherit;font-size:14px;color:#fff;background:#2c2c40;border:1px solid #47476a;border-radius:8px;padding:6px 10px;cursor:pointer}
 #ui button:disabled{opacity:.5;cursor:wait}
 #seek{flex:1;min-width:80px;accent-color:#f6a531}
+#song{min-width:0;max-width:100%;flex:0 1 240px}
+.volume-control{display:flex;align-items:center;gap:6px;flex:none}
+#ui #mute{padding:5px;width:36px;height:32px}
+#volume{width:80px;accent-color:#f6a531}
+#volumeValue{font-size:12px;min-width:4ch;text-align:right;font-variant-numeric:tabular-nums}
 #time{font:13px Menlo,monospace;white-space:nowrap}
 #ui a{color:#9fd2ff;font-size:13px;white-space:nowrap}
 #msg{position:fixed;top:16px;left:50%;translate:-50% 0;font-size:14px;background:rgba(0,0,0,.6);padding:6px 12px;border-radius:8px}
@@ -35,6 +41,11 @@ body.render #pv{width:min(100vw,calc(100vh*16/9))}
   <button id="play" disabled>載入中…</button>
   <input id="seek" type="range" min="0" max="1000" value="0" aria-label="播放位置">
   <span id="time">0:00 / 0:00</span>
+  <div class="volume-control" role="group" aria-label="音量控制">
+    <button id="mute" type="button" aria-label="靜音" aria-pressed="false" title="靜音" disabled>🔊</button>
+    <input id="volume" type="range" min="0" max="100" step="1" value="100" aria-label="音量" disabled>
+    <span id="volumeValue">100%</span>
+  </div>
   <a id="modeLink" href="index.html?mode=characters">人物 PV</a>
   <a href="cast.html">切圖</a>
   <a href="v2.html">第二版本：歌詞播放器 →</a>
@@ -51,6 +62,7 @@ body.render #pv{width:min(100vw,calc(100vh*16/9))}
 })();
 </script>
 <script src="dance-rig.js"></script>
+<script src="volume.js"></script>
 <script src="pv.js"></script>
 </body>
 </html>

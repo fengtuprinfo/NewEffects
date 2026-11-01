@@ -152,13 +152,16 @@ header .pv-link:hover{filter:brightness(1.1)}
 @keyframes leave{to{opacity:0;transform:translateY(-1.5em) scale(.9);filter:blur(8px)}}
 
 /* ---------- controls ---------- */
-.bar{display:flex;align-items:center;gap:12px;margin-top:12px}
+.bar{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:12px}
 .icon{width:40px;height:40px;border-radius:50%;border:0;background:var(--pink);color:#2a0717;display:grid;place-items:center;cursor:pointer;flex:none}
 .icon.ghost{background:var(--panel2);color:var(--text)}
 .icon svg{width:18px;height:18px}
 #timeLbl{font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap;min-width:92px}
 input[type=range]{accent-color:var(--pink)}
-#seek{flex:1;min-width:0}
+#seek{flex:1;min-width:80px}
+.volume-control{display:flex;align-items:center;gap:6px;flex:none}
+#volume{width:80px}
+#volumeValue{font-size:12px;min-width:4ch;text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
 .opts{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin-top:14px;padding:12px 14px;background:var(--panel);border:1px solid var(--line);border-radius:12px}
 .seg{display:flex;flex-wrap:wrap;gap:4px;background:var(--panel2);padding:4px;border-radius:10px}
 .seg button{border:0;background:transparent;padding:6px 12px;border-radius:7px;cursor:pointer;color:var(--muted)}
@@ -245,6 +248,11 @@ kbd{background:var(--panel2);border:1px solid var(--line);border-bottom-width:2p
       <span id="timeLbl">0:00 / 0:00</span>
       <div class="seg" id="srcSeg" hidden title="音源"><button data-src="mp3">MP3</button><button data-src="yt">YouTube</button></div>
       <input type="range" id="seek" min="0" max="1000" value="0" step="1">
+      <div class="volume-control" role="group" aria-label="音量控制">
+        <button class="icon ghost" id="mute" type="button" aria-label="靜音" aria-pressed="false" title="靜音" disabled>🔊</button>
+        <input id="volume" type="range" min="0" max="100" step="1" value="100" aria-label="音量" disabled>
+        <span id="volumeValue">100%</span>
+      </div>
       <button class="icon ghost" id="fsBtn" title="全螢幕 (F)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
     </div>
 
@@ -311,6 +319,7 @@ kbd{background:var(--panel2);border:1px solid var(--line);border-bottom-width:2p
 </main>
 <div id="toast"></div>
 
+<script src="volume.js"></script>
 <script>
 const $ = s => document.querySelector(s);
 const stage = $('#stage'), slot = $('#slot'), nextEl = $('#next'), nextZhEl = $('#nextZh'), listEl = $('#list'), ta = $('#lyricsText');
@@ -359,6 +368,7 @@ const media = {
     this.kind === 'file' ? (vid.currentTime = t) : this.ready && this.yt.seekTo(t, true); },
   toggle(){ this.playing() ? this.pause() : this.play(); }
 };
+const volumeControl = PlayerVolume.bind(vid);
 
 function parseYtId(s){
   s = s.trim();
@@ -374,6 +384,7 @@ window.onYouTubeIframeAPIReady = () => {
     events: {
       onReady(){
         media.ready = true;
+        volumeControl.syncYouTube(media.yt);
         const pending = pendingYt; pendingYt = null;
         if(pending){
           const action = pending.autoplay ? 'loadVideoById' : 'cueVideoById';
@@ -381,7 +392,7 @@ window.onYouTubeIframeAPIReady = () => {
         }
         updateTitleFromYt();
       },
-      onStateChange(){ updateTitleFromYt(); },
+      onStateChange(){ volumeControl.syncYouTube(media.yt); updateTitleFromYt(); },
       onError(e){
         const why = {2:'影片 ID 無效', 5:'播放器錯誤', 100:'找不到影片', 101:'影片擁有者禁止嵌入播放', 150:'影片擁有者禁止嵌入播放', 153:'需要透過 http://localhost 開啟本頁'}[e.data] || ('錯誤碼 ' + e.data);
         if(media.kind === 'yt') showMsg(`無法播放這支 YouTube 影片：${why}<br>可改用右側「本機影音檔」載入音源，歌詞特效照常運作。`);
@@ -1130,6 +1141,7 @@ document.addEventListener('pointerup', () => {
 });
 document.addEventListener('keydown', e => {
   const t = e.target;
+  if(t.closest('.volume-control')) return;
   if(t.tagName === 'TEXTAREA' || (t.tagName === 'INPUT' && !/range|checkbox|file/.test(t.type))) return;
   if(e.metaKey || e.ctrlKey || e.altKey) return;
   switch(e.key){

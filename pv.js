@@ -1639,6 +1639,7 @@ async function renderAll(){
 function preview(buf){
   const audioURL=URL.createObjectURL(new Blob([buf],{type:'audio/mpeg'}));
   const audio = new Audio(audioURL);
+  PlayerVolume.bind(audio);
   addEventListener('pagehide',()=>URL.revokeObjectURL(audioURL),{once:true});
   const play = $('#play'), seek = $('#seek'), time = $('#time');
   const fmt = s => `${Math.floor(s/60)}:${pad(Math.floor(s % 60))}`;
@@ -1661,7 +1662,7 @@ function preview(buf){
     if(!window.PV.hold) render(Math.min(t, A.dur - 1/FPS));
     if(document.activeElement !== seek) seek.value = Math.round(t/A.dur*1000);
     time.textContent = `${fmt(t)} / ${fmt(A.dur)}`;
-    $('#ui').classList.toggle('idle', !audio.paused && performance.now() - idle > 2500);
+    $('#ui').classList.toggle('idle', !audio.paused && !$('#ui').contains(document.activeElement) && performance.now() - idle > 2500);
     requestAnimationFrame(loop);
   };
   loop();
