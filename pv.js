@@ -77,7 +77,12 @@ const SONGS = [
    series: 'Extreme Hearts', kicker: 'CHARACTER SONG · 葉山陽和',
    cast: [['casual', 0, '前原純華', '#2ba6e1'], ['casual', 1, '葉山陽和', '#ee5b97'], ['casual', 2, '小鷹咲希', '#3cc39a'], ['casual', 3, '橘雪乃', '#8d6ad6'],
           ['casual', 4, '小日向理瀬', '#f6a531'], ['casual', 5, 'ミシェル・イェーガー', '#d2c8cf'], ['casual', 6, 'アシュリー・ヴァンクロフト', '#9b85ce'],
-          ['casual', 7, '桜井羽月', '#ebbd48'], ['casual', 8, '御社智', '#e9819d'], ['casual', 9, '末宗祐里子', '#e5b8b9'], ['casual', 10, '本田千尋', '#54bed5'], ['casual', 11, 'ティーナ・メルキース', '#74c4a5']]}
+          ['casual', 7, '桜井羽月', '#ebbd48'], ['casual', 8, '御社智', '#e9819d'], ['casual', 9, '末宗祐里子', '#e5b8b9'], ['casual', 10, '本田千尋', '#54bed5'], ['casual', 11, 'ティーナ・メルキース', '#74c4a5']]},
+  {title: '統一發票頭獎得主鋒兄威力彩頭獎得主塗哥(英文歌詞)', ver: 'Suno v6', file: '統一發票頭獎得主鋒兄威力彩頭獎得主塗哥(英文歌詞)',
+   subs: '統一發票頭獎得主鋒兄威力彩頭獎得主塗哥(英文歌詞).srt', theme: 'lucky', art: 'lucky8', lead: 2,
+   series: '招財喵布布', kicker: '鋒兄生日祝福曲 · ENGLISH VERSION',
+   cast: [['lucky', 0, '鯨魚娘', '#3f7fd0'], ['lucky', 1, '咕咕嘎嘎', '#3a4250'], ['lucky', 2, '鋒兄', '#b08a4a'], ['lucky', 3, '塗哥', '#7b8794'],
+          ['lucky', 4, '喵布布', '#d9822b'], ['lucky', 5, '喵白白', '#8d97a3'], ['lucky', 6, '牙妹', '#d9424f'], ['lucky', 7, '魚妹', '#3f6ea8']]}
 ];
 // 每首歌一組配色：夏日向日葵、日出、黃昏星空、晴空疾風
 const THEMES = {
