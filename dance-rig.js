@@ -7,7 +7,8 @@
    用法：SpriteRig.draw(ctx, img, x, y, height, state)；(x, y) 是腳底中心，height 是畫出來的高度。 */
 (() => {
   'use strict';
-  const ALPHA = 40, CACHE_MAX = 12;
+  const ALPHA = 40;
+  let cacheLimit = 12;
   const measureCache = new WeakMap();
   const bakeCache = new Map();          // img -> rig（LRU，避免同時留太多大圖層）
   const clamp01 = v => v < 0 ? 0 : v > 1 ? 1 : v;
@@ -408,7 +409,7 @@
     const rig = {r, layers, r0, armThick: bandH, thighW, pivotY: corridors ? corridors.pivot : r.hipY,
       pivotL: corridors ? corridors.pivotL : null, pivotR: corridors ? corridors.pivotR : null};
     bakeCache.delete(img); bakeCache.set(img, rig);
-    if(bakeCache.size > CACHE_MAX) bakeCache.delete(bakeCache.keys().next().value);
+    if(bakeCache.size > cacheLimit) bakeCache.delete(bakeCache.keys().next().value);
     return rig;
   }
 
@@ -595,5 +596,9 @@
     return [px + c*(sx - srcX) - s*(sy - srcY), py + s*(sx - srcX) + c*(sy - srcY)];
   }
 
-  window.SpriteRig = {draw, measure, bake, chainPoint};
+  function setCacheLimit(count){
+    cacheLimit=Number.isFinite(count)?Math.max(12,Math.min(32,Math.ceil(count))):12;
+    while(bakeCache.size>cacheLimit) bakeCache.delete(bakeCache.keys().next().value);
+  }
+  window.SpriteRig = {draw, measure, bake, chainPoint, setCacheLimit};
 })();

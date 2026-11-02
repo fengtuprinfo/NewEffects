@@ -17,7 +17,8 @@ const cut = raw.lastIndexOf('init().catch(');
 if(cut < 0) throw new Error('找不到 init()，pv.js 結構可能變了');
 const hook = `window.__t = {buildShots, SHOTS, MEMBERS, LEAD, OTHERS, parseSrt, SONGS,
   setA(a){ A = a; },
-  setup(list){
+  setup(list, cast){
+    if(song.art==='vwest') FACES.push(...cast.vwest.map(m=>m.groupFace));
     cues = list;
     cues.forEach((c, i) => {
       c.i = i; c.ju = tokenize(c.jp); c.zu = tokenize(c.zh || '');
@@ -82,7 +83,7 @@ try{
 T.setA({rms: wave(), low: wave(), mid: wave(),
   cumMid: (() => { const c = new Float32Array(N + 1); for(let i = 0; i < N; i++) c[i+1] = c[i] + .09; return c; })(),
   bpm: 116.2, spb: 60/116.2, beat0: 0, barOff: 0, dur});
-T.setup(cues);
+T.setup(cues, JSON.parse(fs.readFileSync(path.join(ROOT, 'assets/ref/cast/cast.json'), 'utf8')));
 
 console.log(`歌曲 ${songIndex}「${song.title}」  成員 ${T.MEMBERS.length} 位、主唱 #${T.LEAD}、歌詞 ${cues.length} 句`);
 const shots = T.buildShots();

@@ -839,5 +839,330 @@
    "armScale": 0.08,
    "legScale": 0.15
   }
+ ],
+ "vwest": [
+  {
+   "file": "vwest-0.png",
+   "w": 408,
+   "h": 1100,
+   "headX": 241,
+   "headY": 171,
+   "source": [
+    239,
+    3
+   ],
+   "sheet": "vwest/transparent-0.png",
+   "name": "壱百満天原サロメ",
+   "armScale": 0.035,
+   "legScale": 0.07,
+   "groupFace": [
+    172,
+    70
+   ]
+  },
+  {
+   "file": "vwest-1.png",
+   "w": 414,
+   "h": 1100,
+   "headX": 186,
+   "headY": 123,
+   "source": [
+    295,
+    9
+   ],
+   "sheet": "vwest/transparent-1.png",
+   "name": "家長むぎ",
+   "armScale": 0.035,
+   "legScale": 0.07,
+   "groupFace": [
+    474,
+    55
+   ]
+  },
+  {
+   "file": "vwest-2.png",
+   "w": 456,
+   "h": 1100,
+   "headX": 215,
+   "headY": 123,
+   "source": [
+    267,
+    11
+   ],
+   "sheet": "vwest/transparent-2.png",
+   "name": "Zeal Ginjoka",
+   "armScale": 0.035,
+   "legScale": 0.07,
+   "groupFace": [
+    796,
+    55
+   ]
+  },
+  {
+   "file": "vwest-3.png",
+   "w": 502,
+   "h": 1100,
+   "headX": 332,
+   "headY": 243,
+   "source": [
+    187,
+    10
+   ],
+   "sheet": "vwest/transparent-3.png",
+   "name": "小野町春香",
+   "armScale": 0.035,
+   "legScale": 0.07,
+   "groupFace": [
+    1144,
+    91
+   ]
+  },
+  {
+   "file": "vwest-4.png",
+   "w": 369,
+   "h": 1100,
+   "headX": 203,
+   "headY": 123,
+   "source": [
+    277,
+    7
+   ],
+   "sheet": "vwest/transparent-4.png",
+   "name": "矢車りね",
+   "armScale": 0.035,
+   "legScale": 0.07,
+   "groupFace": [
+    1446,
+    55
+   ]
+  },
+  {
+   "file": "vwest-5.png",
+   "w": 474,
+   "h": 1100,
+   "headX": 159,
+   "headY": 152,
+   "source": [
+    252,
+    14
+   ],
+   "sheet": "vwest/transparent-5.png",
+   "name": "ハユン",
+   "armScale": 0.035,
+   "legScale": 0.07,
+   "groupFace": [
+    1737,
+    64
+   ]
+  },
+  {
+   "file": "vwest-6.png",
+   "w": 515,
+   "h": 1100,
+   "headX": 230,
+   "headY": 123,
+   "source": [
+    250,
+    28
+   ],
+   "sheet": "vwest/transparent-6.png",
+   "name": "早瀬走",
+   "armScale": 0.035,
+   "legScale": 0.07,
+   "groupFace": [
+    152,
+    415
+   ]
+  },
+  {
+   "file": "vwest-7.png",
+   "w": 544,
+   "h": 1100,
+   "headX": 251,
+   "headY": 254,
+   "source": [
+    196,
+    16
+   ],
+   "sheet": "vwest/transparent-7.png",
+   "name": "Etna Crimson",
+   "armScale": 0.035,
+   "legScale": 0.07,
+   "groupFace": [
+    474,
+    455
+   ]
+  },
+  {
+   "file": "vwest-8.png",
+   "w": 482,
+   "h": 1100,
+   "headX": 186,
+   "headY": 123,
+   "source": [
+    171,
+    12
+   ],
+   "sheet": "vwest/transparent-8.png",
+   "name": "渋谷ハジメ",
+   "armScale": 0.035,
+   "legScale": 0.07,
+   "groupFace": [
+    784,
+    415
+   ]
+  },
+  {
+   "file": "vwest-9.png",
+   "w": 488,
+   "h": 1100,
+   "headX": 333,
+   "headY": 124,
+   "source": [
+    128,
+    11
+   ],
+   "sheet": "vwest/transparent-9.png",
+   "name": "戌亥とこ",
+   "armScale": 0.035,
+   "legScale": 0.07,
+   "groupFace": [
+    1148,
+    415
+   ]
+  },
+  {
+   "file": "vwest-10.png",
+   "w": 513,
+   "h": 1100,
+   "headX": 197,
+   "headY": 162,
+   "source": [
+    258,
+    7
+   ],
+   "sheet": "vwest/transparent-10.png",
+   "name": "狂蘭メロコ",
+   "armScale": 0.035,
+   "legScale": 0.07,
+   "groupFace": [
+    1422,
+    427
+   ]
+  },
+  {
+   "file": "vwest-11.png",
+   "w": 646,
+   "h": 1100,
+   "headX": 338,
+   "headY": 204,
+   "source": [
+    83,
+    6
+   ],
+   "sheet": "vwest/transparent-11.png",
+   "name": "本間ひまわり",
+   "armScale": 0.035,
+   "legScale": 0.07,
+   "groupFace": [
+    1765,
+    440
+   ]
+  },
+  {
+   "file": "vwest-12.png",
+   "w": 389,
+   "h": 1100,
+   "headX": 232,
+   "headY": 123,
+   "source": [
+    250,
+    11
+   ],
+   "sheet": "vwest/transparent-12.png",
+   "name": "Nagisa Arcinia",
+   "armScale": 0.035,
+   "legScale": 0.07,
+   "groupFace": [
+    332,
+    775
+   ]
+  },
+  {
+   "file": "vwest-13.png",
+   "w": 578,
+   "h": 1100,
+   "headX": 246,
+   "headY": 138,
+   "source": [
+    188,
+    12
+   ],
+   "sheet": "vwest/transparent-13.png",
+   "name": "ラトナ・プティ",
+   "armScale": 0.035,
+   "legScale": 0.07,
+   "groupFace": [
+    627,
+    780
+   ]
+  },
+  {
+   "file": "vwest-14.png",
+   "w": 684,
+   "h": 1100,
+   "headX": 315,
+   "headY": 130,
+   "source": [
+    89,
+    17
+   ],
+   "sheet": "vwest/transparent-14.png",
+   "name": "エリー・コニファー",
+   "armScale": 0.035,
+   "legScale": 0.07,
+   "groupFace": [
+    952,
+    777
+   ]
+  },
+  {
+   "file": "vwest-15.png",
+   "w": 547,
+   "h": 1100,
+   "headX": 229,
+   "headY": 123,
+   "source": [
+    155,
+    19
+   ],
+   "sheet": "vwest/transparent-15.png",
+   "name": "緋八マナ",
+   "armScale": 0.035,
+   "legScale": 0.07,
+   "groupFace": [
+    1267,
+    775
+   ]
+  },
+  {
+   "file": "vwest-16.png",
+   "w": 683,
+   "h": 1100,
+   "headX": 319,
+   "headY": 153,
+   "source": [
+    52,
+    8
+   ],
+   "sheet": "vwest/transparent-16.png",
+   "name": "樋口楓（監督）",
+   "armScale": 0.035,
+   "legScale": 0.07,
+   "groupFace": [
+    1593,
+    784
+   ]
+  }
  ]
 }

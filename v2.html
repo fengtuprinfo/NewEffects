@@ -455,7 +455,8 @@ const DEFAULT_SONGS = [
    subs: '統一發票頭獎得主鋒兄威力彩頭獎得主塗哥(日文歌詞).srt', lead: 2, cast: 'lucky'},
   {id: 'suno-497ce6b7', title: '統一發票頭獎得主鋒兄威力彩頭獎得主塗哥(粵文歌詞)',
    audio: '統一發票頭獎得主鋒兄威力彩頭獎得主塗哥(粵文歌詞).mp3',
-   subs: '統一發票頭獎得主鋒兄威力彩頭獎得主塗哥(粵文歌詞).srt', lead: 2, cast: 'lucky'}
+   subs: '統一發票頭獎得主鋒兄威力彩頭獎得主塗哥(粵文歌詞).srt', lead: 2, cast: 'lucky'},
+  {id:'GGWhqMmOC3E',title:'後はやるだけ！ [V西2025]',audio:'後はやるだけ！.mp3',subs:'後はやるだけ！.srt',cover:'assets/ref/vwest/group.png',lead:0,cast:'vwest'}
 ];
 // 每首歌的字幕／音訊檔放在同一個資料夾，執行時才讀取
 const cfgOf = id => DEFAULT_SONGS.find(d => d.id === id) || {};
@@ -563,7 +564,7 @@ function audioUrl(id){
 function showCover(id){
   const c = $('#cover');
   c.hidden = !id;
-  if(id) c.style.setProperty('--img', `url(https://i.ytimg.com/vi/${id}/maxresdefault.jpg)`);
+  if(id) c.style.setProperty('--img', `url(${cfgOf(id).cover || `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`})`);
 }
 $('#srcSeg').addEventListener('click', e => {
   const b = e.target.closest('button'); if(!b || !curSong || srcOf(curSong) === b.dataset.src) return;
@@ -572,6 +573,7 @@ $('#srcSeg').addEventListener('click', e => {
   applySource(curSong, was, t);
 });
 const LEAD_NAMES = {
+  vwest:['壱百満天原サロメ','家長むぎ','Zeal Ginjoka','小野町春香','矢車りね','ハユン','早瀬走','Etna Crimson','渋谷ハジメ','戌亥とこ','狂蘭メロコ','本間ひまわり','Nagisa Arcinia','ラトナ・プティ','エリー・コニファー','緋八マナ','樋口楓（監督）'],
   best4u: ['小日向理瀬', '葉山陽和', '前原純華', '小鷹咲希', '橘雪乃', '御社智'],
   anaru: ['水之江梅', '古都吹寿子', '陸奥こころ', '尾鳥たん', '照井有栖', '平塚敏深'],
   lucky: ['鯨魚娘', '咕咕嘎嘎', '鋒兄', '塗哥', '喵布布', '喵白白', '牙妹', '魚妹'],

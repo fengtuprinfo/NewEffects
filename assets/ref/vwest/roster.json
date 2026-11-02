@@ -1,0 +1,138 @@
+[
+  {
+    "index": 0,
+    "ref": "source-a.png",
+    "name": "壱百満天原サロメ",
+    "description": "BACK ROW FAR LEFT, long lavender hair in two very large spiral drill curls, pale pink-purple eyes, yellow batting helmet with navy brim and 西 emblem, white baseball gloves. Her left hand tips her helmet, her other hand holds her own vertical dark baseball bat. Keep the full bat and its handle separated cleanly from her silhouette.",
+    "raw": "transparent-0.png",
+    "color": "#b89be4"
+  },
+  {
+    "index": 1,
+    "ref": "source-a.png",
+    "name": "家長むぎ",
+    "description": "BACK ROW SECOND FROM LEFT, tall slender player with long pale-blonde hair and amber/golden eyes under a yellow batting helmet, calm serious face. One hand rests against the opposite shoulder. Only this blonde figure; remove the purple-haired and black-haired neighbors.",
+    "raw": "transparent-1.png",
+    "color": "#ddb65a"
+  },
+  {
+    "index": 2,
+    "ref": "source-a.png",
+    "name": "Zeal Ginjoka",
+    "description": "BACK ROW THIRD FROM LEFT, adult masculine player with dark black/green short-to-medium hair, violet eyes and a knowing smile, yellow batting helmet, white glove raised to helmet brim and own small rounded dark baseball-bat handle close to helmet. Do not include the blonde neighbor's hair or arms.",
+    "raw": "transparent-2.png",
+    "color": "#5b9e7b"
+  },
+  {
+    "index": 3,
+    "ref": "source-a.png",
+    "name": "小野町春香",
+    "description": "BACK ROW FAR RIGHT, slim feminine player with very long dark navy-teal hair and vivid turquoise eyes, open singing mouth, yellow cap/helmet, one black-sleeved arm raised high with a black baseball glove. Preserve her face, long blue-black hair and high raised arm.",
+    "raw": "transparent-3.png",
+    "color": "#51c9e2"
+  },
+  {
+    "index": 4,
+    "ref": "source-a.png",
+    "name": "矢車りね",
+    "description": "FRONT ROW FAR LEFT, petite player with pale ash-blonde hair tied into fluffy braided side buns, light mint-green eyes, thin glasses, lavender flower hair ornaments beside ears, yellow baseball cap. She presents a black baseball glove in front of chest and a white baseball near waist. Keep both her glasses and her own baseball equipment.",
+    "raw": "transparent-4.png",
+    "color": "#a4c98f"
+  },
+  {
+    "index": 5,
+    "ref": "source-a.png",
+    "name": "ハユン",
+    "description": "FRONT ROW SECOND FROM LEFT, masculine young player with short burgundy-red hair and amber/golden eyes, yellow cap/helmet, serious closed-mouth expression, one arm bent high and hand resting above/on helmet, other hand wearing a black baseball glove near chest.",
+    "raw": "transparent-5.png",
+    "color": "#bd5262"
+  },
+  {
+    "index": 6,
+    "ref": "source-a.png",
+    "name": "早瀬走",
+    "description": "FRONT ROW THIRD FROM LEFT, feminine player with straight chin-length dark black hair, violet eyes, purple flower hair pins beside temple, yellow cap slightly tilted sideways, open singing mouth. One arm reaches forward/down with a large black baseball glove near right hip. Remove all adjacent red and teal hair.",
+    "raw": "transparent-6.png",
+    "color": "#8a75b8"
+  },
+  {
+    "index": 7,
+    "ref": "source-a.png",
+    "name": "Etna Crimson",
+    "description": "FRONT ROW FAR RIGHT, cheerful feminine player with bright short red hair and gold/orange eyes, yellow batting helmet, open smile, white glove near shoulder and her own long upright dark baseball bat along right edge. Preserve the bat and gloves.",
+    "raw": "transparent-7.png",
+    "color": "#e76443"
+  },
+  {
+    "index": 8,
+    "ref": "source-b.png",
+    "name": "渋谷ハジメ",
+    "description": "BACK ROW FAR LEFT, tall masculine player with medium light-green hair, violet eyes, yellow batting helmet, open singing mouth. Relaxed original pose. Remove all burgundy-haired front neighbor pieces.",
+    "raw": "transparent-8.png",
+    "color": "#9dc06f"
+  },
+  {
+    "index": 9,
+    "ref": "source-b.png",
+    "name": "戌亥とこ",
+    "description": "BACK ROW SECOND FROM LEFT, long dark-brown hair with green/teal gradient at the tips, vivid green eyes, large orange ribbon/bow above the helmet, yellow baseball helmet, white baseball glove held near chin, thoughtful confident face. Remove all other people's hair and arms.",
+    "raw": "transparent-9.png",
+    "color": "#579b76"
+  },
+  {
+    "index": 10,
+    "ref": "source-b.png",
+    "name": "狂蘭メロコ",
+    "description": "BACK ROW THIRD FROM LEFT, feminine catcher with long dark violet hair and a thick purple braid in front, magenta eyes, yellow cap, NAVY catcher chest protector with orange trim and orange VRWEST lettering, one black-sleeved arm bent up above head with hand resting on top of cap. Preserve catcher armor, unlike the other yellow jerseys.",
+    "raw": "transparent-10.png",
+    "color": "#a177bd"
+  },
+  {
+    "index": 11,
+    "ref": "source-b.png",
+    "name": "本間ひまわり",
+    "description": "BACK ROW FAR RIGHT, cheerful feminine player with short orange-copper hair and bright green eyes, yellow batting helmet, broad toothy smile, hands in original sporty pose. Preserve orange hair and her own black sleeves.",
+    "raw": "transparent-11.png",
+    "color": "#f0ac3d"
+  },
+  {
+    "index": 12,
+    "ref": "source-b.png",
+    "name": "Nagisa Arcinia",
+    "description": "FRONT ROW FAR LEFT, petite feminine player with short dark burgundy bob with a yellow/orange streak, large bright green eyes, yellow cap, open singing mouth. One hand is near collar/chest and the other wears/presents her own black baseball glove.",
+    "raw": "transparent-12.png",
+    "color": "#b34e79"
+  },
+  {
+    "index": 13,
+    "ref": "source-b.png",
+    "name": "ラトナ・プティ",
+    "description": "FRONT ROW SECOND FROM LEFT, feminine player with fluffy medium brown hair and rounded raccoon ears visibly protruding from yellow helmet, distinct heterochromia eyes (golden/amber and red), serious focused gaze. Large black baseball glove held high at chest. Preserve both raccoon ears and her two different eye colors.",
+    "raw": "transparent-13.png",
+    "color": "#bd8e5d"
+  },
+  {
+    "index": 14,
+    "ref": "source-b.png",
+    "name": "エリー・コニファー",
+    "description": "FRONT ROW THIRD FROM LEFT, petite feminine pitcher with very long light-brown/blonde hair tied to both sides with small red cord/ribbon details, blue eyes, yellow helmet with two pointed animal-ear-like protrusions, focused closed-mouth face. She holds white baseball beside her face with a black baseball glove facing the viewer. Keep baseball, glove and ribbon details.",
+    "raw": "transparent-14.png",
+    "color": "#79bdd7"
+  },
+  {
+    "index": 15,
+    "ref": "source-b.png",
+    "name": "緋八マナ",
+    "description": "FRONT ROW FAR RIGHT, youthful player with short pale ash-blonde/grey hair, bright golden-yellow eyes, yellow batting helmet with navy brim, calm smile, yellow jersey tucked into navy baseball trousers, dark belt. One white-gloved hand hangs at the side; keep original pose.",
+    "raw": "transparent-15.png",
+    "color": "#e3cc74"
+  },
+  {
+    "index": 16,
+    "name": "樋口楓（監督）",
+    "raw": "transparent-16.png",
+    "ref": "source-lead.png",
+    "color": "#b7c7ed",
+    "description": "銀白長髮、紫眼，舉起手臂的教練。"
+  }
+]

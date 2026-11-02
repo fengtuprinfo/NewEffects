@@ -14,6 +14,7 @@ const $ = s => document.querySelector(s);
 
 // 主視覺：參考圖與臉部座標（Ken Burns 鏡頭的目標）；cast 第一位是主唱，sprite 由 tools/cutout.mjs 從參考圖去背
 const ARTS = {
+  vwest: {src:'assets/ref/vwest/group.png', crop:[0,0,1920,1080], faces:[]},
   breakshoot: {src: 'assets/ref/breakshoot-cover.png', crop: [0, 0, 720, 720],
     faces: [[142, 145], [288, 145], [433, 145], [579, 145], [142, 338], [288, 338], [433, 338], [579, 338], [142, 531], [288, 531], [433, 531], [579, 531]]},
   growup: {src: 'assets/ref/growup/group.png', crop: [0, 0, 1920, 1080],
@@ -92,10 +93,17 @@ const SONGS = [
    subs: '統一發票頭獎得主鋒兄威力彩頭獎得主塗哥(粵文歌詞).srt', theme: 'lucky', art: 'lucky8', lead: 2,
    series: '招財喵布布', kicker: '鋒兄生日祝福曲 · 粵語版',
    cast: [['lucky', 0, '鯨魚娘', '#3f7fd0'], ['lucky', 1, '咕咕嘎嘎', '#3a4250'], ['lucky', 2, '鋒兄', '#b08a4a'], ['lucky', 3, '塗哥', '#7b8794'],
-          ['lucky', 4, '喵布布', '#d9822b'], ['lucky', 5, '喵白白', '#8d97a3'], ['lucky', 6, '牙妹', '#d9424f'], ['lucky', 7, '魚妹', '#3f6ea8']]}
+          ['lucky', 4, '喵布布', '#d9822b'], ['lucky', 5, '喵白白', '#8d97a3'], ['lucky', 6, '牙妹', '#d9424f'], ['lucky', 7, '魚妹', '#3f6ea8']]},
+  {title:'後はやるだけ！', ver:'V西2025', file:'後はやるだけ！', subs:'後はやるだけ！.srt', theme:'baseball', art:'vwest', lead:0,
+   series:'にじさんじ · V西2025', kicker:'さらば碧き面影 · VRWEST',
+   cast:[['vwest',0,'壱百満天原サロメ','#b89be4'],['vwest',1,'家長むぎ','#ddb65a'],['vwest',2,'Zeal Ginjoka','#5b9e7b'],['vwest',3,'小野町春香','#51c9e2'],
+         ['vwest',4,'矢車りね','#a4c98f'],['vwest',5,'ハユン','#bd5262'],['vwest',6,'早瀬走','#8a75b8'],['vwest',7,'Etna Crimson','#e76443'],
+         ['vwest',8,'渋谷ハジメ','#9dc06f'],['vwest',9,'戌亥とこ','#579b76'],['vwest',10,'狂蘭メロコ','#a177bd'],['vwest',11,'本間ひまわり','#f0ac3d'],
+         ['vwest',12,'Nagisa Arcinia','#b34e79'],['vwest',13,'ラトナ・プティ','#bd8e5d'],['vwest',14,'エリー・コニファー','#79bdd7'],['vwest',15,'緋八マナ','#e3cc74'],['vwest',16,'樋口楓（監督）','#b7c7ed']]}
 ];
 // 每首歌一組配色：夏日向日葵、日出、黃昏星空、晴空疾風
 const THEMES = {
+  baseball: {sky:['#06374d','#237ca4','#c0e9f4'],pastel:['#fff8da','#e7f4fb'],accent:'#ffcc43',accent2:'#f49c36',cool:'#55cee4',deep:'#09283d',particle:'star'},
   growup:   {sky: ['#351429', '#b84b3b', '#ffcb42'], pastel: ['#fff8df', '#ffebbb'], accent: '#ffd64c', accent2: '#dd4058', cool: '#69c7c3', deep: '#301326', particle: 'spark'},
   summer:   {sky: ['#0b3d74', '#2f8fe0', '#bfeaff'], pastel: ['#fff8dc', '#d6f0ff'], accent: '#ffd23f', accent2: '#ff7b54', cool: '#5fd0ff', deep: '#0b2d55', particle: 'petal'},
   sunrise:  {sky: ['#22164a', '#b8487d', '#ffbf7a'], pastel: ['#fff1e6', '#ffe0ef'], accent: '#ffc35c', accent2: '#ff5f93', cool: '#a99bff', deep: '#2a1640', particle: 'spark'},
@@ -175,6 +183,8 @@ const CHARACTER_GROUPS = song.cast[0][0] === 'anaru'
   ? [{sheet:'aiura', title:'あいうら · 奏香・彩生・歩子', src:'assets/ref/aiura-group.png', colors:['#7fbfba','#ffe3b2'], count:3, solo:true}]
   : song.cast[0][0] === 'growup'
   ? [{sheet:'growup', title:'ひまわりサーカス · 十人', src:'assets/ref/growup/group.png', colors:['#e8a72f','#ffd968'], count:10, solo:true}]
+  : song.cast[0][0] === 'vwest'
+  ? [{sheet:'vwest',title:'V西2025 · 選手16人＋監督',src:'assets/ref/vwest/group.png',colors:['#ffcc43','#55cee4'],count:17,solo:true}]
   : song.art === 'breakshoot'
   ? [{sheet:'casual', title:'Extreme Hearts · 十二人', src:'assets/ref/casual-remade/group.png', colors:['#5cabe0','#f3afd3'], count:12,solo:true}]
   : BASE_CHARACTER_GROUPS;
@@ -1087,7 +1097,11 @@ function shotStage(t, sh, u){
   }
   // 舞者：依卡司人數排成後排／中排／前排，中央是主唱。
   // nx、ny 是安全框裡的位置（ny 是把抬手和鞋底的餘裕算進去之後的腳底），nh 是希望的身高占比。
-  const O = OTHERS, spots = O.length >= 11
+  const O = OTHERS, spots = O.length > 11
+    ? [...O.slice(0,6).map((m,i)=>({nx:(i+.5)/6,ny:.42,nh:.28,m})),
+       ...O.slice(6,12).map((m,i)=>({nx:(i+.5)/6,ny:.71,nh:.30,m})),
+       ...O.slice(12).map((m,i)=>({nx:[.12,.32,.68,.88][i],ny:1,nh:.34,m})),{nx:.5,ny:1,nh:.37,m:LEAD}]
+    : O.length >= 11
     ? [...O.slice(0, 6).map((m, i) => ({nx:(i+.5)/6, ny:.60, nh:.28, m})),
        ...O.slice(6, 11).map((m, i) => ({nx:(i+.5)/5, ny:.78, nh:.31, m})), {nx:.50, ny:1, nh:.50, m:LEAD}]
     : O.length >= 9
@@ -1138,7 +1152,7 @@ function shotStage(t, sh, u){
     return {m: s.m, x, y, h};
   });
   placed.forEach(({m, x, y, h}, k) => {
-    const delay = k*.08, st = danceState(m, t, {alt: true, e: m === LEAD ? 1 : .9});
+    const delay = k*.08*Math.min(1,11/Math.max(1,placed.length-1)), st = danceState(m, t, {alt: true, e: m === LEAD ? 1 : .9});
     g.save(); g.globalAlpha = easeOut((intro - delay)/.5 + (intro >= 1 ? 1 : 0));
     // 光暈放在頭後方、收小，白色核心才不會從肩膀兩側爆出來
     g.globalCompositeOperation = 'lighter'; glow(x, y - h*.72, h*.32, MEMBERS[m].color, .06 + .05*pl); g.globalCompositeOperation = 'source-over';
@@ -1367,11 +1381,11 @@ function shotBike(t, sh, u){
   karaoke(t, {cx: W/2, y: 968, size: 60, maxW: 1560, zhSize: 34});
 }
 // 拍立得裡的合照：全員用 SpriteRig 現場跳舞，而不是貼上靜態立繪的 T-pose。
-// 依人數排成一～兩排、主唱放前排正中央；舞姿手腳都在動（手臂大擺、雙腿開合踏步）。
+// 依人數排成一～三排、主唱放前排正中央；舞姿手腳都在動（手臂大擺、雙腿開合踏步）。
 function groupPhoto(t, lt, cw, ch){
-  const N = MEMBERS.length, rows = N <= 4 ? 1 : 2, cols = Math.ceil(N/rows);
+  const N = MEMBERS.length, rows = N <= 4 ? 1 : N > 12 ? 3 : 2, cols = Math.ceil(N/rows);
   const order = MEMBERS.map((_, i) => i).filter(i => i !== LEAD);
-  const center = rows === 1 ? Math.floor(cols/2) : cols + Math.floor((N - cols)/2);
+  const center = (rows-1)*cols + Math.floor((N-(rows-1)*cols)/2);
   order.splice(Math.min(center, order.length), 0, LEAD);
   const cellW = cw/cols, cellH = ch/rows, pl = pulse(t), en = Math.max(energy(t), .7);
   order.forEach((m, k) => {
@@ -1448,7 +1462,7 @@ function shotCharacters(t,sh,u){
     light.addColorStop(0,'rgba(255,255,255,.16)');light.addColorStop(1,'rgba(255,255,255,0)');
     g.fillStyle=light;g.beginPath();g.moveTo(x-6,0);g.lineTo(x+6,0);g.lineTo(x+sway+130,900);g.lineTo(x+sway-130,900);g.closePath();g.fill();
   }
-  const sizes={casual:[1920,1080],rooftop:[1536,1024],idol:[1536,1024],stage:[1774,887],anaru:[1920,1080],lucky:[1920,1080],kaguya:[1920,1080],aiura:[1920,1080],growup:[1920,1080]};
+  const sizes={casual:[1920,1080],rooftop:[1536,1024],idol:[1536,1024],stage:[1774,887],anaru:[1920,1080],lucky:[1920,1080],kaguya:[1920,1080],aiura:[1920,1080],growup:[1920,1080],vwest:[1920,1080]};
   const [sourceW,sourceH]=sizes[group.sheet],scale=Math.min((W-160)/sourceW,740/sourceH);
   const originX=(W-sourceW*scale)/2,originY=150;
   if(group.matte){
@@ -1462,7 +1476,7 @@ function shotCharacters(t,sh,u){
   const focus=Math.floor(Math.max(0,local-2)/2)%actors.length;
   // solo 組的切圖來自各自獨立的立繪，沒有群像座標，改用網格平均排列（人數少時一列排開、每列置中）
   const solo=!!group.solo,n=actors.length,gw=sourceW*scale,gh=sourceH*scale;
-  const cols=solo?(n===12?6:n===10?5:Math.min(4,Math.max(1,n))):1,rows=solo?Math.ceil(n/cols):1;
+  const cols=solo?(n>12?6:n===12?6:n===10?5:Math.min(4,Math.max(1,n))):1,rows=solo?Math.ceil(n/cols):1;
   const cw=solo?gw/cols:0,chh=solo?gh/rows:0;
   actors.forEach((actor,i)=>{
     const col=solo?i%cols:i,row=solo?Math.floor(i/cols):0;
@@ -1593,6 +1607,7 @@ window.addEventListener('error', e => { if(RENDER) post('error', String(e.messag
 window.addEventListener('unhandledrejection', e => { if(RENDER) post('error', String(e.reason?.stack || e.reason)); });
 
 async function init(){
+  window.SpriteRig?.setCacheLimit?.(Math.max(MEMBERS.length,...(CHARACTER_PV?CHARACTER_GROUPS.map(g=>g.count):[])));
   if(RENDER) document.body.classList.add('render');
   const sel = $('#song');
   SONGS.forEach((s, i) => sel.add(new Option(`${s.title}（${s.ver}）`, i, false, s === song)));
@@ -1607,6 +1622,7 @@ async function init(){
   await Promise.all([jpFont(40), zhFont(40), `300 40px ${FONT.mincho}`, `40px ${FONT.maru}`, `italic 800 40px ${FONT.logo}`, `600 40px ${FONT.cond}`]
     .map(f => document.fonts.load(f, 'あ漢字ABC')));
   const castJson = await fetch('assets/ref/cast/cast.json').then(r => { if(!r.ok) throw new Error('找不到角色切圖，請先執行 node tools/cutout.mjs'); return r.json(); });
+  if(song.art==='vwest') FACES.push(...castJson.vwest.map(m=>m.groupFace));
   await Promise.all(MEMBERS.map(async m => { m.meta = castJson[m.sheet][m.idx]; m.img = await loadImg('assets/ref/cast/' + m.meta.file); }));
   if(CHARACTER_PV) await Promise.all(CHARACTER_GROUPS.map(async group=>{
     if(castJson[group.sheet]?.length!==group.count) throw new Error(`${group.title}切圖未完成，請執行 node tools/cutout.mjs`);

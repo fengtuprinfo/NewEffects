@@ -22,6 +22,10 @@ let dancers = MEMBERS;
 // 後排站位：預設五人沿用原本的左右分佈，其他人數以中央主唱為軸左右交錯
 const DEFAULT_SLOTS = [[.10, .66], [.27, .65], [.40, .63], [.74, .65], [.90, .66]];
 function backSlots(n){
+  if(n>11){
+    const rows=[Math.ceil(n/2),Math.floor(n/2)];
+    return rows.flatMap((count,row)=>Array.from({length:count},(_,i)=>[(i+.5)/count,row===0?.39:.59]));
+  }
   if(n === DEFAULT_SLOTS.length) return DEFAULT_SLOTS;
   const out = new Array(n), spread = (count, from, to) =>
     Array.from({length: count}, (_, i) => count === 1 ? (from + to)/2 : from + (to - from)*i/(count - 1));
@@ -108,7 +112,8 @@ function bow(x, y, sz, col, edge){
 function drawDancer(m, x, y, s, st){
   if(prefs.danceStyle === 'anime' && window.SpriteDancers?.ready){
     const fit=Math.min(1, CW/CH/2.05);
-    SpriteDancers.draw(g,m.index,x,y,CH*(st.mic ? .53 : .43)*fit,{
+    const crowded=dancers.length>12;
+    SpriteDancers.draw(g,m.index,x,y,CH*(st.mic ? (crowded?.43:.53) : (crowded?.29:.43))*fit,{
       wave:st.armWave,energy:st.energy,hop:st.hopY*CH/155,
       tilt:st.tilt,squash:st.squash*.45,mouth:st.mouth,lead:st.mic
     });
@@ -252,7 +257,10 @@ function frame(dt, playing){
   if(window.SpriteDancers?.use) SpriteDancers.use(set);
   // 人數跟著這首歌的卡司走（best4u／anaru 六人、lucky 八人），素材未載入時沿用六人
   const cnt = window.SpriteDancers?.count?.(set) || MEMBERS.length;
-  if(dancers.length !== cnt) dancers = Array.from({length: cnt}, (_, i) => ({...MEMBERS[i % MEMBERS.length], index: i}));
+  if(dancers.length !== cnt){
+    dancers = Array.from({length: cnt}, (_, i) => ({...MEMBERS[i % MEMBERS.length], index: i}));
+    window.SpriteRig?.setCacheLimit?.(cnt);
+  }
   const lead = Math.max(0, Math.min(cnt - 1, prefs.danceLead === 'auto' ? (song.lead || 0) : (+prefs.danceLead || 0)));
   const order = Array.from({length: cnt - 1}, (_, k) => (lead + k + 1) % cnt);
   const p = phase(), moveFn = MOVES[Math.floor(p/8) % MOVES.length];
