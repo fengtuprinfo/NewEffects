@@ -302,6 +302,11 @@
 
   // 逐像素算權重，並把原圖依權重拆成五張圖層
   function bake(img){
+    const cached=bakeCache.get(img);
+    if(cached){
+      bakeCache.delete(img); bakeCache.set(img,cached);
+      return cached;
+    }
     const r = measure(img);
     if(!r.ok) return null;
     const {W, H} = r, N = W*H;
