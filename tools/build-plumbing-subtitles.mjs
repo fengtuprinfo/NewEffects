@@ -8,7 +8,7 @@ const stamp=t=>{
   const ms=Math.round(t*1000),pad=(v,n=2)=>String(v).padStart(n,'0');
   return `${pad(Math.floor(ms/3600000))}:${pad(Math.floor(ms/60000)%60)}:${pad(Math.floor(ms/1000)%60)},${pad(ms%1000,3)}`;
 };
-for(const [lang,title,count] of [['zh','水電進化 Show',27],['en','水電進化 Show(英文歌詞)',28],['ja','水電進化 Show(日文歌詞)',28]]){
+for(const [lang,title,count] of [['zh','水電進化 Show',27],['en','水電進化 Show(英文歌詞)',28],['ja','水電進化 Show(日文歌詞)',28],['yue','水電進化 Show(粵文歌詞)',28]]){
   const lines=fs.readFileSync(path.join(ref,`lyrics-${lang}.txt`),'utf8').split(/\r?\n/).filter(l=>l.trim());
   const {duration,cues}=JSON.parse(fs.readFileSync(path.join(ref,`timings-${lang}.json`),'utf8'));
   if(lines.length!==count||!Number.isFinite(duration)||duration<=0||new Set(cues.map(c=>c.line)).size!==count) throw Error(`Expected timings for all ${count} ${lang} source lines`);

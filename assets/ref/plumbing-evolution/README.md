@@ -19,4 +19,10 @@
 
 - [使用者提供的 Suno 分享頁](https://suno.com/s/4c76h11DcL4ZxL7k)，曲目 ID `8fd67acc-baec-4a3b-9e65-c7df55ea3922`，模型 `v6-mini`。PV 編號 `28`，第二版 ID `suno-8fd67acc`。
 - 介面名稱「水電進化 Show(日文歌詞)」，完整音訊約 165.97 秒。`lyrics-ja.txt` 保存 28 行日文原文，保留假名、空格與獨立的「ラストサビ」標記，時間軸另存 `timings-ja.json`，由日文音源獨立對齊。
-- `node tools/build-plumbing-subtitles.mjs` 可重建中、英、日三份字幕。
+- 日文版亦由同一字幕重建工具處理。
+
+## 粵文版
+
+- [使用者提供的 Suno 分享頁](https://suno.com/s/ASdd0bCWhgisDEIk)，曲目 ID `8d63d0a5-3903-4fad-8661-0d645c522129`，模型 `v6-mini`。PV 編號 `29`，第二版 ID `suno-8d63d0a5`。
+- 介面名稱「水電進化 Show(粵文歌詞)」，完整音訊約 169.49 秒。`lyrics-yue.txt` 保存 28 行粵文原文，保留全形空格、High／Fans、粵文用字、和聲與「最後副歌」標記。
+- `timings-yue.json` 依粵語音源獨立對齊，不套用其他語言時間軸。`node tools/build-plumbing-subtitles.mjs` 可重建中、英、日、粵四份字幕。
