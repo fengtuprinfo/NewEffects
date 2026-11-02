@@ -1606,12 +1606,22 @@ function post(path, body){ return fetch(`/__pv/${path}?job=${encodeURIComponent(
 window.addEventListener('error', e => { if(RENDER) post('error', String(e.message || e)); });
 window.addEventListener('unhandledrejection', e => { if(RENDER) post('error', String(e.reason?.stack || e.reason)); });
 
+let previewAudio = null;
+function changeSong(index){
+  const query = new URLSearchParams({song:String((index+SONGS.length)%SONGS.length)});
+  if(CHARACTER_PV) query.set('mode','characters');
+  if(previewAudio && !previewAudio.paused) query.set('autoplay','1');
+  location.search = query.toString();
+}
 async function init(){
   window.SpriteRig?.setCacheLimit?.(Math.max(MEMBERS.length,...(CHARACTER_PV?CHARACTER_GROUPS.map(g=>g.count):[])));
   if(RENDER) document.body.classList.add('render');
   const sel = $('#song');
   SONGS.forEach((s, i) => sel.add(new Option(`${s.title}（${s.ver}）`, i, false, s === song)));
-  sel.onchange = () => { location.search = `?song=${sel.value}${CHARACTER_PV ? '&mode=characters' : ''}`; };
+  sel.onchange = () => changeSong(+sel.value);
+  $('#prevSong').onclick = () => changeSong(SONGS.indexOf(song)-1);
+  $('#nextSong').onclick = () => changeSong(SONGS.indexOf(song)+1);
+  $('#prevSong').disabled = $('#nextSong').disabled = SONGS.length<2;
   $('#modeLink').href=CHARACTER_PV ? `index.html?song=${SONGS.indexOf(song)}` : `index.html?song=${SONGS.indexOf(song)}&mode=characters`;
   $('#modeLink').textContent=CHARACTER_PV ? '歌詞 PV' : '人物 PV';
   if(CHARACTER_PV) document.title='人物動畫 PV · '+song.title;
@@ -1670,9 +1680,22 @@ async function renderAll(){
 function preview(buf){
   const audioURL=URL.createObjectURL(new Blob([buf],{type:'audio/mpeg'}));
   const audio = new Audio(audioURL);
+  previewAudio = audio;
   PlayerVolume.bind(audio);
   addEventListener('pagehide',()=>URL.revokeObjectURL(audioURL),{once:true});
   const play = $('#play'), seek = $('#seek'), time = $('#time');
+  let seekDragging = false;
+  const releaseSeek = () => { seekDragging = false; };
+  seek.addEventListener('pointerdown', () => { seekDragging = true; });
+  for(const event of ['pointerup','pointercancel','blur']) addEventListener(event,releaseSeek);
+  seek.addEventListener('blur',releaseSeek);
+  const skip = delta => {
+    window.PV.hold=false;
+    audio.currentTime=clamp(audio.currentTime+delta,0,A.dur);
+  };
+  $('#rewind5').disabled = $('#forward5').disabled = false;
+  $('#rewind5').onclick = () => skip(-5);
+  $('#forward5').onclick = () => skip(5);
   const fmt = s => `${Math.floor(s/60)}:${pad(Math.floor(s % 60))}`;
   play.disabled = false; play.textContent = '▶ 播放';
   play.onclick = () => {
@@ -1684,14 +1707,17 @@ function preview(buf){
   audio.onpause = () => { play.textContent = '▶ 播放'; };
   seek.oninput = () => { window.PV.hold=false;audio.currentTime = seek.value/1000*A.dur; };
   const start = clamp(+(params.get('t') || 0),0,A.dur);
-  audio.addEventListener('loadedmetadata',()=>{audio.currentTime=start;},{once:true});
+  audio.addEventListener('loadedmetadata',()=>{
+    audio.currentTime=start;
+    if(params.get('autoplay')==='1') audio.play().catch(e=>msg('播放失敗：'+e.message));
+  },{once:true});
   addEventListener('keydown', e => { if(e.code === 'Space' && e.target === document.body){ e.preventDefault(); play.click(); } });
   let idle = 0; addEventListener('pointermove', () => { idle = performance.now(); $('#ui').classList.remove('idle'); });
   const loop = () => {
     const t = Math.min(audio.readyState ? audio.currentTime : start,A.dur);
     if(audio.currentTime>=A.dur && !audio.paused) audio.pause();
     if(!window.PV.hold) render(Math.min(t, A.dur - 1/FPS));
-    if(document.activeElement !== seek) seek.value = Math.round(t/A.dur*1000);
+    if(!seekDragging) seek.value = Math.round(t/A.dur*1000);
     time.textContent = `${fmt(t)} / ${fmt(A.dur)}`;
     $('#ui').classList.toggle('idle', !audio.paused && !$('#ui').contains(document.activeElement) && performance.now() - idle > 2500);
     requestAnimationFrame(loop);

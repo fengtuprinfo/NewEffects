@@ -156,6 +156,8 @@ header .pv-link:hover{filter:brightness(1.1)}
 .icon{width:40px;height:40px;border-radius:50%;border:0;background:var(--pink);color:#2a0717;display:grid;place-items:center;cursor:pointer;flex:none}
 .icon.ghost{background:var(--panel2);color:var(--text)}
 .icon svg{width:18px;height:18px}
+.icon:disabled{opacity:.4;cursor:default}
+.icon.seek-step{font-size:11px;white-space:nowrap}
 #timeLbl{font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap;min-width:92px}
 input[type=range]{accent-color:var(--pink)}
 #seek{flex:1;min-width:80px}
@@ -244,7 +246,11 @@ kbd{background:var(--panel2);border:1px solid var(--line);border-bottom-width:2p
     </div>
 
     <div class="bar">
+      <button class="icon ghost" id="prevSong" type="button" aria-label="上一首" title="上一首">⏮</button>
+      <button class="icon ghost seek-step" id="rewind5" type="button" aria-label="倒退 5 秒" title="倒退 5 秒">−5秒</button>
       <button class="icon" id="playBtn" title="播放／暫停 (K)"></button>
+      <button class="icon ghost seek-step" id="forward5" type="button" aria-label="快轉 5 秒" title="快轉 5 秒">+5秒</button>
+      <button class="icon ghost" id="nextSong" type="button" aria-label="下一首" title="下一首">⏭</button>
       <span id="timeLbl">0:00 / 0:00</span>
       <div class="seg" id="srcSeg" hidden title="音源"><button data-src="mp3">MP3</button><button data-src="yt">YouTube</button></div>
       <input type="range" id="seek" min="0" max="1000" value="0" step="1">
@@ -489,6 +495,7 @@ const saveSongs = () => { store.set('lyricfx:songs', songs); store.set('lyricfx:
 for(const d of DEFAULT_SONGS) if(!songs.some(s => s.id === d.id) && !removedSongs.includes(d.id)) songs.push({...d});
 
 function renderSongs(){
+  $('#prevSong').disabled = $('#nextSong').disabled = songs.length<2;
   const ul = $('#songs'); ul.innerHTML = '';
   songs.forEach((s, i) => {
     const d = getLyricsData('yt:' + s.id);
@@ -523,14 +530,18 @@ function applySource(id, autoplay, at = 0){
   showMsg('');
   if(srcOf(id) === 'mp3'){
     if(media.ready) media.yt.pauseVideo();
+    vid.pause();
     media.kind = 'file'; vid.hidden = true;
     if(ytEl) ytEl.style.visibility = 'hidden';
-    const go = () => { vid.currentTime = at; if(autoplay) vid.play().catch(() => {}); };
+    const go = () => {
+      if(curSong!==id || media.kind!=='file' || vid._song!==id) return;
+      vid.currentTime = at; if(autoplay) vid.play().catch(() => {});
+    };
     // python http.server 不支援 Range，直接串流會無法拖曳進度，所以先整個讀進記憶體
     if(vid._song !== id){
       vid._song = id; vid.removeAttribute('src');
       audioUrl(id).then(url => {
-        if(vid._song !== id) return;
+        if(curSong!==id || media.kind!=='file' || vid._song!==id) return;
         if(!url){
           delete audioUrls[id];
           prefs.src = {...(prefs.src || {}), [id]:'yt'}; savePrefs();
@@ -1100,12 +1111,34 @@ function frame(ts){
 }
 
 /* ---------------- controls ---------------- */
+function stepSong(direction){
+  if(!songs.length) return;
+  const current=songs.findIndex(s=>s.id===curSong);
+  const next=current<0 ? (direction>0?0:songs.length-1) : (current+direction+songs.length)%songs.length;
+  playSong(songs[next].id,media.playing());
+}
+$('#prevSong').onclick = () => stepSong(-1);
+$('#nextSong').onclick = () => stepSong(1);
+function skipSeconds(delta){
+  const duration=media.duration();
+  if(Number.isFinite(duration)&&duration>0) media.seek(clamp(media.time()+delta,0,duration));
+}
+$('#rewind5').onclick = () => skipSeconds(-5);
+$('#forward5').onclick = () => skipSeconds(5);
 $('#playBtn').onclick = () => media.toggle();
 $('#catcher').onclick = () => media.toggle();
 $('#catcher').ondblclick = () => toggleFs();
 const seekEl = $('#seek');
-seekEl.addEventListener('input', () => { seeking = true; });
-seekEl.addEventListener('change', () => { media.seek(seekEl.value/1000*media.duration()); seeking = false; });
+const seekToSlider = () => {
+  const duration=media.duration();
+  if(Number.isFinite(duration)&&duration>0) media.seek(seekEl.value/1000*duration);
+};
+const releaseSeek = () => { seeking = false; };
+seekEl.addEventListener('pointerdown', () => { seeking = true; });
+seekEl.addEventListener('input',seekToSlider);
+seekEl.addEventListener('change', () => { seekToSlider(); releaseSeek(); });
+seekEl.addEventListener('blur',releaseSeek);
+for(const event of ['pointerup','pointercancel','blur']) addEventListener(event,releaseSeek);
 function toggleFs(){ document.fullscreenElement ? document.exitFullscreen() : stage.requestFullscreen?.(); }
 $('#fsBtn').onclick = toggleFs;
 
