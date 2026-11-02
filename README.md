@@ -47,6 +47,8 @@ macOS 也可雙擊 `啟動播放器.command`，會在終端機啟動伺服器並
 
 幸運八人的素材來自獨立立繪，使用內建 imagegen 去背。牙妹已依使用者提供的橘髮持書圖替換成 Claude 娘，魚妹改為白髮龍角的 GPT 娘；鯨魚娘、咕咕嘎嘎、鋒兄、塗哥、喵布布、喵白白沿用既有切圖。國語、英語、日語與粵語版共用此八人卡司，兩版播放器、人物 PV 與圖庫同步更新。來源對照與完整提示見 [assets/ref/lucky-remade/README.md](assets/ref/lucky-remade/README.md)。
 
+四版的舞台、騎車、群像與人物 PV 皆讓鋒兄、塗哥並列中央；第二版預設也使用雙 C 位，手動選主唱時可覆寫。騎車鏡頭顯示全員，雙人膠卷與三人視窗每 2.4 秒依序輪換人物，視窗標題顯示姓名。
+
 - `assets/ref/lucky-remade/lucky-1.png`～`lucky-7.png` 保存七張透明原圖，保留服裝、白鞋與配件；Claude 娘保留書與長裙，GPT 娘保留龍角、翅膀、尾巴及 GPT 紋飾，依使用者要求移除右上方的藍色 Sora2 符號與軌跡。
 - `node tools/rebuild-lucky.mjs`：依 alpha 裁切空白、加透明邊距，更新 `assets/ref/cast/lucky-1.png`～`lucky-7.png` 與 `cast.json`，再重建群像。`node tools/cutout-solo.mjs` 會自動使用相同流程，避免舊白底填充挖掉白鞋。
 - `node tools/build-group.mjs`：單獨把目前八張切圖拼成 1920×1080 群像主視覺 `assets/ref/lucky8.png`，並印出 `ARTS.lucky8` 要用的臉部座標。

@@ -48,7 +48,8 @@ const faces = [];
 list.forEach((meta, i) => {
   const {w: iw, h: ih, rgba} = load(path.join(CAST, meta.file));
   const k = FIG/ih, dw = Math.round(iw*k), dh = FIG;
-  const cx = (i % COLS)*CELL_W, cy = Math.floor(i/COLS)*CELL_H;
+  const slot=[0,1,5,6,2,3,4,7][i]; // Feng and Tu share the two front-center cells.
+  const cx = (slot % COLS)*CELL_W, cy = Math.floor(slot/COLS)*CELL_H;
   const left = Math.round(cx + (CELL_W - dw)/2), top = Math.round(cy + CELL_H - PAD - dh);
   for(let y = 0; y < dh; y++) for(let x = 0; x < dw; x++){
     const sx = Math.min(iw - 1, Math.floor(x/k)), sy = Math.min(ih - 1, Math.floor(y/k));

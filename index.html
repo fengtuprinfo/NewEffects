@@ -28,6 +28,7 @@ body{--ui-h:104px;display:grid;place-items:center;box-sizing:border-box;padding-
 #volumeValue{font-size:12px;min-width:4ch;text-align:right;font-variant-numeric:tabular-nums}
 #time{font:13px Menlo,monospace;white-space:nowrap}
 #ui a{color:#9fd2ff;font-size:13px;white-space:nowrap}
+.player-links{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;flex-basis:100%;order:6}
 #msg{position:fixed;top:16px;left:50%;translate:-50% 0;font-size:14px;background:rgba(0,0,0,.6);padding:6px 12px;border-radius:8px}
 #msg:empty{display:none}
 body.render #ui,body.render #msg{display:none}
@@ -56,9 +57,11 @@ body.render #pv{width:min(100vw,calc(100vh*16/9))}
     <input id="volume" type="range" min="0" max="100" step="1" value="100" aria-label="音量" disabled>
     <span id="volumeValue">100%</span>
   </div>
-  <a id="modeLink" href="index.html?mode=characters">人物 PV</a>
-  <a href="cast.html">切圖</a>
-  <a href="v2.html">第二版本：歌詞播放器 →</a>
+  <nav class="player-links" aria-label="播放器頁面">
+    <a id="modeLink" href="index.html?mode=characters">人物 PV</a>
+    <a href="cast.html">切圖</a>
+    <a href="v2.html">第二版本：歌詞播放器 →</a>
+  </nav>
 </div>
 <div id="msg"></div>
 <script>

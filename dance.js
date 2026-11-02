@@ -113,7 +113,7 @@ function drawDancer(m, x, y, s, st){
   if(prefs.danceStyle === 'anime' && window.SpriteDancers?.ready){
     const fit=Math.min(1, CW/CH/2.05);
     const crowded=dancers.length>12;
-    SpriteDancers.draw(g,m.index,x,y,CH*(st.mic ? (crowded?.43:.53) : (crowded?.29:.43))*fit,{
+    SpriteDancers.draw(g,m.index,x,y,CH*(st.mic ? (crowded?.43:st.duet?.47:.53) : (crowded?.29:.43))*fit,{
       wave:st.armWave,energy:st.energy,hop:st.hopY*CH/155,
       tilt:st.tilt,squash:st.squash*.45,mouth:st.mouth,lead:st.mic
     });
@@ -262,7 +262,8 @@ function frame(dt, playing){
     window.SpriteRig?.setCacheLimit?.(cnt);
   }
   const lead = Math.max(0, Math.min(cnt - 1, prefs.danceLead === 'auto' ? (song.lead || 0) : (+prefs.danceLead || 0)));
-  const order = Array.from({length: cnt - 1}, (_, k) => (lead + k + 1) % cnt);
+  const centers=set==='lucky'&&prefs.danceLead==='auto' ? [2,3] : [lead];
+  const order = Array.from({length: cnt - 1}, (_, k) => (lead + k + 1) % cnt).filter(i=>!centers.includes(i));
   const p = phase(), moveFn = MOVES[Math.floor(p/8) % MOVES.length];
   const strength=+prefs.danceEnergy || 1;
   const amp = playing ? (1.6 + 2.6*clamp(level, 0, 1))*strength : 0;
@@ -276,7 +277,7 @@ function frame(dt, playing){
     m.blinkT = Math.max(0, m.blinkT - dt);
   }
 
-  const slots = backSlots(order.length);
+  const slots = centers.length===2 ? [[.07,.60],[.20,.60],[.32,.60],[.68,.60],[.80,.60],[.93,.60]] : backSlots(order.length);
   order.forEach((mi, k) => {
     const [fx, fy] = slots[k], left = fx < .5;
     const pk = p - k*.05;
@@ -294,18 +295,18 @@ function frame(dt, playing){
   const mv = moveFn(p);
   const mouth = singing && playing ? clamp((vocal - .1)*3.2, 0, 1) : 0;
   const hopL = playing ? AS(p)*amp*.55*mv.hop : Math.max(0, breath);
-  const sx = CW*.55, sy = CH*.72, ss = unit*.38;
-  drawDancer(dancers[lead], sx, sy, ss, {
+  const sx = CW*(centers.length===2?.42:.55), sy = CH*(centers.length===2?.76:.72), ss = unit*.38;
+  centers.forEach((mi,i)=>drawDancer(dancers[mi],centers.length===2?CW*[.42,.58][i]:sx,sy,ss,{
     la: singing ? mv.la : mv.la, ra: 2.72 + .08*S(p), tilt: mv.tilt*.5,
     hopY: hopL, squash: playing ? .04*Math.pow(1 - AS(p), 6)*level : 0, flare: hopL*.25,
     sway: S(p/2),armWave:S(p/2),energy:playing ? strength : 0,
-    happy: false, blink: MEMBERS[lead % MEMBERS.length].blinkT > 0 && !mouth, mouth, mic: true
-  });
+    happy: false, blink: MEMBERS[mi % MEMBERS.length].blinkT > 0 && !mouth, mouth:mi===lead?mouth:0, mic:true,duet:centers.length===2
+  }));
   const activeStyle=prefs.danceStyle === 'anime' && window.SpriteDancers?.ready ? 'anime' : 'chibi';
   const mode=an && media.kind==='file' ? 'MP3 音量／節拍驅動' : '固定 120 BPM';
   const label=(activeStyle==='anime' ? `${cnt} 位參考人物` : `${cnt} 位 Q 版偶像`)+' · '+(playing ? mode : '按播放開始');
   if(label!==lastStatus){lastStatus=label;const el=document.getElementById('danceStatus');if(el)el.textContent=label;}
-  info={style:activeStyle,count:cnt,lead,playing,singing,mouth,phase:p,mode};
+  info={style:activeStyle,count:cnt,lead,centers,playing,singing,mouth,phase:p,mode};
 
   // 音符
   if(prefs.particles && singing && playing && mouth > .15){

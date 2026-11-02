@@ -29,7 +29,7 @@ const ARTS = {
     faces: [[181, 369], [588, 377], [919, 402], [1216, 372], [1486, 367], [1726, 380]]},
   // 招財喵布布八人：由 tools/build-group.mjs 把 tools/cutout-solo.mjs 的切圖拼成群像
   lucky8: {src: 'assets/ref/lucky8.png', crop: [0, 0, 1920, 1080],
-    faces: [[228, 104], [720, 104], [1198, 104], [1675, 104], [238, 644], [719, 645], [1204, 644], [1674, 644]]},
+    faces: [[228, 104], [720, 104], [718, 644], [1195, 644], [1198, 104], [1679, 105], [244, 644], [1674, 644]]},
   aiura: {src: 'assets/ref/aiura-group.png', crop: [0, 0, 1920, 1080],
     faces: [[976, 285], [425, 287], [1469, 294]]},
   // 超かぐや姫！：畫面取自歌詞影片，由 tools/cutout-kaguya.py 去背切圖並拼成群像
@@ -167,6 +167,7 @@ const ART = ARTS[song.art], AW = ART.crop[2], AH = ART.crop[3], FACES = ART.face
 const MEMBERS = song.cast.map(([sheet, idx, name, color], i) => ({sheet, idx, name: name || `No.${pad(i + 1)}`, color, img: null, meta: null}));
 const LEAD = clamp(+(song.lead ?? 0) | 0, 0, MEMBERS.length - 1);
 const OTHERS = MEMBERS.map((_, i) => i).filter(i => i !== LEAD);
+const CENTERS = song.cast[0][0] === 'lucky' ? [2,3] : [LEAD];
 const BASE_CHARACTER_GROUPS = [
   {sheet:'casual',title:'十二人 · 制服與便服',src:'assets/ref/casual-remade/group.png',colors:['#11bbde','#ff86b1'],count:12,solo:true},
   {sheet:'rooftop',title:'屋頂六人 · SUNRISE',src:'assets/ref/rooftop6.webp',colors:['#70ccff','#bdf1bc'],count:6},
@@ -377,11 +378,10 @@ function buildShots(){
       if(type === 'stage') o.variant = ['wide', 'close', 'screen', 'close2'][k % 4];
       if(type === 'typo'){ o.member = k % 2 ? OTHERS[(k >> 1) % OTHERS.length] : LEAD; o.side = k % 2; }
       if(type === 'film'){
-        const n2 = MEMBERS.length, a = k % n2;
-        let b = (a + 1 + (k*3) % Math.max(1, n2 - 1)) % n2; if(b === a) b = (a + 1) % n2;
-        o.pair = [a, b];
+        o.rotationOffset=k*2;
+        o.pair = [k*2 % MEMBERS.length, (k*2+1) % MEMBERS.length];
       }
-      if(type === 'windows'){ o.members = [LEAD, OTHERS[(k*2) % OTHERS.length], OTHERS[(k*2 + 1) % OTHERS.length]]; o.layout = k % 2; }
+      if(type === 'windows'){ o.rotationOffset=k*3; o.members=Array.from({length:3},(_,i)=>(k*3+i)%MEMBERS.length); o.layout = k % 2; }
       add(type, s, e, o);
     }
     if(next && next.start - c.end > 1 && c.end < outroStart){
@@ -810,12 +810,18 @@ function strip(x, w, tape, pos, t, kind){
   g.fillStyle = sg; g.fillRect(x, 0, w, H);
   g.textAlign = 'left'; g.textBaseline = 'alphabetic';
 }
+// Advance through the whole cast within each shot and across successive shots.
+function rotatingMembers(t,sh,count){
+  const offset=sh.rotationOffset ?? 0;
+  const turn=Math.floor(Math.max(0,t-sh.start)/2.4);
+  return Array.from({length:Math.min(count,MEMBERS.length)},(_,i)=>(offset+turn*count+i)%MEMBERS.length);
+}
 function shotFilm(t, sh, u){
   backdrop(t, {dim: .55});
   bokeh(t, 8, 1);
   const px = 540, pw = 840;
   // 中央視窗放實際在跳舞的成員（而不是靜態主視覺）
-  const pair = (sh.pair || [LEAD, (LEAD + 1) % MEMBERS.length]).filter(m => MEMBERS[m]?.img);
+  const pair = rotatingMembers(t,sh,2).filter(m => MEMBERS[m]?.img);
   g.save();
   g.beginPath(); g.rect(px, 0, pw, H); g.clip();
   const bg = g.createLinearGradient(0, 0, 0, H);
@@ -945,6 +951,7 @@ const WIN_LAYOUTS = [
   [[360, 460, 540, 580, .02], [960, 430, 580, 600, -.01], [1560, 460, 540, 580, .016]]
 ];
 function shotWindows(t, sh, u){
+  const members=rotatingMembers(t,sh,3);
   g.drawImage(C.pastel, 0, 0);
   g.save(); g.globalAlpha = .5; bokeh(t, 6, 4); g.restore();
   for(let i = 0; i < 14; i++){
@@ -955,7 +962,7 @@ function shotWindows(t, sh, u){
     g.fill(); g.restore();
   }
   WIN_LAYOUTS[sh.layout].forEach(([cx, cy, w, h, rot], i) => {
-    const m = sh.members[i], mem = MEMBERS[m], ap = easeBack((t - sh.start - i*.12)/.45);
+    const m = members[i % members.length], mem = MEMBERS[m], ap = easeBack((t - sh.start - i*.12)/.45);
     if(ap <= 0) return;
     g.save(); g.translate(cx, cy + Math.sin(t*1.4 + i*2)*8); g.rotate(rot); g.scale(ap, ap);
     const x = -w/2, y = -h/2, bar = 54;
@@ -976,7 +983,7 @@ function shotWindows(t, sh, u){
     g.font = `800 26px ${FONT.jp}`; g.fillStyle = '#ffffff'; g.textBaseline = 'middle';
     g.beginPath(); g.arc(x + 30, y + bar/2, 13, 0, Math.PI*2); g.fill();
     g.fillStyle = mem.color; g.beginPath(); g.arc(x + 30, y + bar/2, 6, 0, Math.PI*2); g.fill();
-    g.fillStyle = '#ffffff'; g.fillText(`${mem.name}.pv`, x + 54, y + bar/2 + 1);
+    g.fillStyle = '#ffffff'; g.fillText(mem.name, x + 54, y + bar/2 + 1);
     g.font = `700 15px ${FONT.cond}`; g.letterSpacing = '4px'; g.textAlign = 'right';
     g.fillText(`MEMBER ${pad(m + 1)}`, x + w - 120, y + bar/2 + 1); g.letterSpacing = '0px'; g.textAlign = 'left';
     for(let b = 0; b < 3; b++){ g.beginPath(); g.arc(x + w - 84 + b*28, y + bar/2, 10, 0, Math.PI*2); g.lineWidth = 3; g.strokeStyle = T.deep; g.fillStyle = '#ffffff'; g.fill(); g.stroke(); }
@@ -1097,7 +1104,12 @@ function shotStage(t, sh, u){
   }
   // 舞者：依卡司人數排成後排／中排／前排，中央是主唱。
   // nx、ny 是安全框裡的位置（ny 是把抬手和鞋底的餘裕算進去之後的腳底），nh 是希望的身高占比。
-  const O = OTHERS, spots = O.length > 11
+  const O = OTHERS, duo = CENTERS.length===2;
+  const supporting=MEMBERS.map((_,i)=>i).filter(i=>!CENTERS.includes(i));
+  const spots = duo
+    ? [...supporting.map((m,i)=>({nx:[.07,.20,.32,.68,.80,.93][i],ny:.72,nh:.40,m})),
+       {nx:.42,ny:1,nh:.56,m:CENTERS[0]},{nx:.58,ny:1,nh:.56,m:CENTERS[1]}]
+    : O.length > 11
     ? [...O.slice(0,6).map((m,i)=>({nx:(i+.5)/6,ny:.42,nh:.28,m})),
        ...O.slice(6,12).map((m,i)=>({nx:(i+.5)/6,ny:.71,nh:.30,m})),
        ...O.slice(12).map((m,i)=>({nx:[.12,.32,.68,.88][i],ny:1,nh:.34,m})),{nx:.5,ny:1,nh:.37,m:LEAD}]
@@ -1120,7 +1132,7 @@ function shotStage(t, sh, u){
        {nx:.50, ny:1, nh:.70, m:LEAD}];
   // 後排正中央會被主唱擋住。手張得很開的立繪，冒出的頭和手臂會像主唱的殘影，每個景別都不畫；
   // 較窄的立繪只在特寫拿掉，廣角仍留著當後排。
-  const centerBack = O.length >= 9 ? -1 : O.length >= 7 ? 2 : O.length >= 5 ? 1 : -1;  const intro = sh.variant === 'intro' ? clamp((t - .5)/1.5) : 1;
+  const centerBack = duo ? -1 : O.length >= 9 ? -1 : O.length >= 7 ? 2 : O.length >= 5 ? 1 : -1;  const intro = sh.variant === 'intro' ? clamp((t - .5)/1.5) : 1;
   const inv = (cam2, x, y) => [cam2.fx + (x - cam2.fx)/cam2.z, cam2.fy + (y - cam2.fy)/cam2.z];
   const corners = [[STAGE_SAFE.l, STAGE_SAFE.t], [STAGE_SAFE.r, STAGE_SAFE.t], [STAGE_SAFE.l, STAGE_SAFE.b], [STAGE_SAFE.r, STAGE_SAFE.b]].map(([x, y]) => inv(camFit, x, y));
   const box = {
@@ -1351,17 +1363,18 @@ function shotBike(t, sh, u){
   }
   g.restore();
   drawRoad(t, horizon, 380);
-  // 鏡頭貼近：主唱大台在前景，其餘成員在後方依遠近縮小（由遠而近畫）
+  // Every cast member gets a bicycle; the featured pair share the foreground.
   const R = 100;
   const ride = (m, cx, cy, sc, o) => { g.save(); g.translate(cx, cy); g.scale(sc, sc); drawRider(m, 0, 0, R, t, o); g.restore(); };
-  const O = OTHERS;
-  const plan = [
-    [O[0], W*.28, horizon + 190, .62, {speed: 290, cadence: 3.1, frame: 'rgba(47,175,156,.78)'}],
-    [O[1], W*.70, horizon + 204, .66, {speed: 300, cadence: 3.2, frame: 'rgba(47,175,156,.78)'}],
-    [O[2], W*.08, horizon + 300, 1.0, {speed: 350, cadence: 3.6, frame: '#249e8c'}],
-    [O[3], W*.89, horizon + 312, 1.04, {speed: 360, cadence: 3.7, frame: '#249e8c'}],
-    [LEAD, W*.40, horizon + 430, 1.5, {speed: 430, cadence: 4.2, frame: '#2faf9c'}]
-  ];
+  const others=MEMBERS.map((_,i)=>i).filter(i=>!CENTERS.includes(i));
+  const rows=Math.ceil(others.length/6),cols=Math.ceil(others.length/Math.max(1,rows));
+  const plan=others.map((m,i)=>{
+    const row=Math.floor(i/cols),count=Math.min(cols,others.length-row*cols),col=i%cols;
+    return [m,W*(col+.5)/count,horizon+(rows===1?170:70+row*100),rows===1?.62:.38+row*.05,
+      {speed:290+row*20,cadence:3.1+m*.04,frame:'rgba(47,175,156,.78)'}];
+  });
+  CENTERS.forEach((m,i)=>plan.push([m,W*(CENTERS.length===2?[.36,.64][i]:.5),horizon+420,1.05,
+    {speed:430,cadence:4.2,frame:'#2faf9c'}]));
   plan.forEach(([m, cx, cy, sc, o]) => { if(m !== undefined) ride(m, cx, cy, sc, o); });
   g.save(); g.strokeStyle = 'rgba(255,255,255,.35)'; g.lineWidth = 3;    // 速度線
   for(let i = 0; i < 16; i++){
@@ -1371,7 +1384,7 @@ function shotBike(t, sh, u){
     g.beginPath(); g.moveTo(x, y); g.lineTo(x + len, y); g.stroke();
   }
   g.restore();
-  const tag = MEMBERS[LEAD].name;
+  const tag = CENTERS.map(m=>MEMBERS[m].name).join(' · ');
   g.save(); g.font = `700 30px ${FONT.jp}`;
   const tw = g.measureText(tag).width;
   roundRect(W - 70 - tw - 40, H - 250, tw + 40, 52, 26); g.fillStyle = MEMBERS[LEAD].color; g.fill();
@@ -1387,6 +1400,7 @@ function groupPhoto(t, lt, cw, ch){
   const order = MEMBERS.map((_, i) => i).filter(i => i !== LEAD);
   const center = (rows-1)*cols + Math.floor((N-(rows-1)*cols)/2);
   order.splice(Math.min(center, order.length), 0, LEAD);
+  if(CENTERS.length===2) order.splice(0,order.length,0,1,4,5,6,2,3,7);
   const cellW = cw/cols, cellH = ch/rows, pl = pulse(t), en = Math.max(energy(t), .7);
   order.forEach((m, k) => {
     const mem = MEMBERS[m]; if(!mem?.img) return;
@@ -1479,7 +1493,8 @@ function shotCharacters(t,sh,u){
   const cols=solo?(n>12?6:n===12?6:n===10?5:Math.min(4,Math.max(1,n))):1,rows=solo?Math.ceil(n/cols):1;
   const cw=solo?gw/cols:0,chh=solo?gh/rows:0;
   actors.forEach((actor,i)=>{
-    const col=solo?i%cols:i,row=solo?Math.floor(i/cols):0;
+    const slot=group.sheet==='lucky'?[0,1,5,6,2,3,4,7][i]:i;
+    const col=solo?slot%cols:i,row=solo?Math.floor(slot/cols):0;
     const inRow=solo?Math.min(cols,n-row*cols):1;
     const h=solo?Math.min(chh*.9,cw*.95*actor.meta.h/actor.meta.w):actor.meta.h*scale;
     const x=solo?originX+(gw-inRow*cw)/2+(col+.5)*cw:originX+(actor.meta.source[0]+actor.meta.w/2)*scale;
@@ -1697,19 +1712,22 @@ function preview(buf){
   $('#rewind5').onclick = () => skip(-5);
   $('#forward5').onclick = () => skip(5);
   const fmt = s => `${Math.floor(s/60)}:${pad(Math.floor(s % 60))}`;
+  const startPlayback = () => audio.play().catch(e=>{
+    msg(e.name==='NotAllowedError' ? '瀏覽器已暫停自動播放，請按「▶ 播放」開始。' : '播放失敗：'+e.message);
+  });
   play.disabled = false; play.textContent = '▶ 播放';
   play.onclick = () => {
     window.PV.hold=false;
     if(audio.currentTime>=A.dur) audio.currentTime=0;
-    audio.paused ? audio.play().catch(e=>msg('播放失敗：'+e.message)) : audio.pause();
+    audio.paused ? startPlayback() : audio.pause();
   };
-  audio.onplay = () => { play.textContent = '❚❚ 暫停'; };
+  audio.onplay = () => { msg(''); play.textContent = '❚❚ 暫停'; };
   audio.onpause = () => { play.textContent = '▶ 播放'; };
   seek.oninput = () => { window.PV.hold=false;audio.currentTime = seek.value/1000*A.dur; };
   const start = clamp(+(params.get('t') || 0),0,A.dur);
   audio.addEventListener('loadedmetadata',()=>{
     audio.currentTime=start;
-    if(params.get('autoplay')==='1') audio.play().catch(e=>msg('播放失敗：'+e.message));
+    if(params.get('autoplay')==='1') startPlayback();
   },{once:true});
   addEventListener('keydown', e => { if(e.code === 'Space' && e.target === document.body){ e.preventDefault(); play.click(); } });
   let idle = 0; addEventListener('pointermove', () => { idle = performance.now(); $('#ui').classList.remove('idle'); });
