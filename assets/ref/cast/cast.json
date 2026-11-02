@@ -581,29 +581,33 @@
   },
   {
    "file": "lucky-6.png",
-   "w": 1020,
-   "h": 1448,
-   "headX": 506,
-   "headY": 137,
+   "w": 934,
+   "h": 1683,
+   "headX": 477,
+   "headY": 158,
    "source": [
-    2,
-    41
+    10,
+    1
    ],
    "sheet": "lucky-remade/lucky-6.png",
-   "name": "牙妹"
+   "name": "Claude 娘",
+   "armScale": 0.03,
+   "legScale": 0.02
   },
   {
    "file": "lucky-7.png",
-   "w": 1023,
-   "h": 1413,
-   "headX": 509,
-   "headY": 134,
+   "w": 932,
+   "h": 1673,
+   "headX": 446,
+   "headY": 157,
    "source": [
-    1,
-    81
+    12,
+    -2
    ],
    "sheet": "lucky-remade/lucky-7.png",
-   "name": "魚妹"
+   "name": "GPT 娘",
+   "armScale": 0.03,
+   "legScale": 0.02
   }
  ],
  "kaguya": [

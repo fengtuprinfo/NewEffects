@@ -45,11 +45,11 @@ macOS 也可雙擊 `啟動播放器.command`，會在終端機啟動伺服器並
 
 ### 招財喵布布八人（單張立繪）
 
-幸運八人的素材來自獨立的 T-pose 立繪。咕咕嘎嘎、鋒兄、塗哥、喵布布、喵白白、牙妹、魚妹已依使用者此次提供的七張原圖，以內建 imagegen 重新去背並替換；鯨魚娘沿用既有切圖。來源對照與完整提示見 [assets/ref/lucky-remade/README.md](assets/ref/lucky-remade/README.md)。
+幸運八人的素材來自獨立立繪，使用內建 imagegen 去背。牙妹已依使用者提供的橘髮持書圖替換成 Claude 娘，魚妹改為白髮龍角的 GPT 娘；鯨魚娘、咕咕嘎嘎、鋒兄、塗哥、喵布布、喵白白沿用既有切圖。國語、英語、日語與粵語版共用此八人卡司，兩版播放器、人物 PV 與圖庫同步更新。來源對照與完整提示見 [assets/ref/lucky-remade/README.md](assets/ref/lucky-remade/README.md)。
 
-- `assets/ref/lucky-remade/lucky-1.png`～`lucky-7.png` 保存七張透明原圖，保留白鞋、衣服、耳朵、手指與尾巴。
+- `assets/ref/lucky-remade/lucky-1.png`～`lucky-7.png` 保存七張透明原圖，保留服裝、白鞋與配件；Claude 娘保留書與長裙，GPT 娘保留龍角、翅膀、尾巴及 GPT 紋飾，依使用者要求移除右上方的藍色 Sora2 符號與軌跡。
 - `node tools/rebuild-lucky.mjs`：依 alpha 裁切空白、加透明邊距，更新 `assets/ref/cast/lucky-1.png`～`lucky-7.png` 與 `cast.json`，再重建群像。`node tools/cutout-solo.mjs` 會自動使用相同流程，避免舊白底填充挖掉白鞋。
-- `node tools/build-group.mjs`：單獨把目前八張切圖拼成 1920×1080 群像主視覺 `assets/ref/lucky8.png`，並印出 `ARTS.lucky8` 要用的臉部座標；這個檔案是輸出群像，不是魚妹的來源圖。
+- `node tools/build-group.mjs`：單獨把目前八張切圖拼成 1920×1080 群像主視覺 `assets/ref/lucky8.png`，並印出 `ARTS.lucky8` 要用的臉部座標。
 - 這一組在人物 PV 裡只有一組造型（沒有四組輪替），因為切圖來自各自獨立的立繪，改用 4×2 網格排列。
 
 英文版「統一發票頭獎得主鋒兄威力彩頭獎得主塗哥(英文歌詞)」獨立加入兩版歌曲清單（PV 編號 10），使用使用者提供的 [Suno 音源](https://suno.com/s/NNjWp4nInpeloTf5)，附 20 段英中雙語同步字幕。沿用相同八人與鋒兄主唱，MP3、SRT 均納入 repo 供線上版使用；來源與原始歌詞見 [assets/ref/LUCKY-EN.md](assets/ref/LUCKY-EN.md)。

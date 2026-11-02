@@ -11,7 +11,7 @@ const REF = path.join(ROOT, 'assets/ref'), CAST = path.join(REF, 'cast');
 const manifestPath = path.join(CAST, 'cast.json');
 const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
 if(manifest.lucky?.length !== 8) throw new Error('Expected the existing eight-person lucky cast');
-const names = ['鯨魚娘', '咕咕嘎嘎', '鋒兄', '塗哥', '喵布布', '喵白白', '牙妹', '魚妹'];
+const names = ['鯨魚娘', '咕咕嘎嘎', '鋒兄', '塗哥', '喵布布', '喵白白', 'Claude 娘', 'GPT 娘'];
 const run = args => execFileSync('ffmpeg', ['-v', 'error', '-y', ...args], {maxBuffer: 32 << 20});
 for(let i = 1; i < 8; i++){
   const sheet = `lucky-remade/lucky-${i}.png`, input = path.join(REF, sheet);
@@ -35,7 +35,8 @@ for(let i = 1; i < 8; i++){
   run(['-i', input, '-vf', `crop=${cw}:${ch}:${x0}:${y0},pad=${cw+pad*2}:${ch+pad*2}:${pad}:${pad}:color=black@0`, '-frames:v', '1', '-pix_fmt', 'rgba', path.join(CAST, file)]);
   manifest.lucky[i] = {file, w: cw + pad*2, h: ch + pad*2,
     headX: Math.round(headSum/Math.max(1, headPixels)), headY: Math.round(ch*.09) + pad,
-    source: [x0 - pad, y0 - pad], sheet, name: names[i]};
+    source: [x0 - pad, y0 - pad], sheet, name: names[i],
+    ...(i>=6 ? {armScale:.03,legScale:.02} : {})};
   console.log(`${names[i]}: ${cw+pad*2}×${ch+pad*2}`);
 }
 fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 1) + '\n');

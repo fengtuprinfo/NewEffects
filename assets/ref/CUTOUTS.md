@@ -1,6 +1,6 @@
 # 複雜場景去背與人物切圖
 
-共 62 張切圖：制服／便服 12（依色條原圖逐位重製）、屋頂 6、RISE 演出服 5、黃昏舞台 9、生徒会 6、招財喵布布 8（單張立繪）、超かぐや姫！3（影片定格）、あいうら 3（封面參照重建）、ひまわりサーカス 10（人物圖去背）。人物索引依各組素材排列；造型包含重複人物。
+共 79 張切圖：制服／便服 12（依色條原圖逐位重製）、屋頂 6、RISE 演出服 5、黃昏舞台 9、生徒会 6、招財喵布布 8（單張立繪）、超かぐや姫！3（影片定格）、あいうら 3（封面參照重建）、ひまわりサーカス 10（人物圖去背）、V西2025 17（選手與監督）。人物索引依各組素材排列；造型包含重複人物。
 
 ひまわりサーカス十人素材與內建 imagegen 去背提示見 [growup/README.md](growup/README.md)，執行 `node tools/build-growup.mjs` 可保留 alpha 重建切圖與 5×2 群像。
 
@@ -10,7 +10,7 @@
 
 ## 招財喵布布八人（單張立繪）
 
-目前七位人物已由使用者原圖以內建 imagegen 重新去背替換，透明圖與提示存於 [lucky-remade/README.md](lucky-remade/README.md)。執行 `node tools/rebuild-lucky.mjs` 或 `node tools/cutout-solo.mjs` 會保留新素材的 alpha 並重建群像；下列 Vision 遮罩與白底填充為早期處理記錄。
+目前七位人物已由使用者原圖以內建 imagegen 去背，索引 6、7 分別為新替換的 Claude 娘與 GPT 娘，透明圖與提示存於 [lucky-remade/README.md](lucky-remade/README.md)。執行 `node tools/rebuild-lucky.mjs` 或 `node tools/cutout-solo.mjs` 會保留新素材的 alpha 並重建群像；下列 Vision 遮罩與白底填充為早期處理記錄。
 
 `assets/ref/lucky1.png`～`lucky8.png` 是一張一位角色的 T-pose 立繪，不是多人合圖，改用另一條工具鏈：
 

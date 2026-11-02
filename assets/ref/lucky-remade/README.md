@@ -1,6 +1,6 @@
-# 幸運八人：七位人物重製
+# 幸運八人：透明人物素材
 
-使用者提供七張原始 T-pose 圖，依既有人物身分替換 lucky 索引 1–7。使用內建 imagegen 逐張去背，保留原臉型、服裝、T-pose、完整鞋面與尾巴。保存工具輸出的 RGBA 原始透明圖，建置時只裁空白及加透明邊距，不再以白色當背景填除。
+使用內建 imagegen 逐張去背，保存工具輸出的 RGBA 透明圖；建置時保留 alpha，只裁空白及加透明邊距。索引 1–5 沿用先前提供的 T-pose 人物；索引 6 已由牙妹替換成橘髮持書的 Claude 娘，索引 7 已由魚妹替換成白髮龍角的 GPT 娘。新兩人保留使用者圖中的原站姿、服裝與配件。
 
 | lucky 索引 | 人物 | 使用者來源檔 | 透明原圖 | 使用中的切圖 |
 | --- | --- | --- | --- | --- |
@@ -9,16 +9,18 @@
 | 3 | 塗哥 | ChatGPT Image 2026年9月22日 上午12_13_57.png | lucky-3.png | ../cast/lucky-3.png |
 | 4 | 喵布布 | ChatGPT Image 2026年9月22日 上午12_14_54.png | lucky-4.png | ../cast/lucky-4.png |
 | 5 | 喵白白 | ChatGPT Image 2026年9月22日 上午12_15_54.png | lucky-5.png | ../cast/lucky-5.png |
-| 6 | 牙妹 | ChatGPT Image 2026年9月22日 上午12_16_57.png | lucky-6.png | ../cast/lucky-6.png |
-| 7 | 魚妹 | ChatGPT Image 2026年9月22日 上午12_18_04.png | lucky-7.png | ../cast/lucky-7.png |
+| 6 | Claude 娘 | [claude-source.png](claude-source.png) | [lucky-6.png](lucky-6.png) | [lucky-6.png](../cast/lucky-6.png) |
+| 7 | GPT 娘 | [gpt-source.png](gpt-source.png) | [lucky-7.png](lucky-7.png) | [lucky-7.png](../cast/lucky-7.png) |
 
-索引 0 的鯨魚娘沿用既有透明素材。原歌曲的八人編制與主唱鋒兄不變；歌詞 PV、人物 PV、第二版播放器及人物圖庫均透過同一份 cast.json 載入替換後素材。
+索引 0 的鯨魚娘沿用既有透明素材。八人編制與主唱鋒兄不變；國語、英語、日語與粵語四版的歌詞 PV、人物 PV、第二版播放器及人物圖庫均透過同一份 cast.json 載入新素材與名稱。第二版四首的封面也使用更新後的本機八人群像。
+
+Claude 娘保留書本、花飾與長裙；GPT 娘保留白色服裝、龍角、翅膀、尾巴、鞋與 GPT 紋飾。兩張皆使用內建 image_gen 的 `background-extraction`，`transparent_background=true`，一位人物一個獨立呼叫；GPT 娘再依使用者後續要求，以定向修改移除右上方的藍色 Sora2 符號及軌跡，該區恢復透明。完整提示與原始路徑見 [ai-replacements-prompts.json](ai-replacements-prompts.json)。兩人使用較保守的手腳擺幅，讓長裙與配件保持完整。
 
 ## 重建
 
 `node tools/rebuild-lucky.mjs` 裁切此資料夾的七張圖，更新 `assets/ref/cast/cast.json` 與 `lucky-1.png`～`lucky-7.png`，再重建 `assets/ref/lucky8.png`。舊入口 `node tools/cutout-solo.mjs` 偵測到這組素材後也會走此流程，避免重新把白鞋挖空。建置後會印出群像的臉部座標，對應 pv.js 的 ARTS.lucky8.faces。
 
-## 內建 imagegen 最終提示（七張各使用相同提示）
+## 初次重製的 imagegen 共用提示（索引 1–5 沿用）
 
 ```text
 Use case: background-extraction.

@@ -1,0 +1,31 @@
+[
+  {
+    "index": 6,
+    "name": "Claude 娘",
+    "source": "C:\\Users\\chbon\\AppData\\Local\\Temp\\codex-clipboard-82780a1c-95a3-4abd-9bef-a65fe01e081f.png",
+    "prompt": "Use case: background-extraction. Input image 1 is the EDIT TARGET, an existing full-body orange-haired anime Claude girl holding a book. Remove ONLY the plain white background and any cast shadow, make the outside and genuine gaps truly transparent alpha 0. Preserve the original illustration identity, exact face, long orange hair, amber eyes, flower hair pin, black ribbons, book and orange sunburst emblems, cream/orange/black long dress, jewelry, visible boot, complete skirt hem and original calm standing pose. Preserve the WHITE and CREAM clothing, skin and shoe as fully opaque alpha 255. Do not change her costume, expression, pose or proportions. Full figure from hair top to boot sole within frame with a narrow transparent margin. Crisp clean antialiased contour, no halo, no fuzzy translucent cloud, no extra objects, no captions. Output ONE isolated transparent PNG sprite.",
+    "generatedSource": "C:\\Users\\chbon\\.codex\\generated_images\\01a19572-a1d3-7922-84ac-5b0da2b1fb5e\\exec-efc286ea-3102-4522-a1f3-c6c153bb5426.png",
+    "mode": "built-in image_gen; transparent_background=true",
+    "savedSource": "claude-source.png",
+    "savedTransparent": "lucky-6.png",
+    "sprite": "../cast/lucky-6.png"
+  },
+  {
+    "index": 7,
+    "name": "GPT 娘",
+    "source": "C:\\Users\\chbon\\AppData\\Local\\Temp\\codex-clipboard-90fb9f2b-ee5e-43f8-87f2-1c8957ba5a78.png",
+    "prompt": "Use case: background-extraction. Input image 1 is the EDIT TARGET, an existing full-body white/silver-haired anime GPT dragon girl. Remove ONLY the plain white background and any cast shadow, make the outside and genuine gaps truly transparent alpha 0. Preserve the exact recognizable face, lavender eyes, long silver hair, two curved white dragon horns, pointed ears, OpenAI knot ornaments, silver jewelry, white flowing dress and lace-up slit, both pale dragon wings, long scaled curling tail, visible white high heel, small blue floating cloud companion beside her raised hand and original standing pose. All WHITE clothing, white hair, white horns, white tail, wings, skin and shoe must remain fully opaque alpha 255, never mistake white parts for background. Do not change costume, expression, pose, proportions or ornaments. Entire figure, wings, tail curl, horns, companion and shoe within frame with a narrow transparent margin. Crisp clean antialiased contour, no halo, no fuzzy translucent cloud, no new objects, no captions. Output ONE isolated transparent PNG sprite.",
+    "generatedSource": "C:\\Users\\chbon\\.codex\\generated_images\\01a19572-a1d3-7922-84ac-5b0da2b1fb5e\\exec-7a3e39b7-8a2a-4052-90dc-c344b3a14186.png",
+    "mode": "built-in image_gen; transparent_background=true",
+    "savedSource": "gpt-source.png",
+    "savedTransparent": "lucky-7.png",
+    "sprite": "../cast/lucky-7.png",
+    "edits": [
+      {
+        "prompt": "Use case: precise-object-edit. Input image 1 is the EDIT TARGET: this transparent full-body white-haired GPT dragon girl. REMOVE ONLY the small floating BLUE cloud creature / Sora2 symbol at the upper right above her raised hand, INCLUDING ALL blue motion trails connecting toward the hand. Leave fully transparent alpha 0 where that separate blue symbol and its blue trails were. Keep absolutely every part of the girl unchanged: face, lavender eyes, silver hair, horns, ears, raised hand and fingers, white dress, all OpenAI/GPT knot emblems on clothes and ornaments, wings, scaled curling tail, complete heels and skirt hem. Do not remove the GPT knot emblems. Preserve original transparency and opaque white body/clothes. No redraw, no new object, no new pose, no change of framing or scale. One transparent PNG sprite.",
+        "generatedSource": "C:\\Users\\chbon\\.codex\\generated_images\\01a19572-a1d3-7922-84ac-5b0da2b1fb5e\\exec-69a65b7a-d71d-4b52-8205-2c96f1641f21.png",
+        "mode": "built-in image_gen; precise-object-edit; transparent_background=true"
+      }
+    ]
+  }
+]
