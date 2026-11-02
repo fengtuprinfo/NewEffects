@@ -60,6 +60,20 @@ macOS 也可雙擊 `啟動播放器.command`，會在終端機啟動伺服器並
 
 粵文版「統一發票頭獎得主鋒兄威力彩頭獎得主塗哥(粵文歌詞)」獨立加入兩版歌曲清單（PV 編號 12），使用使用者提供的 [Suno 音源](https://suno.com/s/a0XTF9CAMxLNOtBc)，附 20 段粵文同步字幕。沿用相同八人與鋒兄主唱，MP3、SRT 均納入 repo 供線上版使用；來源與原始歌詞見 [assets/ref/LUCKY-YUE.md](assets/ref/LUCKY-YUE.md)。
 
+### 最瞎結婚理由：中、英、粵、日四版
+
+已新增〈最瞎結婚理由〉（PV 編號 14）、〈最瞎結婚理由(英文歌詞)〉（15）、〈最瞎結婚理由(粵文歌詞)〉（16）、〈最瞎結婚理由(日文歌詞)〉（17）。四版各有完整 MP3 與依音訊對時的原文字幕（33／34／34／34 句），兩版播放器與人物 PV 共用既有幸運八人，鋒兄、塗哥預設並列中央。歌詞保留使用者提供的牙妹／魚妹、日文假名與空格等原文；來源、歌詞與可重建的時間軸見 [assets/ref/wedding/README.md](assets/ref/wedding/README.md)。音訊與字幕均納入 repo，供部署版播放。
+
+執行 `node tools/build-wedding-subtitles.mjs` 可重建四版字幕；直接開啟 `/?song=14`、`/?song=15`、`/?song=16`、`/?song=17` 預覽。
+
+### 鋒兄進化 Show！🔥：中、英、粵、日四版
+
+已加入使用者提供的〈鋒兄進化 Show！🔥〉中文（PV 編號 18）、英文（19）、粵文（20）、日文（21）四首完整音源與同步歌詞。兩版播放器、人物 PV 使用幸運八人，鋒兄、塗哥預設並列中央。原文及來源保存在 [assets/ref/evolution/README.md](assets/ref/evolution/README.md)，可執行 `node tools/build-evolution-subtitles.mjs` 重建字幕。
+
+### 喵布布本喵掉的毛
+
+已加入〈喵布布本喵掉的毛〉（PV 編號 22）完整 MP3 與 48 句同步歌詞，保留使用者原文及和聲。兩版播放器使用幸運八人，由喵布布擔任預設主唱與中央人物，其他成員同場演出；人物 PV 沿用八人造型。來源、原文與可重建的時間軸見 [assets/ref/bubu-fur/README.md](assets/ref/bubu-fur/README.md)，執行 `node tools/build-bubu-fur-subtitles.mjs` 可重建字幕。
+
 ### 後はやるだけ！：V西2025
 
 已加入使用者提供的〈後はやるだけ！〉MP3（PV 編號 13，224.92 秒），附 41 段日中雙語同步字幕。三張參考圖重建為十六位 V西2025 球員與監督樋口楓，共十七張獨立透明人物；兩版播放器、人物 PV 與人物圖庫共用，預設舞台主唱為壱百満天原サロメ。人物 PV 固定此組，以 6×3 排列，歌詞舞台與尾聲合照也顯示全員。來源、人物索引、重建方法及 imagegen 提示見 [assets/ref/vwest/README.md](assets/ref/vwest/README.md)。MP3、字幕與人物素材均納入 repo 供線上版使用。

@@ -99,7 +99,43 @@ const SONGS = [
    cast:[['vwest',0,'壱百満天原サロメ','#b89be4'],['vwest',1,'家長むぎ','#ddb65a'],['vwest',2,'Zeal Ginjoka','#5b9e7b'],['vwest',3,'小野町春香','#51c9e2'],
          ['vwest',4,'矢車りね','#a4c98f'],['vwest',5,'ハユン','#bd5262'],['vwest',6,'早瀬走','#8a75b8'],['vwest',7,'Etna Crimson','#e76443'],
          ['vwest',8,'渋谷ハジメ','#9dc06f'],['vwest',9,'戌亥とこ','#579b76'],['vwest',10,'狂蘭メロコ','#a177bd'],['vwest',11,'本間ひまわり','#f0ac3d'],
-         ['vwest',12,'Nagisa Arcinia','#b34e79'],['vwest',13,'ラトナ・プティ','#bd8e5d'],['vwest',14,'エリー・コニファー','#79bdd7'],['vwest',15,'緋八マナ','#e3cc74'],['vwest',16,'樋口楓（監督）','#b7c7ed']]}
+         ['vwest',12,'Nagisa Arcinia','#b34e79'],['vwest',13,'ラトナ・プティ','#bd8e5d'],['vwest',14,'エリー・コニファー','#79bdd7'],['vwest',15,'緋八マナ','#e3cc74'],['vwest',16,'樋口楓（監督）','#b7c7ed']]},
+  {title:'最瞎結婚理由', ver:'Suno v6-mini', file:'最瞎結婚理由', subs:'最瞎結婚理由.srt', theme:'lucky', art:'lucky8', lead:2,
+   series:'鋒兄 · 小塗', kicker:'今彩五三九牽紅線',
+   cast:[['lucky',0,'鯨魚娘','#3f7fd0'],['lucky',1,'咕咕嘎嘎','#3a4250'],['lucky',2,'鋒兄','#b08a4a'],['lucky',3,'塗哥','#7b8794'],
+         ['lucky',4,'喵布布','#d9822b'],['lucky',5,'喵白白','#8d97a3'],['lucky',6,'Claude 娘','#d9874e'],['lucky',7,'GPT 娘','#c2b9e9']]},
+  {title:'最瞎結婚理由(英文歌詞)', ver:'Suno v6-mini', file:'最瞎結婚理由(英文歌詞)', subs:'最瞎結婚理由(英文歌詞).srt', theme:'lucky', art:'lucky8', lead:2,
+   series:'鋒兄 · 小塗', kicker:'THE CRAZIEST WEDDING REASON · ENGLISH VERSION',
+   cast:[['lucky',0,'鯨魚娘','#3f7fd0'],['lucky',1,'咕咕嘎嘎','#3a4250'],['lucky',2,'鋒兄','#b08a4a'],['lucky',3,'塗哥','#7b8794'],
+         ['lucky',4,'喵布布','#d9822b'],['lucky',5,'喵白白','#8d97a3'],['lucky',6,'Claude 娘','#d9874e'],['lucky',7,'GPT 娘','#c2b9e9']]},
+  {title:'最瞎結婚理由(粵文歌詞)', ver:'Suno v6-mini', file:'最瞎結婚理由(粵文歌詞)', subs:'最瞎結婚理由(粵文歌詞).srt', theme:'lucky', art:'lucky8', lead:2,
+   series:'鋒兄 · 小塗', kicker:'今彩五三九牽紅線 · 粵語版',
+   cast:[['lucky',0,'鯨魚娘','#3f7fd0'],['lucky',1,'咕咕嘎嘎','#3a4250'],['lucky',2,'鋒兄','#b08a4a'],['lucky',3,'塗哥','#7b8794'],
+         ['lucky',4,'喵布布','#d9822b'],['lucky',5,'喵白白','#8d97a3'],['lucky',6,'Claude 娘','#d9874e'],['lucky',7,'GPT 娘','#c2b9e9']]},
+  {title:'最瞎結婚理由(日文歌詞)', ver:'Suno v6-mini', file:'最瞎結婚理由(日文歌詞)', subs:'最瞎結婚理由(日文歌詞).srt', theme:'lucky', art:'lucky8', lead:2,
+   series:'鋒兄 · 小塗', kicker:'今彩五三九牽紅線 · 日本語版',
+   cast:[['lucky',0,'鯨魚娘','#3f7fd0'],['lucky',1,'咕咕嘎嘎','#3a4250'],['lucky',2,'鋒兄','#b08a4a'],['lucky',3,'塗哥','#7b8794'],
+         ['lucky',4,'喵布布','#d9822b'],['lucky',5,'喵白白','#8d97a3'],['lucky',6,'Claude 娘','#d9874e'],['lucky',7,'GPT 娘','#c2b9e9']]},
+  {title:'鋒兄進化 Show！🔥', ver:'Suno', file:'鋒兄進化 Show！🔥', subs:'鋒兄進化 Show！🔥.srt', theme:'sunrise', art:'lucky8', lead:2,
+   series:'鋒兄 · 塗哥', kicker:'台北有鋒兄真好 · EVOLUTION SHOW',
+   cast:[['lucky',0,'鯨魚娘','#3f7fd0'],['lucky',1,'咕咕嘎嘎','#3a4250'],['lucky',2,'鋒兄','#b08a4a'],['lucky',3,'塗哥','#7b8794'],
+         ['lucky',4,'喵布布','#d9822b'],['lucky',5,'喵白白','#8d97a3'],['lucky',6,'Claude 娘','#d9874e'],['lucky',7,'GPT 娘','#c2b9e9']]},
+  {title:'鋒兄進化 Show！🔥(英文歌詞)', ver:'Suno v6-mini', file:'鋒兄進化 Show！🔥(英文歌詞)', subs:'鋒兄進化 Show！🔥(英文歌詞).srt', theme:'sunrise', art:'lucky8', lead:2,
+   series:'鋒兄 · 塗哥', kicker:"BROTHER FENG'S EVOLUTION SHOW · ENGLISH VERSION",
+   cast:[['lucky',0,'鯨魚娘','#3f7fd0'],['lucky',1,'咕咕嘎嘎','#3a4250'],['lucky',2,'鋒兄','#b08a4a'],['lucky',3,'塗哥','#7b8794'],
+         ['lucky',4,'喵布布','#d9822b'],['lucky',5,'喵白白','#8d97a3'],['lucky',6,'Claude 娘','#d9874e'],['lucky',7,'GPT 娘','#c2b9e9']]},
+  {title:'鋒兄進化 Show！🔥(粵文歌詞)', ver:'Suno v6-mini', file:'鋒兄進化 Show！🔥(粵文歌詞)', subs:'鋒兄進化 Show！🔥(粵文歌詞).srt', theme:'sunrise', art:'lucky8', lead:2,
+   series:'鋒兄 · 塗哥', kicker:'台北有鋒兄真係好 · 粵語版',
+   cast:[['lucky',0,'鯨魚娘','#3f7fd0'],['lucky',1,'咕咕嘎嘎','#3a4250'],['lucky',2,'鋒兄','#b08a4a'],['lucky',3,'塗哥','#7b8794'],
+         ['lucky',4,'喵布布','#d9822b'],['lucky',5,'喵白白','#8d97a3'],['lucky',6,'Claude 娘','#d9874e'],['lucky',7,'GPT 娘','#c2b9e9']]},
+  {title:'鋒兄進化 Show！🔥(日文歌詞)', ver:'Suno v6-mini', file:'鋒兄進化 Show！🔥(日文歌詞)', subs:'鋒兄進化 Show！🔥(日文歌詞).srt', theme:'sunrise', art:'lucky8', lead:2,
+   series:'鋒兄 · 塗哥', kicker:'台北有鋒兄真好 · 日本語版',
+   cast:[['lucky',0,'鯨魚娘','#3f7fd0'],['lucky',1,'咕咕嘎嘎','#3a4250'],['lucky',2,'鋒兄','#b08a4a'],['lucky',3,'塗哥','#7b8794'],
+         ['lucky',4,'喵布布','#d9822b'],['lucky',5,'喵白白','#8d97a3'],['lucky',6,'Claude 娘','#d9874e'],['lucky',7,'GPT 娘','#c2b9e9']]},
+  {title:'喵布布本喵掉的毛', ver:'Suno', file:'喵布布本喵掉的毛', subs:'喵布布本喵掉的毛.srt', theme:'lucky', art:'lucky8', lead:4, centers:[4],
+   series:'喵布布', kicker:'本喵原廠 · 傲嬌出場',
+   cast:[['lucky',0,'鯨魚娘','#3f7fd0'],['lucky',1,'咕咕嘎嘎','#3a4250'],['lucky',2,'鋒兄','#b08a4a'],['lucky',3,'塗哥','#7b8794'],
+         ['lucky',4,'喵布布','#d9822b'],['lucky',5,'喵白白','#8d97a3'],['lucky',6,'Claude 娘','#d9874e'],['lucky',7,'GPT 娘','#c2b9e9']]}
 ];
 // 每首歌一組配色：夏日向日葵、日出、黃昏星空、晴空疾風
 const THEMES = {
@@ -167,7 +203,7 @@ const ART = ARTS[song.art], AW = ART.crop[2], AH = ART.crop[3], FACES = ART.face
 const MEMBERS = song.cast.map(([sheet, idx, name, color], i) => ({sheet, idx, name: name || `No.${pad(i + 1)}`, color, img: null, meta: null}));
 const LEAD = clamp(+(song.lead ?? 0) | 0, 0, MEMBERS.length - 1);
 const OTHERS = MEMBERS.map((_, i) => i).filter(i => i !== LEAD);
-const CENTERS = song.cast[0][0] === 'lucky' ? [2,3] : [LEAD];
+const CENTERS = song.centers || (song.cast[0][0] === 'lucky' ? [2,3] : [LEAD]);
 const BASE_CHARACTER_GROUPS = [
   {sheet:'casual',title:'十二人 · 制服與便服',src:'assets/ref/casual-remade/group.png',colors:['#11bbde','#ff86b1'],count:12,solo:true},
   {sheet:'rooftop',title:'屋頂六人 · SUNRISE',src:'assets/ref/rooftop6.webp',colors:['#70ccff','#bdf1bc'],count:6},
@@ -1104,11 +1140,14 @@ function shotStage(t, sh, u){
   }
   // 舞者：依卡司人數排成後排／中排／前排，中央是主唱。
   // nx、ny 是安全框裡的位置（ny 是把抬手和鞋底的餘裕算進去之後的腳底），nh 是希望的身高占比。
-  const O = OTHERS, duo = CENTERS.length===2;
+  const O = OTHERS, duo = CENTERS.length===2, soloLucky = song.cast[0][0]==='lucky' && !duo;
   const supporting=MEMBERS.map((_,i)=>i).filter(i=>!CENTERS.includes(i));
   const spots = duo
     ? [...supporting.map((m,i)=>({nx:[.07,.20,.32,.68,.80,.93][i],ny:.72,nh:.40,m})),
        {nx:.42,ny:1,nh:.56,m:CENTERS[0]},{nx:.58,ny:1,nh:.56,m:CENTERS[1]}]
+    : soloLucky
+    ? [...O.slice(0,4).map((m,i)=>({nx:[.14,.38,.62,.86][i],ny:.64,nh:.34,m})),
+       ...O.slice(4).map((m,i)=>({nx:[.12,.29,.80][i],ny:.92,nh:.43,m})),{nx:.50,ny:1,nh:.64,m:LEAD}]
     : O.length > 11
     ? [...O.slice(0,6).map((m,i)=>({nx:(i+.5)/6,ny:.42,nh:.28,m})),
        ...O.slice(6,12).map((m,i)=>({nx:(i+.5)/6,ny:.71,nh:.30,m})),
@@ -1132,7 +1171,7 @@ function shotStage(t, sh, u){
        {nx:.50, ny:1, nh:.70, m:LEAD}];
   // 後排正中央會被主唱擋住。手張得很開的立繪，冒出的頭和手臂會像主唱的殘影，每個景別都不畫；
   // 較窄的立繪只在特寫拿掉，廣角仍留著當後排。
-  const centerBack = duo ? -1 : O.length >= 9 ? -1 : O.length >= 7 ? 2 : O.length >= 5 ? 1 : -1;  const intro = sh.variant === 'intro' ? clamp((t - .5)/1.5) : 1;
+  const centerBack = duo || soloLucky ? -1 : O.length >= 9 ? -1 : O.length >= 7 ? 2 : O.length >= 5 ? 1 : -1;  const intro = sh.variant === 'intro' ? clamp((t - .5)/1.5) : 1;
   const inv = (cam2, x, y) => [cam2.fx + (x - cam2.fx)/cam2.z, cam2.fy + (y - cam2.fy)/cam2.z];
   const corners = [[STAGE_SAFE.l, STAGE_SAFE.t], [STAGE_SAFE.r, STAGE_SAFE.t], [STAGE_SAFE.l, STAGE_SAFE.b], [STAGE_SAFE.r, STAGE_SAFE.b]].map(([x, y]) => inv(camFit, x, y));
   const box = {

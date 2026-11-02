@@ -262,7 +262,7 @@ function frame(dt, playing){
     window.SpriteRig?.setCacheLimit?.(cnt);
   }
   const lead = Math.max(0, Math.min(cnt - 1, prefs.danceLead === 'auto' ? (song.lead || 0) : (+prefs.danceLead || 0)));
-  const centers=set==='lucky'&&prefs.danceLead==='auto' ? [2,3] : [lead];
+  const centers=prefs.danceLead==='auto' ? (song.centers || (set==='lucky' ? [2,3] : [lead])) : [lead];
   const order = Array.from({length: cnt - 1}, (_, k) => (lead + k + 1) % cnt).filter(i=>!centers.includes(i));
   const p = phase(), moveFn = MOVES[Math.floor(p/8) % MOVES.length];
   const strength=+prefs.danceEnergy || 1;
