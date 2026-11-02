@@ -163,6 +163,22 @@ const SONGS = [
   {title:'水電進化 Show(粵文歌詞)', ver:'Suno v6-mini', file:'水電進化 Show(粵文歌詞)', subs:'水電進化 Show(粵文歌詞).srt', theme:'sunrise', art:'lucky8', lead:2,
    series:'水電進化 Show', kicker:'由水電進化到樂隊 · 粵語版',
    cast:[['lucky',0,'鯨魚娘','#3f7fd0'],['lucky',1,'咕咕嘎嘎','#3a4250'],['lucky',2,'鋒兄','#b08a4a'],['lucky',3,'塗哥','#7b8794'],
+         ['lucky',4,'喵布布','#d9822b'],['lucky',5,'喵白白','#8d97a3'],['lucky',6,'Claude 娘','#d9874e'],['lucky',7,'GPT 娘','#c2b9e9']]},
+  {title:'鋒塗力百年夢', ver:'Suno', file:'鋒塗力百年夢', subs:'鋒塗力百年夢.srt', theme:'sunrise', art:'lucky8', lead:2,
+   series:'鋒塗力', kicker:'資訊 · 文化 · 水電科技',
+   cast:[['lucky',0,'鯨魚娘','#3f7fd0'],['lucky',1,'咕咕嘎嘎','#3a4250'],['lucky',2,'鋒兄','#b08a4a'],['lucky',3,'塗哥','#7b8794'],
+         ['lucky',4,'喵布布','#d9822b'],['lucky',5,'喵白白','#8d97a3'],['lucky',6,'Claude 娘','#d9874e'],['lucky',7,'GPT 娘','#c2b9e9']]},
+  {title:'鋒塗力百年夢(英文歌詞)', ver:'Suno v6-mini', file:'鋒塗力百年夢(英文歌詞)', subs:'鋒塗力百年夢(英文歌詞).srt', theme:'sunrise', art:'lucky8', lead:2,
+   series:'鋒塗力', kicker:'FENG TU POWER · A HUNDRED-YEAR DREAM',
+   cast:[['lucky',0,'鯨魚娘','#3f7fd0'],['lucky',1,'咕咕嘎嘎','#3a4250'],['lucky',2,'鋒兄','#b08a4a'],['lucky',3,'塗哥','#7b8794'],
+         ['lucky',4,'喵布布','#d9822b'],['lucky',5,'喵白白','#8d97a3'],['lucky',6,'Claude 娘','#d9874e'],['lucky',7,'GPT 娘','#c2b9e9']]},
+  {title:'鋒塗力百年夢(日文歌詞)', ver:'Suno v6-mini', file:'鋒塗力百年夢(日文歌詞)', subs:'鋒塗力百年夢(日文歌詞).srt', theme:'sunrise', art:'lucky8', lead:2,
+   series:'鋒塗力', kicker:'資訊 · 文化 · 水電科技 · 日本語版',
+   cast:[['lucky',0,'鯨魚娘','#3f7fd0'],['lucky',1,'咕咕嘎嘎','#3a4250'],['lucky',2,'鋒兄','#b08a4a'],['lucky',3,'塗哥','#7b8794'],
+         ['lucky',4,'喵布布','#d9822b'],['lucky',5,'喵白白','#8d97a3'],['lucky',6,'Claude 娘','#d9874e'],['lucky',7,'GPT 娘','#c2b9e9']]},
+  {title:'鋒塗力百年夢(粵文歌詞)', ver:'Suno v6-mini', file:'鋒塗力百年夢(粵文歌詞)', subs:'鋒塗力百年夢(粵文歌詞).srt', theme:'sunrise', art:'lucky8', lead:2,
+   series:'鋒塗力', kicker:'資訊 · 文化 · 水電科技 · 粵語版',
+   cast:[['lucky',0,'鯨魚娘','#3f7fd0'],['lucky',1,'咕咕嘎嘎','#3a4250'],['lucky',2,'鋒兄','#b08a4a'],['lucky',3,'塗哥','#7b8794'],
          ['lucky',4,'喵布布','#d9822b'],['lucky',5,'喵白白','#8d97a3'],['lucky',6,'Claude 娘','#d9874e'],['lucky',7,'GPT 娘','#c2b9e9']]}
 ];
 // 每首歌一組配色：夏日向日葵、日出、黃昏星空、晴空疾風
@@ -1699,10 +1715,12 @@ async function init(){
   window.SpriteRig?.setCacheLimit?.(Math.max(MEMBERS.length,...(CHARACTER_PV?CHARACTER_GROUPS.map(g=>g.count):[])));
   if(RENDER) document.body.classList.add('render');
   const sel = $('#song');
-  SONGS.forEach((s, i) => sel.add(new Option(`${s.title}（${s.ver}）`, i, false, s === song)));
+  const order=SongOrder.group(SONGS.map((s,index)=>({title:s.title,index})));
+  const position=order.findIndex(item=>item.index===songIndex);
+  order.forEach(({index})=>{const s=SONGS[index];sel.add(new Option(`${s.title}（${s.ver}）`,index,false,s===song));});
   sel.onchange = () => changeSong(+sel.value);
-  $('#prevSong').onclick = () => changeSong(SONGS.indexOf(song)-1);
-  $('#nextSong').onclick = () => changeSong(SONGS.indexOf(song)+1);
+  $('#prevSong').onclick = () => changeSong(order[(position-1+order.length)%order.length].index);
+  $('#nextSong').onclick = () => changeSong(order[(position+1)%order.length].index);
   $('#prevSong').disabled = $('#nextSong').disabled = SONGS.length<2;
   $('#modeLink').href=CHARACTER_PV ? `index.html?song=${SONGS.indexOf(song)}` : `index.html?song=${SONGS.indexOf(song)}&mode=characters`;
   $('#modeLink').textContent=CHARACTER_PV ? '歌詞 PV' : '人物 PV';

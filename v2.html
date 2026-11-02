@@ -326,6 +326,7 @@ kbd{background:var(--panel2);border:1px solid var(--line);border-bottom-width:2p
 <div id="toast"></div>
 
 <script src="volume.js"></script>
+<script src="playlist-order.js"></script>
 <script>
 const $ = s => document.querySelector(s);
 const stage = $('#stage'), slot = $('#slot'), nextEl = $('#next'), nextZhEl = $('#nextZh'), listEl = $('#list'), ta = $('#lyricsText');
@@ -478,7 +479,11 @@ const DEFAULT_SONGS = [
   {id:'suno-f6f5d51c',title:'水電進化 Show',audio:'水電進化 Show.mp3',subs:'水電進化 Show.srt',cover:'assets/ref/lucky8.png',lead:2,cast:'lucky'},
   {id:'suno-3ff3b89a',title:'水電進化 Show(英文歌詞)',audio:'水電進化 Show(英文歌詞).mp3',subs:'水電進化 Show(英文歌詞).srt',cover:'assets/ref/lucky8.png',lead:2,cast:'lucky'},
   {id:'suno-8fd67acc',title:'水電進化 Show(日文歌詞)',audio:'水電進化 Show(日文歌詞).mp3',subs:'水電進化 Show(日文歌詞).srt',cover:'assets/ref/lucky8.png',lead:2,cast:'lucky'},
-  {id:'suno-8d63d0a5',title:'水電進化 Show(粵文歌詞)',audio:'水電進化 Show(粵文歌詞).mp3',subs:'水電進化 Show(粵文歌詞).srt',cover:'assets/ref/lucky8.png',lead:2,cast:'lucky'}
+  {id:'suno-8d63d0a5',title:'水電進化 Show(粵文歌詞)',audio:'水電進化 Show(粵文歌詞).mp3',subs:'水電進化 Show(粵文歌詞).srt',cover:'assets/ref/lucky8.png',lead:2,cast:'lucky'},
+  {id:'suno-eba8ff1a',title:'鋒塗力百年夢',audio:'鋒塗力百年夢.mp3',subs:'鋒塗力百年夢.srt',cover:'assets/ref/lucky8.png',lead:2,cast:'lucky'},
+  {id:'suno-db86dddf',title:'鋒塗力百年夢(英文歌詞)',audio:'鋒塗力百年夢(英文歌詞).mp3',subs:'鋒塗力百年夢(英文歌詞).srt',cover:'assets/ref/lucky8.png',lead:2,cast:'lucky'},
+  {id:'suno-ba267a2c',title:'鋒塗力百年夢(日文歌詞)',audio:'鋒塗力百年夢(日文歌詞).mp3',subs:'鋒塗力百年夢(日文歌詞).srt',cover:'assets/ref/lucky8.png',lead:2,cast:'lucky'},
+  {id:'suno-2a090234',title:'鋒塗力百年夢(粵文歌詞)',audio:'鋒塗力百年夢(粵文歌詞).mp3',subs:'鋒塗力百年夢(粵文歌詞).srt',cover:'assets/ref/lucky8.png',lead:2,cast:'lucky'}
 ];
 // 每首歌的字幕／音訊檔放在同一個資料夾，執行時才讀取
 const cfgOf = id => DEFAULT_SONGS.find(d => d.id === id) || {};
@@ -509,11 +514,12 @@ let removedSongs = store.get('lyricfx:removed') || [];
 const saveSongs = () => { store.set('lyricfx:songs', songs); store.set('lyricfx:removed', removedSongs); };
 // 預設清單新增的歌曲會自動補進已存的清單（使用者刪掉的不會再補回）
 for(const d of DEFAULT_SONGS) if(!songs.some(s => s.id === d.id) && !removedSongs.includes(d.id)) songs.push({...d});
+const orderedSongs=()=>SongOrder.group(songs,DEFAULT_SONGS);
 
 function renderSongs(){
   $('#prevSong').disabled = $('#nextSong').disabled = songs.length<2;
   const ul = $('#songs'); ul.innerHTML = '';
-  songs.forEach((s, i) => {
+  orderedSongs().forEach((s, i) => {
     const d = getLyricsData('yt:' + s.id);
     const ls = d?.lrc ? parse(d.lrc) : [];
     const nt = ls.filter(l => l.t != null && l.text).length, n = ls.filter(l => l.text).length;
@@ -1128,10 +1134,11 @@ function frame(ts){
 
 /* ---------------- controls ---------------- */
 function stepSong(direction){
-  if(!songs.length) return;
-  const current=songs.findIndex(s=>s.id===curSong);
-  const next=current<0 ? (direction>0?0:songs.length-1) : (current+direction+songs.length)%songs.length;
-  playSong(songs[next].id,media.playing());
+  const list=orderedSongs();
+  if(!list.length) return;
+  const current=list.findIndex(s=>s.id===curSong);
+  const next=current<0 ? (direction>0?0:list.length-1) : (current+direction+list.length)%list.length;
+  playSong(list[next].id,media.playing());
 }
 $('#prevSong').onclick = () => stepSong(-1);
 $('#nextSong').onclick = () => stepSong(1);
@@ -1222,7 +1229,7 @@ function toast(s){ const el = $('#toast'); el.textContent = s; el.classList.add(
 
 /* ---------------- boot ---------------- */
 syncOpts();
-const firstId = songs.some(s => s.id === prefs.lastSong) ? prefs.lastSong : (songs[0] || DEFAULT_SONGS[0]).id;
+const firstId = songs.some(s => s.id === prefs.lastSong) ? prefs.lastSong : (orderedSongs()[0] || DEFAULT_SONGS[0]).id;
 mediaKey = 'yt:' + firstId;
 preloadFiles().then(() => playSong(firstId, false));
 if(location.protocol === 'file:') showMsg('YouTube 需要透過網址開啟本頁，請在這個資料夾執行：<br><code>python3 -m http.server 8765</code><br>再打開 http://localhost:8765');
